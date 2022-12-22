@@ -12,4 +12,6 @@ public interface UtenteDao {
     public void saveOrUpdate(Utente utente);
 
     public void delete(Utente utente);
+
+    public boolean alreadyInDatabase(String username);
 }

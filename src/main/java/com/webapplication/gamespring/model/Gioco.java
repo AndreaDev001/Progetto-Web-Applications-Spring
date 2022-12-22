@@ -1,13 +1,13 @@
 package com.webapplication.gamespring.model;
 
 public class Gioco {
-    int id;
+    Long id;
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 }
