@@ -1,6 +1,9 @@
 package com.webapplication.gamespring.persistenza;
 
 
+import com.webapplication.gamespring.persistenza.Dao.UtenteDao;
+import com.webapplication.gamespring.persistenza.Dao.postgres.UtenteDaoPostgres;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -22,7 +25,7 @@ public class DatabaseManager {
     public Connection getConnection() {
         if (connection == null) {
             try {
-                connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/", "postgres", "postgres");
+                connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "postgres");
                 System.out.println("Connesso");
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -31,6 +34,8 @@ public class DatabaseManager {
         return connection;
     }
 
-
+    public UtenteDao getUtenteDao() {
+        return new UtenteDaoPostgres(getConnection());
+    }
 
 }
