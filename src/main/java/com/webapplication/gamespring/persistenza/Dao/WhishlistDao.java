@@ -12,4 +12,5 @@ public interface WhishlistDao {
     public void saveOrUpdate(Whishlist utente);
 
     public void delete(Whishlist utente);
+    public boolean alreadyInDatabase(String username, Long id);
 }

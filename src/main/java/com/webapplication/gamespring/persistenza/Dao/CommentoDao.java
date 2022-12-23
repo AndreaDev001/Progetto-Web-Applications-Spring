@@ -13,4 +13,5 @@ public interface CommentoDao {
     public void saveOrUpdate(Commento utente);
 
     public void delete(Commento utente);
+    public boolean alreadyInDatabase(Long id);
 }

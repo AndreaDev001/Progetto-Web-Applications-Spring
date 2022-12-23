@@ -12,4 +12,5 @@ public interface SegnalazioneDao {
     public void saveOrUpdate(Segnalazione utente);
 
     public void delete(Segnalazione utente);
+    public boolean alreadyInDatabase(Long id, String username);
 }

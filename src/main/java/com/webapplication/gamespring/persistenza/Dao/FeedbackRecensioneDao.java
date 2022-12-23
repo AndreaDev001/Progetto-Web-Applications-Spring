@@ -12,4 +12,5 @@ public interface FeedbackRecensioneDao {
     public void saveOrUpdate(FeedbackRecensione utente);
 
     public void delete(FeedbackRecensione utente);
+    public boolean alreadyInDatabase(String username, Long id);
 }

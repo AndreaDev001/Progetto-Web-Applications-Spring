@@ -11,4 +11,5 @@ public interface FeedbackCommentoDao {
     public void saveOrUpdate(FeedbackCommento utente);
 
     public void delete(FeedbackCommento utente);
+    public boolean alreadyInDatabase(String username, Long id);
 }
