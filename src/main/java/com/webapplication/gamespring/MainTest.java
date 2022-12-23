@@ -5,10 +5,12 @@ import com.webapplication.gamespring.persistenza.Dao.UtenteDao;
 import com.webapplication.gamespring.persistenza.Dao.postgres.UtenteDaoPostgres;
 import com.webapplication.gamespring.persistenza.DatabaseManager;
 
+import java.sql.Connection;
+
 public class MainTest {
     public static void main(String[] args) {
 
-
+/*
         Utente U = new Utente();
         U.setUsername("Pie_Ox");
         U.setPassword("123456");
@@ -20,5 +22,10 @@ public class MainTest {
         UtenteDao udao = DatabaseManager.getInstance().getUtenteDao();
         udao.saveOrUpdate(U);
 
+*/
+
+        DatabaseManager.getInstance().getConnection();
     }
+
+
 }
