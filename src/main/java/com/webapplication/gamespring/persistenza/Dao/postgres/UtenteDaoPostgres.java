@@ -72,8 +72,8 @@ public class UtenteDaoPostgres implements UtenteDao {
             try {
                 st = connection.prepareStatement(insertStr);
 
-                st.setString(1, utente.getUsername());
-                st.setString(2, utente.getEmail());
+                st.setString(1, utente.getEmail());
+                st.setString(2, utente.getUsername());
                 st.setString(3, utente.getPassword());
                 st.setBoolean(4, utente.isAmministratore());
                 st.setBoolean(5, utente.isBandito());
@@ -132,14 +132,16 @@ public class UtenteDaoPostgres implements UtenteDao {
             st.setString(1, username);
             ResultSet rs = st.executeQuery();
 
-            if (rs.next()) {
-                return true;
+            if (rs != null) {
+                System.out.println("falso");
+                return false;
             }
 
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return false;
+        System.out.println("vero");
+        return true;
     }
 }

@@ -10,11 +10,11 @@ import java.sql.Connection;
 public class MainTest {
     public static void main(String[] args) {
 
-/*
+
         Utente U = new Utente();
-        U.setUsername("Pie_Ox");
-        U.setPassword("123456");
-        U.setEmail("piero.stalteri@icloud.com");
+        U.setUsername("Pie_Ocs");
+        U.setPassword("1234567");
+        U.setEmail("piero.stalteri@gmail.com");
         U.setBandito(false);
         U.setAmministratore(true);
 
@@ -22,9 +22,7 @@ public class MainTest {
         UtenteDao udao = DatabaseManager.getInstance().getUtenteDao();
         udao.saveOrUpdate(U);
 
-*/
 
-        DatabaseManager.getInstance().getConnection();
     }
 
 
