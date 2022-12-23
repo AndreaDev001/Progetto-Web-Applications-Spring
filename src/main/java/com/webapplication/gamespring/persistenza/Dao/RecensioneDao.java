@@ -7,11 +7,11 @@ import java.util.List;
 public interface RecensioneDao {
     public List<Recensione> findAll();
 
-    public Recensione findByPrimaryKey(Long id);
+    public Recensione findByPrimaryKey(int id);
 
     public void saveOrUpdate(Recensione recensione);
 
     public void delete(Recensione recensione);
 
-    public boolean alreadyInDatabase(String utente, int id);
+    public boolean alreadyInDatabase(String utente, int gioco);
 }

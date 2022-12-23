@@ -25,7 +25,7 @@ public class RecensioneDaoPostgres implements RecensioneDao {
 
             while (rs.next()) {
                 Recensione recensione = new Recensione();
-                recensione.setId(rs.getLong("id"));
+                recensione.setId(rs.getInt("id"));
                 recensione.setTitolo(rs.getString("titolo"));
                 recensione.setContenuto(rs.getString("contenuto"));
                 recensione.setVoto(rs.getInt("voto"));
@@ -45,17 +45,17 @@ public class RecensioneDaoPostgres implements RecensioneDao {
     }
 
     @Override
-    public Recensione findByPrimaryKey(Long id) {
+    public Recensione findByPrimaryKey(int id) {
         Recensione recensione = null;
         String query = "select * from DatabaseProg.recensione where id = ?";
         try {
             PreparedStatement st = connection.prepareStatement(query);
-            st.setLong(1, id);
+            st.setInt(1, id);
             ResultSet rs = st.executeQuery();
 
             if (rs.next()) {
                 recensione = new Recensione();
-                recensione.setId(rs.getLong("id"));
+                recensione.setId(rs.getInt("id"));
                 recensione.setTitolo(rs.getString("titolo"));
                 recensione.setContenuto(rs.getString("contenuto"));
                 recensione.setVoto(rs.getInt("voto"));
@@ -117,7 +117,7 @@ public class RecensioneDaoPostgres implements RecensioneDao {
                 st.setInt(5, recensione.getNumeroNonMiPiace());
                 st.setString(6, recensione.getUtente());
                 st.setInt(7, recensione.getGioco());
-                st.setLong(8, recensione.getId());
+                st.setInt(8, recensione.getId());
 
                 st.executeUpdate();
 
@@ -142,11 +142,11 @@ public class RecensioneDaoPostgres implements RecensioneDao {
     }
 
     @Override
-    public boolean alreadyInDatabase(String utente, int id) {
+    public boolean alreadyInDatabase(String utente, int gioco) {
         String query = "select * from DatabaseProg.recensione where gioco = ? and utente = ?";
         try {
             PreparedStatement st = connection.prepareStatement(query);
-            st.setLong(1, id);
+            st.setLong(1, gioco);
             st.setString(2, utente);
             ResultSet rs = st.executeQuery();
 

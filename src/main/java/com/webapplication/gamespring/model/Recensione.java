@@ -1,7 +1,7 @@
 package com.webapplication.gamespring.model;
 
 public class Recensione {
-    Long id;
+    int id;
     String titolo;
     String contenuto;
     int voto;
@@ -10,11 +10,11 @@ public class Recensione {
     String utente;
     int gioco;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

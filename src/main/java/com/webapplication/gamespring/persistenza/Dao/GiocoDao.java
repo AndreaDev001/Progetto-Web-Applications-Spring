@@ -8,11 +8,11 @@ public interface GiocoDao {
 
     public List<Gioco> findAll();
 
-    public Gioco findByPrimaryKey(Long id);
+    public Gioco findByPrimaryKey(int id);
 
     public void saveOrUpdate(Gioco gioco);
 
     public void delete(Gioco gioco);
 
-    public boolean alreadyInDatabase(Long id);
+    public boolean alreadyInDatabase(int id);
 }

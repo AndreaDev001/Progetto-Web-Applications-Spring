@@ -23,7 +23,7 @@ public class GiocoDaoPostgres implements GiocoDao {
 
             while (rs.next()) {
                 Gioco gioco = new Gioco();
-                gioco.setId(rs.getLong("id"));
+                gioco.setId(rs.getInt("id"));
 
                 giochi.add(gioco);
             }
@@ -36,7 +36,7 @@ public class GiocoDaoPostgres implements GiocoDao {
     }
 
     @Override
-    public Gioco findByPrimaryKey(Long id) {
+    public Gioco findByPrimaryKey(int id) {
         Gioco gioco = null;
         String query = "select * from DatabaseProg.gioco where id = ?";
         try {
@@ -46,7 +46,7 @@ public class GiocoDaoPostgres implements GiocoDao {
 
             if (rs.next()) {
                 gioco = new Gioco();
-                gioco.setId(rs.getLong("id"));
+                gioco.setId(rs.getInt("id"));
 
             }
 
@@ -58,7 +58,7 @@ public class GiocoDaoPostgres implements GiocoDao {
     }
 
     @Override
-    public boolean alreadyInDatabase(Long id) {
+    public boolean alreadyInDatabase(int id) {
 
         String query = "select * from DatabaseProg.gioco where id = ?";
         try {
