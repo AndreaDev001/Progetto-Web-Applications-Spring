@@ -9,8 +9,8 @@ public interface SegnalazioneDao {
 
     public Segnalazione findByPrimaryKey(int recensione, String utente);
 
-    public void saveOrUpdate(Segnalazione utente);
+    public void saveOrUpdate(Segnalazione segnalazione);
 
-    public void delete(Segnalazione utente);
-    public boolean alreadyInDatabase(Long id, String username);
+    public void delete(Segnalazione segnalazione);
+    public boolean alreadyInDatabase(int recensione, String utente);
 }

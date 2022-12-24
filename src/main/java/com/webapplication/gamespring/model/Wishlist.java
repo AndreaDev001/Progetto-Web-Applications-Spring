@@ -1,6 +1,6 @@
 package com.webapplication.gamespring.model;
 
-public class Whishlist {
+public class Wishlist {
     int gioco;
     String utente;
 
