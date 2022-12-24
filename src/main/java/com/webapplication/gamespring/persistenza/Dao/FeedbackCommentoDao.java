@@ -8,8 +8,8 @@ public interface FeedbackCommentoDao {
 
     public FeedbackCommento findByPrimaryKey(String utente, int commento);
 
-    public void saveOrUpdate(FeedbackCommento utente);
+    public void saveOrUpdate(FeedbackCommento feedbackCommento);
 
-    public void delete(FeedbackCommento utente);
-    public boolean alreadyInDatabase(String username, Long id);
+    public void delete(FeedbackCommento feedbackCommento);
+    public boolean alreadyInDatabase(String utente, int commento);
 }

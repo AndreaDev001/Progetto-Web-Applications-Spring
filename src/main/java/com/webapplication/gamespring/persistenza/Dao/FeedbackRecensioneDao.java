@@ -9,8 +9,8 @@ public interface FeedbackRecensioneDao {
 
     public FeedbackRecensione findByPrimaryKey(String utente, int recensione);
 
-    public void saveOrUpdate(FeedbackRecensione utente);
+    public void saveOrUpdate(FeedbackRecensione feedbackRecensione);
 
-    public void delete(FeedbackRecensione utente);
-    public boolean alreadyInDatabase(String username, Long id);
+    public void delete(FeedbackRecensione feedbackRecensione);
+    public boolean alreadyInDatabase(String utente, int recensione);
 }
