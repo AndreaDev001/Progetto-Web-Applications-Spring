@@ -25,7 +25,7 @@ public class DeleteUser extends HttpServlet{
 
                 RequestDispatcher dispacher = req.getRequestDispatcher("views/utenti.html");
                 dispacher.forward(req, resp);
-
+//commento
 
 
         }
