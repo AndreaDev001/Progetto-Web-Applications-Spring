@@ -120,7 +120,17 @@ public class CommentoDaoPostgres implements CommentoDao {
 
     @Override
     public void delete(Commento commento) {
-        String query = "DELETE FROM DatabaseProg.commento WHERE id = ?";
+        String query = "DELETE FROM DatabaseProg.feedback_commento WHERE commento = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            st.setLong(1, commento.getId());
+            st.executeUpdate();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        query = "DELETE FROM DatabaseProg.commento WHERE id = ?";
         try {
             PreparedStatement st = connection.prepareStatement(query);
             st.setLong(1, commento.getId());

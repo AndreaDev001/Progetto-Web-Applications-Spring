@@ -100,7 +100,17 @@ public class GiocoDaoPostgres implements GiocoDao {
 
     @Override
     public void delete(Gioco gioco) {
-        String query = "DELETE FROM DatabaseProg.gioco WHERE id = ?";
+        String query = "DELETE FROM DatabaseProg.wishlist WHERE gioco = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            st.setLong(1, gioco.getId());
+            st.executeUpdate();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        query = "DELETE FROM DatabaseProg.gioco WHERE id = ?";
         try {
             PreparedStatement st = connection.prepareStatement(query);
             st.setLong(1, gioco.getId());
