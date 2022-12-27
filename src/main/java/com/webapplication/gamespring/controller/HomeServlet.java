@@ -18,7 +18,7 @@ public class HomeServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		HttpSession session = req.getSession(); // 3. prendo la session che mi ha passato la login servlet
-		System.out.println("sessionId:\t" + session.getAttribute("sessionId")); // todo: debug -> rimuovi
+		System.out.println("Da HomeServlet sessionId:\t" + session.getAttribute("sessionId")); // todo: debug -> rimuovi
 
 		/*
 		Utente u = (Utente) session.getAttribute("user");
@@ -30,7 +30,7 @@ public class HomeServlet extends HttpServlet {
 		*/
 
 
-		RequestDispatcher dispacher = req.getRequestDispatcher("index.html");
-		dispacher.forward(req, resp);
+		RequestDispatcher dispatcher = req.getRequestDispatcher("views/index.html");
+		dispatcher.forward(req, resp);
 	}
 }

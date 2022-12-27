@@ -1,3 +1,4 @@
+/*
 const form = document.getElementById('loginForm');
 const usernameField = document.getElementById('username');
 const passwordField = document.getElementById('password');
@@ -51,3 +52,5 @@ function validateInputs() {
 
     return true;
 }
+
+ */
