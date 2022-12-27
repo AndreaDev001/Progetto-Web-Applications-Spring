@@ -1,3 +1,5 @@
+
+
 #form h1 {
     color: #0f2027;
     text-align: center;
@@ -31,3 +33,20 @@
     outline: 0;
 }
 
+.input-control.error input {
+    border-color: #ff3860;
+}
+
+.input-control .error {
+    color: #ff3860;
+    font-size: 12px;
+}
+
+.input-control.success input {
+    border-color: green;
+}
+
+.input-control .success {
+    color: green;
+    font-size: 12px;
+}

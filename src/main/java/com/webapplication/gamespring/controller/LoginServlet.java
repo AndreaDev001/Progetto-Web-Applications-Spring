@@ -41,7 +41,6 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("emptyFields", true);
             RequestDispatcher dispatcher = req.getRequestDispatcher("views/login.html");
             dispatcher.forward(req, resp);
-            // todo: aggiungi messaggio di errore o alert: campi non possono essere vuoti
         }
 
         else {
