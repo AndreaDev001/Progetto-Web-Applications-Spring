@@ -3,6 +3,7 @@ package com.webapplication.gamespring.controller;
 import com.webapplication.gamespring.model.Utente;
 import com.webapplication.gamespring.persistenza.Dao.UtenteDao;
 import com.webapplication.gamespring.persistenza.DatabaseManager;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,12 +46,13 @@ public class RegistrationHandler {
         }
 
         // todo: cripta pw
+        String encryptedPassword = BCrypt.hashpw(password, BCrypt.gensalt(12));
 
         // todo: crea utente e salvalo nel db
         Utente newUtente = new Utente();
         newUtente.setEmail(email);
         newUtente.setUsername(username);
-        newUtente.setPassword(password);  // todo: cripta pw
+        newUtente.setPassword(encryptedPassword);
         newUtente.setAmministratore(false);
         newUtente.setBandito(false);
         uDao.saveOrUpdate(newUtente);

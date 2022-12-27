@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.boot.web.servlet.server.Session;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.io.IOException;
 import java.util.Enumeration;
@@ -55,7 +56,7 @@ public class LoginServlet extends HttpServlet {
             }
             else {
                 // se le credenziali sono entrambe giuste
-                if (password.equals(utente.getPassword())) {
+                if (BCrypt.checkpw(password, utente.getPassword())) {
                     logged = true;
                     HttpSession session = req.getSession();
 

@@ -30,11 +30,6 @@ public class resetPasswordServlet extends HttpServlet {
 
         if (username.isEmpty() || username.isBlank()) {
             HttpSession session = req.getSession();
-            /*
-            session.setAttribute("emptyFields", true);
-            session.setAttribute("invalidUser", false);
-            session.setAttribute("ok", false);
-             */
             session.setAttribute("status", Status.EMPTY_FIELDS);
             RequestDispatcher dispatcher = req.getRequestDispatcher("views/resetPassword.html");
             dispatcher.forward(req, resp);
@@ -49,11 +44,6 @@ public class resetPasswordServlet extends HttpServlet {
             if (utente == null) {
                 System.out.println("utente null");
                 HttpSession session = req.getSession();
-                /*
-                session.setAttribute("invalidUser", true);
-                session.setAttribute("emptyFields", false);
-                session.setAttribute("ok", false);
-                 */
                 session.setAttribute("status", Status.INEXISTENT_ACCOUNT);
 
                 RequestDispatcher dispatcher = req.getRequestDispatcher("views/resetPassword.html");
@@ -64,11 +54,6 @@ public class resetPasswordServlet extends HttpServlet {
                 System.out.println("username: " + utente.getUsername());
                 // todo: send email
                 HttpSession session = req.getSession();
-                /*
-                session.setAttribute("invalidUser", false);
-                session.setAttribute("emptyFields", false);
-                session.setAttribute("ok", true);
-                 */
                 session.setAttribute("status", Status.SUCCESS);
 
                 RequestDispatcher dispatcher = req.getRequestDispatcher("views/resetPassword.html");
