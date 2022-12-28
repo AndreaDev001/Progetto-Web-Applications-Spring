@@ -3,7 +3,7 @@ package com.webapplication.gamespring.controller;
 import com.webapplication.gamespring.model.Utente;
 import com.webapplication.gamespring.persistenza.Dao.UtenteDao;
 import com.webapplication.gamespring.persistenza.DatabaseManager;
-import com.webapplication.gamespring.utils.MailHandler;
+import com.webapplication.gamespring.util.MailHandler;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -14,14 +14,14 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebServlet("/resetPassword")
-public class resetPasswordServlet extends HttpServlet {
+@WebServlet("/recoverAccount")
+public class RecoverAccountServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         session.setAttribute("emptyFields", false);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("views/resetPassword.html");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("views/recoverAccount.html");
         dispatcher.forward(req, resp);
     }
 
@@ -32,7 +32,8 @@ public class resetPasswordServlet extends HttpServlet {
         if (username.isEmpty() || username.isBlank()) {
             HttpSession session = req.getSession();
             session.setAttribute("status", Status.EMPTY_FIELDS);
-            RequestDispatcher dispatcher = req.getRequestDispatcher("views/resetPassword.html");
+
+            RequestDispatcher dispatcher = req.getRequestDispatcher("views/recoverAccount.html");
             dispatcher.forward(req, resp);
         }
         else {
@@ -45,9 +46,10 @@ public class resetPasswordServlet extends HttpServlet {
             if (utente == null) {
                 System.out.println("utente null");
                 HttpSession session = req.getSession();
-                session.setAttribute("status", Status.INEXISTENT_ACCOUNT);
+                session.setAttribute("status", Status.NONEXISTENT_ACCOUNT);
 
-                RequestDispatcher dispatcher = req.getRequestDispatcher("views/resetPassword.html");
+
+                RequestDispatcher dispatcher = req.getRequestDispatcher("views/recoverAccount.html");
                 dispatcher.forward(req, resp);
             }
             // Esiste account associato a questo utente
@@ -56,13 +58,19 @@ public class resetPasswordServlet extends HttpServlet {
 
                 // cerco l'email associata a username nel db
                 String email = utente.getEmail();
-                // todo: send email
-                MailHandler.getInstance().sendEmail(email);
+                // se l'invio dell'email è andato a buon fine
+                if (MailHandler.getInstance().sendEmail(email)) {
+                    HttpSession session = req.getSession();
+                    session.setAttribute("status", Status.SUCCESS);
+                    session.setAttribute("user", utente);
+                }
+                else {
+                    HttpSession session = req.getSession();
+                    session.setAttribute("status", Status.COULDNT_SEND_EMAIL);
+                    session.setAttribute("user", utente);
+                }
 
-                HttpSession session = req.getSession();
-                session.setAttribute("status", Status.SUCCESS);
-
-                RequestDispatcher dispatcher = req.getRequestDispatcher("views/resetPassword.html");
+                RequestDispatcher dispatcher = req.getRequestDispatcher("views/recoverAccount.html");
                 dispatcher.forward(req, resp);
             }
         }

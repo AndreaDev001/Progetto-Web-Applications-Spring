@@ -21,14 +21,18 @@ public class RegistrationHandler {
         String username =  body.get("username");
         String password =  body.get("password");
 
+
+
+        // todo: trim email e username
+        email = email.trim();
+        username = username.trim();
+
         // todo: rifai validazione params lato server
         // email regex
         // username min 3 max 50 char
         // pw con min 1 numero, 1 minuscola, 1 maiuscola,  char speciale, min 8 char di lunghezza
 
-        // todo: trim email e username
-        email = email.trim();
-        username = username.trim();
+
 
         // todo: check username inesistente nel db
         UtenteDao uDao = DatabaseManager.getInstance().getUtenteDao();

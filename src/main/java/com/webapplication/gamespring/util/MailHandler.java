@@ -1,4 +1,4 @@
-package com.webapplication.gamespring.utils;
+package com.webapplication.gamespring.util;
 
 
 
@@ -41,6 +41,7 @@ public class MailHandler {
     }
 
     public boolean sendEmail(String toEmail) {
+
         try {
 
             MimeMessage message = new MimeMessage(session);
@@ -51,17 +52,17 @@ public class MailHandler {
 
             message.setSubject("Reset your Password");
 
-            // todo: aggiorna link con pagina per reimpostare pw
-            message.setContent("<p>Click <a href=\"http://localhost:8080/login\">here</a> to reset your password</p>", "text/HTML");
+            message.setContent("<p>Click <a href=\"http://localhost:8080/changePassword\">here</a> to reset your password</p>", "text/HTML");
 
             message.setSentDate(new Date());
             Transport.send(message);
             return true;
 
         } catch (MessagingException mex) {
-            mex.printStackTrace();
+            return false;
         }
-        return false;
+
+
     }
 
 }
