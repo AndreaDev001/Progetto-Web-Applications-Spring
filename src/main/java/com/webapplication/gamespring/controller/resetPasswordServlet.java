@@ -3,6 +3,7 @@ package com.webapplication.gamespring.controller;
 import com.webapplication.gamespring.model.Utente;
 import com.webapplication.gamespring.persistenza.Dao.UtenteDao;
 import com.webapplication.gamespring.persistenza.DatabaseManager;
+import com.webapplication.gamespring.utils.MailHandler;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -51,8 +52,13 @@ public class resetPasswordServlet extends HttpServlet {
             }
             // Esiste account associato a questo utente
             else {
-                System.out.println("username: " + utente.getUsername());
+                System.out.println("username: " + utente.getUsername());  // todo: debug
+
+                // cerco l'email associata a username nel db
+                String email = utente.getEmail();
                 // todo: send email
+                MailHandler.getInstance().sendEmail(email);
+
                 HttpSession session = req.getSession();
                 session.setAttribute("status", Status.SUCCESS);
 
