@@ -3,6 +3,7 @@ package com.webapplication.gamespring.controller;
 import com.webapplication.gamespring.model.Utente;
 import com.webapplication.gamespring.persistenza.Dao.UtenteDao;
 import com.webapplication.gamespring.persistenza.DatabaseManager;
+import com.webapplication.gamespring.util.ValidationHandler;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -49,12 +50,7 @@ public class ChangePasswordServlet extends HttpServlet {
 
         else {
             // se pw non valida -> errore
-            if (password.length() < 8 ||
-            !password.matches(".*[a-z].*") ||
-            !password.matches(".*[A-Z].*") ||
-            !password.matches(".*\\d.*") ||
-            !password.matches(".*[^\\s\\d\\w].*") ||
-            password.contains(" ")) {
+            if (!ValidationHandler.getInstance().validatePassword(password)) {
                 System.out.println("Invalid pw"); // todo: debug
                 HttpSession session = req.getSession();
                 session.setAttribute("status", Status.INVALID_PASSWORD);

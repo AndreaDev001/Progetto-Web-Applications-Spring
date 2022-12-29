@@ -3,7 +3,7 @@ package com.webapplication.gamespring.controller;
 import com.webapplication.gamespring.model.Utente;
 import com.webapplication.gamespring.persistenza.Dao.UtenteDao;
 import com.webapplication.gamespring.persistenza.DatabaseManager;
-import jakarta.servlet.http.HttpSession;
+import com.webapplication.gamespring.util.ValidationHandler;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,23 +35,17 @@ public class RegistrationHandler {
 
         // validazione params lato server
         // email regex
-        if (!email.matches("^[a-zA-Z\\d_+&*-\\/]+(?:\\.[a-zA-Z\\d_+&*-]+)*@(?:[a-zA-Z\\d-]+\\.)+[a-zA-Z]{2,7}$")) {
-            System.out.println(email + " Invalid email");
+        if (!ValidationHandler.getInstance().validateEmail(email)) {
             return "invalidEmail";
         }
 
         // username min 3 max 50 char
-        if (username.length() < 3 || username.length() > 50) {
+        if (!ValidationHandler.getInstance().validateUsername(username)) {
             return "invalidUsername";
         }
 
         // pw con min 1 numero, 1 minuscola, 1 maiuscola, char speciale, min 8 char di lunghezza
-        if (password.length() < 8 ||
-                !password.matches(".*[a-z].*") ||
-                !password.matches(".*[A-Z].*") ||
-                !password.matches(".*\\d.*") ||
-                !password.matches(".*[^\\s\\d\\w].*") ||
-                password.contains(" ")) {
+        if (!ValidationHandler.getInstance().validatePassword(password)) {
             return "invalidPassword";
         }
 
@@ -82,11 +76,6 @@ public class RegistrationHandler {
         newUtente.setAmministratore(false);
         newUtente.setBandito(false);
         uDao.saveOrUpdate(newUtente);
-
-        System.out.println("\n\nUTENTE OGGETTO:" +
-                "\nusername: " + newUtente.getUsername() +
-                "\nemail: " + newUtente.getEmail() +
-                "\npassword: " + newUtente.getPassword());
 
         return "ok";
     }
