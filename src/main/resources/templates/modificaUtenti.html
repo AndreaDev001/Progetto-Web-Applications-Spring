@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.0.4/popper.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="js/validate.js" ></script>
+    <link rel="stylesheet" href="css/prova.css" />
+</head>
+<body>
+
+    <header class="headerPrincipale">
+    <h1>Gestione Account</h1>
+    <button type="button" class="admin">Amministratore</button>
+    <button type="button" class="personal-account">Personal account</button>
+</header>
+    <div>
+    <h4 class="ban-account">Gestione account segnalati</h4>
+    </div>
+    <form action="modifyUser" method="post" >
+        <table>
+            <tr class="text-center">
+                <th class="label_username">Username</th>
+                <th class="label_password">Password</th>
+                <th class="label_email">Email</th>
+                <th class="label_admin">Amministratore</th>
+                <th class="label_ban">Bandito</th>
+            </tr>
+            <tr class="text-center">
+                <th><input name="username" th:value="${modify_utente.username}" readonly></input></th>
+                <th><input name="password" th:value="${modify_utente.password}"></input></th>
+                <th><input name="email" th:value="${modify_utente.email}"></input></th>
+                <th class="text-center"><input name="admin" type="checkbox" th:checked="${modify_utente.amministratore}" class="checkbox_admin"></th>
+                <th><input name="ban" type="checkbox" th:checked="${modify_utente.bandito}" class="checkbox_ban"></th>
+                <th><button type="submit" value="Submit" class="btn btn-danger">modifica dati account</button></th>
+            </tr>
+
+        </table>
+    </form>
+
+</body>
+</html>

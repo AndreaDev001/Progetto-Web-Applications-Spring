@@ -17,7 +17,7 @@ public class SearchSegnalati extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String keyword = req.getParameter("keyword");
-        if(keyword == null){
+        if(keyword.equals("")){
             List<Utente> utenti = DatabaseManager.getInstance().getUtenteDao().findAll();
             req.setAttribute("lista_utenti", utenti);
 

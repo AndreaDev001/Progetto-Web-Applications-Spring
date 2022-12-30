@@ -17,7 +17,6 @@ public class ListaUtenti extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         List<Utente> utenti = DatabaseManager.getInstance().getUtenteDao().findAll();
-        System.out.println(utenti.get(0).getUsername());
 
         req.setAttribute("lista_utenti", utenti);
 

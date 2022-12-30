@@ -10,7 +10,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="js/validate.js" ></script>
 
-
+    <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
@@ -27,30 +27,32 @@
         <h4 class="ban-account">Gestione account segnalati</h4>
     </div>
 
-    <div th:each="utenti : ${lista_utenti}">
-        <div>
-            <td th:text="${utenti.username}">...</td>
-            <td th:text="${utenti.password}">...</td>
-
-            <form action="deleteUser" method="post">
-                <input type="hidden" name="username" th:value="${utenti.username}">
-                <button type="submit" value="Submit" class="btn btn-danger">elimina account</button>
-            </form>
-        </div>
-    </div>
-
-
 <div class="container mt-5">
-    <h2 align="center">Search in Thymeleaf Template</h2>
     <form action="search" method="post">
         <input type="text" name="keyword" placeholder="Cerca utente per username" size="40" >
         <button type="submit" class="btn btn-info" >Search</button>
-        <button type="submit" class="btn btn-info" >Reset</button>
     </form>
 
 </div>
 
-
+    <div th:each="utenti, iterator : ${lista_utenti}" class="user-list">
+        <div th:unless="${iterator.index > 4}">
+            <td th:text="${utenti.username}">...</td>
+            <td th:text="${utenti.password}">...</td>
+            <td>
+                <form action="deleteUser" method="post">
+                    <input type="hidden" name="username" th:value="${utenti.username}">
+                    <button type="submit" value="Submit" class="btn btn-danger">elimina account</button>
+                </form>
+            </td>
+            <td>
+                <form action="openModifyUser" method="post">
+                    <input type="hidden" name="username" th:value="${utenti.username}">
+                    <button type="submit" value="Submit" class="btn btn-info">modifica account</button>
+                </form>
+            </td>
+        </div>
+    </div>
 
 </body>
 </html>

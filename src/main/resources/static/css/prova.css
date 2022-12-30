@@ -1,0 +1,5 @@
+.label_admin, .label_ban, .label_email, .label_password, .label_username{
+
+    text-align: center;
+    padding-right: 50px;
+}
