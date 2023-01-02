@@ -1,14 +1,8 @@
 package com.webapplication.gamespring.persistenza;
 
 
-import com.webapplication.gamespring.persistenza.Dao.CommentoDao;
-import com.webapplication.gamespring.persistenza.Dao.GiocoDao;
-import com.webapplication.gamespring.persistenza.Dao.RecensioneDao;
-import com.webapplication.gamespring.persistenza.Dao.UtenteDao;
-import com.webapplication.gamespring.persistenza.Dao.postgres.CommentoDaoPostgres;
-import com.webapplication.gamespring.persistenza.Dao.postgres.GiocoDaoPostgres;
-import com.webapplication.gamespring.persistenza.Dao.postgres.RecensioneDaoPostgres;
-import com.webapplication.gamespring.persistenza.Dao.postgres.UtenteDaoPostgres;
+import com.webapplication.gamespring.persistenza.Dao.*;
+import com.webapplication.gamespring.persistenza.Dao.postgres.*;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -46,5 +40,6 @@ public class DatabaseManager {
     public RecensioneDao getRecensioneDao(){return new RecensioneDaoPostgres(getConnection());}
     public GiocoDao getGiocoDao(){return new GiocoDaoPostgres(getConnection());}
     public CommentoDao getCommentoDao(){return new CommentoDaoPostgres(getConnection());}
+    public WishlistDao getWishlistDao(){return new WishlistDaoPostgres(getConnection());}
 
 }

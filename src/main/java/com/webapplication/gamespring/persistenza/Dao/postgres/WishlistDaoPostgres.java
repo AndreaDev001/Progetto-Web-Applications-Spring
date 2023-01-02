@@ -61,6 +61,30 @@ public class WishlistDaoPostgres implements WishlistDao {
     }
 
     @Override
+    public List<Wishlist> findByUser(String utente) {
+        List<Wishlist> wishlists = new ArrayList<Wishlist>();
+        String query = "select * from DatabaseProg.wishlist where utente = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            st.setString(1, utente);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                Wishlist wishlist = new Wishlist();
+                wishlist.setGioco(rs.getInt("gioco"));
+                wishlist.setUtente(rs.getString("utente"));
+
+                wishlists.add(wishlist);
+            }
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return wishlists;
+    }
+
+    @Override
     public void save(Wishlist wishlist) {
         if (!alreadyInDatabase(wishlist.getGioco(), wishlist.getUtente())) {
             String insertStr = "INSERT INTO DatabaseProg.wishlist VALUES (?, ?)";

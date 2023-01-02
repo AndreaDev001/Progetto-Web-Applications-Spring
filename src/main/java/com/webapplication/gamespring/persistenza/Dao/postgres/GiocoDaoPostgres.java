@@ -24,6 +24,7 @@ public class GiocoDaoPostgres implements GiocoDao {
             while (rs.next()) {
                 Gioco gioco = new Gioco();
                 gioco.setId(rs.getInt("id"));
+                gioco.setGenere(rs.getString("genere"));
 
                 giochi.add(gioco);
             }
@@ -47,6 +48,7 @@ public class GiocoDaoPostgres implements GiocoDao {
             if (rs.next()) {
                 gioco = new Gioco();
                 gioco.setId(rs.getInt("id"));
+                gioco.setGenere(rs.getString("genere"));
 
             }
 
@@ -81,13 +83,14 @@ public class GiocoDaoPostgres implements GiocoDao {
     @Override
     public void saveOrUpdate(Gioco gioco) {
         if (!alreadyInDatabase(gioco.getId())) {
-            String insertStr = "INSERT INTO DatabaseProg.gioco VALUES (?)";
+            String insertStr = "INSERT INTO DatabaseProg.gioco VALUES (?,?)";
 
             PreparedStatement st;
             try {
                 st = connection.prepareStatement(insertStr);
 
                 st.setLong(1, gioco.getId());
+                st.setString(2, gioco.getGenere());
                 st.executeUpdate();
 
             } catch (SQLException e) {

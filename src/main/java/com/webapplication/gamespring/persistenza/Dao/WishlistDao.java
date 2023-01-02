@@ -10,7 +10,7 @@ public interface WishlistDao {
     public Wishlist findByPrimaryKey(int gioco, String utente);
 
     public void save(Wishlist wishlist);
-
+    public List<Wishlist> findByUser(String utente);
     public void delete(Wishlist wishlist);
     public boolean alreadyInDatabase(int gioco, String utente);
 }
