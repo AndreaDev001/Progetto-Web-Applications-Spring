@@ -8,7 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.0.4/popper.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="js/validate.js" ></script>
+    <script src="js/javascript.js"></script>
     <link rel="stylesheet" href="css/prova.css" />
 </head>
 <body>
@@ -17,10 +17,12 @@
     <h1>Gestione Account</h1>
     <button type="button" class="admin">Amministratore</button>
     <button type="button" class="personal-account">Personal account</button>
-</header>
+    </header>
+
     <div>
     <h4 class="ban-account">Gestione account segnalati</h4>
     </div>
+    <div>
     <form action="modifyUser" method="post" >
         <table>
             <tr class="text-center">
@@ -31,16 +33,24 @@
                 <th class="label_ban">Bandito</th>
             </tr>
             <tr class="text-center">
-                <th><input name="username" th:value="${modify_utente.username}" readonly></input></th>
-                <th><input name="password" th:value="${modify_utente.password}"></input></th>
-                <th><input name="email" th:value="${modify_utente.email}"></input></th>
-                <th class="text-center"><input name="admin" type="checkbox" th:checked="${modify_utente.amministratore}" class="checkbox_admin"></th>
-                <th><input name="ban" type="checkbox" th:checked="${modify_utente.bandito}" class="checkbox_ban"></th>
-                <th><button type="submit" value="Submit" class="btn btn-danger">modifica dati account</button></th>
+                <td><input name="username" th:value="${modify_utente.username}" readonly></input>...</td>
+                <td><input name="password" th:value="${modify_utente.password}"></input>...</td>
+                <td><input name="email" th:value="${modify_utente.email}"></input>...</td>
+                <td><input name="admin" type="checkbox" th:checked="${modify_utente.amministratore}" class="checkbox_admin"></input></td>
+                <td><input name="ban" type="checkbox" th:checked="${modify_utente.bandito}" class="checkbox_ban"></input></td>
             </tr>
-
+            <tr>
+                    <td><button type="submit" value="Submit" class="btn btn-info">modifica dati account</button></td>
+            </tr>
         </table>
     </form>
+
+    <form action="deleteUser" method="post">
+        <input type="hidden" name="username" th:value="${modify_utente.username}">
+        <button onclick="alertDelete()" class="btn btn-danger">elimina account</button>
+    </form>
+
+
 
 </body>
 </html>

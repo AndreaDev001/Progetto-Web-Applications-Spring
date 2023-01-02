@@ -22,6 +22,7 @@ public class PaginaModificaUtente extends HttpServlet {
         Utente utente = DatabaseManager.getInstance().getUtenteDao().findByPrimaryKey(username);
 
         req.setAttribute("modify_utente", utente);
+
         RequestDispatcher dispacher = req.getRequestDispatcher("views/modificaUtenti.html");
         dispacher.forward(req, resp);
 

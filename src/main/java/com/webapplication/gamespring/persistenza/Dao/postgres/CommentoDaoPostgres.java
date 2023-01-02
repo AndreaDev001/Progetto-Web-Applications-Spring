@@ -67,6 +67,7 @@ public class CommentoDaoPostgres implements CommentoDao {
         return commento;
     }
 
+
     @Override
     public void save(Commento commento) {
             String insertStr = "INSERT INTO DatabaseProg.commento (contenuto, numero_mi_piace, numero_non_mi_piace, recensione, utente) VALUES (?, ?, ?, ?, ?)";

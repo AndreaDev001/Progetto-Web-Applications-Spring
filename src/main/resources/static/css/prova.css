@@ -3,3 +3,7 @@
     text-align: center;
     padding-right: 50px;
 }
+
+form{
+    display: inline;
+}

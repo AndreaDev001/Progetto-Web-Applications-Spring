@@ -13,5 +13,7 @@ public interface CommentoDao {
     public void save(Commento commento);
     public void update(Commento commento);
 
+
+
     public void delete(Commento commento);
 }
