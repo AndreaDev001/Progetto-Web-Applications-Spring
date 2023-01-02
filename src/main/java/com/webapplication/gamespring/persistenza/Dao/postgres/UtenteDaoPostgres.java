@@ -41,10 +41,10 @@ public class UtenteDaoPostgres implements UtenteDao {
     @Override
     public Utente findByPrimaryKey(String username) {
         Utente utente = null;
-        String query = "select * from DatabaseProg.utente where username = ?";
+        String query = "select * from DatabaseProg.utente where username LIKE ?";
         try {
             PreparedStatement st = connection.prepareStatement(query);
-            st.setString(1, username);
+            st.setString(1, "%"+username+"%");
             ResultSet rs = st.executeQuery();
 
             if (rs.next()) {
