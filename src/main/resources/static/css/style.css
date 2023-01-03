@@ -1,3 +1,12 @@
-form{
-    display: inline;
+.div-checkbox {
+    display: flex;
+    text-align: center;
+    width: 100%;
+
 }
+
+.div-checkbox div{
+    padding: 30px;
+    font-size: 30px;
+}
+

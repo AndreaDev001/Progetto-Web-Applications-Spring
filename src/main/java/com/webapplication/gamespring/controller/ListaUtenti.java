@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/utenti")
+@WebServlet("/listaUtenti")
 public class ListaUtenti extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -23,7 +23,5 @@ public class ListaUtenti extends HttpServlet {
         RequestDispatcher dispacher = req.getRequestDispatcher("views/utenti.html");
         dispacher.forward(req, resp);
 
-
-        //resp.sendRedirect("utenti.html");
     }
 }
