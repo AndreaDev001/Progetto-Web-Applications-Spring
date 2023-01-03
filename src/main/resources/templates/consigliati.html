@@ -3,58 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.0.4/popper.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" href="Css/style.css">
 
 </head>
 <body>
 
+<div class="upper-board"></div>
 
-<div id="containers"></div>
-<p id="aaa" th:text="${ricerca_gioco1}">...</p>
-<p id="aaaa" th:text="${ricerca_gioco2}">...</p>
+<div class="main-wrap">
+    <h2 th:text="${gen1}" style="text-transform: uppercase"></h2>
+    <div class=container id="container1"></div>
+    <h2 th:text="${gen2}" style="text-transform: uppercase"></h2>
+    <div class=container id="container2"></div>
+    <h2 th:text="${gen3}" style="text-transform: uppercase"></h2>
+    <div class=container id="container3"></div>
+</div>
 
-
-<script>
-    function funzione(value) {
-        console.log(value)
-        fetch(value)
-            .then(response => response.json())
-            .then(data => {
-                data.results.forEach(element => {
-                    creaCard(element)
-                })
-            })
-    }
-
-    funzione(document.getElementById("aaa").textContent)
-    funzione(document.getElementById("aaaa").textContent)
-
-    function creaCard(data){
-        const card = document.createElement("div")
-
-        const innerDiv = document.createElement("div")
-        card.appendChild(innerDiv)
-
-        const title = document.createElement("h3")
-        title.appendChild(document.createTextNode(data.name))
-        innerDiv.appendChild(title)
-
-        const gen = document.createElement("p")
-        gen.appendChild(document.createTextNode(data.genres[0].name))
-        innerDiv.appendChild(gen)
-
-        const rat = document.createElement("p")
-        rat.appendChild(document.createTextNode(data.id))
-        innerDiv.appendChild(rat)
+<p hidden id="api1" th:text="${api1}">...</p>
+<p hidden id="api2" th:text="${api2}">...</p>
+<p hidden id="api3" th:text="${api3}">...</p>
 
 
-        containers.appendChild(card)
-    }
-
-</script>
-
+<script src="js/main.js"></script>
 </body>
 </html>

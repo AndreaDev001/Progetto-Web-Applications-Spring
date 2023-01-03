@@ -1,0 +1,44 @@
+html, body{
+    margin: 0;
+    padding: 0;
+
+}
+
+.upper-board{
+    height: 100px;
+
+}
+
+.main-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+    width: 100%;
+}
+
+
+.container{
+    display: flex;
+    gap: 20px;
+    overflow-x: scroll;
+    width: 50%;
+    text-align: center;
+
+}
+
+.card {
+    border: 1px solid gray;
+    padding: 10px;
+    border-radius: 10px;
+    width: 200px;
+    height: 300px;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.card img {
+    width: 100%;
+    height: 125px;
+    object-fit: cover;
+}

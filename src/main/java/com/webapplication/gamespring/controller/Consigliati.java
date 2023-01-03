@@ -13,8 +13,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
-@WebServlet("/utenti")
-public class Prova extends HttpServlet {
+@WebServlet("/consigliati")
+public class Consigliati extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -69,25 +69,43 @@ public class Prova extends HttpServlet {
 
         generi.remove(index);
 
-        int max2 = Collections.max(generi.values());
+        max = Collections.max(generi.values());
         String index2 = "";
 
         for (Map.Entry<String, Integer> entry : generi.entrySet()){
-            if(max2 == entry.getValue())
+            if(max == entry.getValue())
                 index2 = entry.getKey();
+
+        }
+
+        generi.remove(index2);
+
+        max = Collections.max(generi.values());
+        String index3 = "";
+
+        for (Map.Entry<String, Integer> entry : generi.entrySet()){
+            if(max == entry.getValue())
+                index3 = entry.getKey();
 
         }
 
 
         String api = "https://api.rawg.io/api/games?key=9970cebdf7b244e6bc80319c9e29e10c&genres=" + index ;
         String api2 = "https://api.rawg.io/api/games?key=9970cebdf7b244e6bc80319c9e29e10c&genres=" + index2 ;
+        String api3 = "https://api.rawg.io/api/games?key=9970cebdf7b244e6bc80319c9e29e10c&genres=" + index3 ;
 
 
-        req.setAttribute("ricerca_gioco1", api);
-        req.setAttribute("ricerca_gioco2", api2);
+        req.setAttribute("api1", api);
+        req.setAttribute("api2", api2);
+        req.setAttribute("api3", api3);
+
+        req.setAttribute("gen1", index);
+        req.setAttribute("gen2", index2);
+        req.setAttribute("gen3", index3);
 
         System.out.println(api);
         System.out.println(api2);
+        System.out.println(api3);
         RequestDispatcher dispacher = req.getRequestDispatcher("views/consigliati.html");
         dispacher.forward(req, resp);
 
