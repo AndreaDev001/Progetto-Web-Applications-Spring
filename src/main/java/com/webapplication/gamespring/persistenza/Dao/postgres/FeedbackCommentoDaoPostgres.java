@@ -17,7 +17,7 @@ public class FeedbackCommentoDaoPostgres implements FeedbackCommentoDao {
     @Override
     public List<FeedbackCommento> findAll() {
         List<FeedbackCommento> feedbackCommenti = new ArrayList<FeedbackCommento>();
-        String query = "select * from DatabaseProg.feedback_commento";
+        String query = "select * from DatabaseProg.feedback_commenti";
         try {
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(query);
@@ -42,7 +42,7 @@ public class FeedbackCommentoDaoPostgres implements FeedbackCommentoDao {
     @Override
     public FeedbackCommento findByPrimaryKey(String utente, int commento) {
         FeedbackCommento feedbackCommento = null;
-        String query = "select * from DatabaseProg.feedback_commento where utente = ? and commento = ?";
+        String query = "select * from DatabaseProg.feedback_commenti where utente = ? and commento = ?";
         try {
             PreparedStatement st = connection.prepareStatement(query);
             st.setString(1, utente);
@@ -64,60 +64,37 @@ public class FeedbackCommentoDaoPostgres implements FeedbackCommentoDao {
     }
 
     @Override
-    public void saveOrUpdate(FeedbackCommento feedbackCommento) {
-        if (!alreadyInDatabase(feedbackCommento.getUtente(), feedbackCommento.getCommento())) {
-            String insertStr = "INSERT INTO DatabaseProg.feedback_commento VALUES (?, ?, ?)";
+    public boolean saveOrUpdate(FeedbackCommento feedbackCommento) {
+        try {
 
-            PreparedStatement st;
-            try {
-                st = connection.prepareStatement(insertStr);
-
-                st.setString(1, feedbackCommento.getUtente());
-                st.setInt(2, feedbackCommento.getCommento());
-                st.setBoolean(3, feedbackCommento.isTipo());
-
-
-                st.executeUpdate();
-
-            } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            String query = "select databaseprog.updateLikeOrDislike(?, ?, ?)";
+            PreparedStatement st = this.connection.prepareStatement(query);
+            st.setInt(1, feedbackCommento.getCommento());
+            st.setBoolean(2, feedbackCommento.isTipo());
+            st.setString(3, feedbackCommento.getUtente());
+            ResultSet resultSet = st.executeQuery();
+            return resultSet.next() && resultSet.getBoolean(1);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
-        else {
-            String updateStr = "UPDATE DatabaseProg.feedback_commento set tipo = ?, "
-                    + "where commento = ? and utente = ?";
-
-            PreparedStatement st;
-            try {
-                st = connection.prepareStatement(updateStr);
-
-                st.setBoolean(1, feedbackCommento.isTipo());
-                st.setInt(2, feedbackCommento.getCommento());
-                st.setString(3, feedbackCommento.getUtente());
-
-
-                st.executeUpdate();
-
-            } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
+        return false;
     }
 
     @Override
-    public void delete(FeedbackCommento feedbackCommento) {
-        String query = "DELETE FROM DatabaseProg.feedback_commento WHERE utente = ? and commento = ?";
+    public boolean delete(FeedbackCommento feedbackCommento) {
+        String query = "DELETE FROM databaseprog.feedback_commenti WHERE utente = ? and commento = ?";
         try {
             PreparedStatement st = connection.prepareStatement(query);
             st.setString(1, feedbackCommento.getUtente());
             st.setInt(2, feedbackCommento.getCommento());
             st.executeUpdate();
+            return true;
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        return false;
     }
 
     @Override
