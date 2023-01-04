@@ -14,5 +14,4 @@ public class ServletUtil {
         resource = resource.substring(0, resource.indexOf(".html"));
         return resource;
     }
-
 }
