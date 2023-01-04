@@ -54,7 +54,7 @@ public class Consigliati extends HttpServlet {
 
         for (int i=0; i<giochi.size(); i++){
 
-            generi.replace(giochi.get(i).getGenere(), generi.get(giochi.get(i).getGenere())+1);
+            generi.replace(giochi.get(i).getGenere(), generi.get(giochi.get(i).getGenere()) +1);
             System.out.println(generi);
         }
 
