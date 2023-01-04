@@ -1,5 +1,8 @@
 package com.webapplication.gamespring.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
+
 public class Commento {
     int id;
     String contenuto;
@@ -54,5 +57,11 @@ public class Commento {
 
     public void setUtente(String utente) {
         this.utente = utente;
+    }
+
+    public enum Feedback {
+        Like,
+        Dislike,
+        None
     }
 }

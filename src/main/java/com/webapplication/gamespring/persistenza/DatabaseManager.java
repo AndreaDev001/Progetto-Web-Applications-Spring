@@ -1,6 +1,7 @@
 package com.webapplication.gamespring.persistenza;
 
 
+import com.webapplication.gamespring.model.FeedbackCommento;
 import com.webapplication.gamespring.persistenza.Dao.*;
 import com.webapplication.gamespring.persistenza.Dao.postgres.*;
 
@@ -41,5 +42,6 @@ public class DatabaseManager {
     public GiocoDao getGiocoDao(){return new GiocoDaoPostgres(getConnection());}
     public CommentoDao getCommentoDao(){return new CommentoDaoPostgres(getConnection());}
     public WishlistDao getWishlistDao(){return new WishlistDaoPostgres(getConnection());}
+    public FeedbackCommentoDao getFeedbackCommentoDao(){ return new FeedbackCommentoDaoPostgres(getConnection());}
 
 }

@@ -1,12 +1,16 @@
 package com.webapplication.gamespring.persistenza.Dao.postgres;
 
 import com.webapplication.gamespring.model.Commento;
+import com.webapplication.gamespring.model.FeedbackCommento;
 import com.webapplication.gamespring.model.Recensione;
 import com.webapplication.gamespring.persistenza.Dao.CommentoDao;
+import com.webapplication.gamespring.persistenza.DatabaseManager;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CommentoDaoPostgres implements CommentoDao {
     Connection connection;
@@ -31,6 +35,45 @@ public class CommentoDaoPostgres implements CommentoDao {
                 commento.setRecensione(rs.getInt("recensione"));
                 commento.setUtente(rs.getString("utente"));
 
+                commenti.add(commento);
+            }
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return commenti;
+    }
+
+    @Override
+    public List<Commento> getReviewComments(int reviewID, int startIndex, int commentsSize) {
+
+
+        List<Commento> commenti = new ArrayList<>();
+        String query = "select * from DatabaseProg.commento where recensione = ? order by numero_mi_piace offset ? limit ?";
+        try {
+
+
+            PreparedStatement st = connection.prepareStatement(query);
+            st.setInt(1, reviewID);
+            st.setInt(2, startIndex);
+            st.setInt(3, commentsSize);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                Commento commento = new Commento();
+
+                commento.setId(rs.getInt("id"));
+                commento.setContenuto(rs.getString("contenuto"));
+                commento.setNumeroMiPiace(rs.getInt("numero_mi_piace"));
+                commento.setNumeroNonMiPiace(rs.getInt("numero_non_mi_piace"));
+                commento.setRecensione(rs.getInt("recensione"));
+                commento.setUtente(rs.getString("utente"));
+
+
+                FeedbackCommento feedbackCommento = DatabaseManager.getInstance().getFeedbackCommentoDao().findByPrimaryKey("Pie_Oxx", commento.getId());
+
+                Commento.Feedback feedback = feedbackCommento != null ? (feedbackCommento.isTipo() ? Commento.Feedback.Like : Commento.Feedback.Dislike) : Commento.Feedback.None;
                 commenti.add(commento);
             }
 
@@ -67,77 +110,37 @@ public class CommentoDaoPostgres implements CommentoDao {
         return commento;
     }
 
+
     @Override
-    public void save(Commento commento) {
-            String insertStr = "INSERT INTO DatabaseProg.commento (contenuto, numero_mi_piace, numero_non_mi_piace, recensione, utente) VALUES (?, ?, ?, ?, ?)";
-
-            PreparedStatement st;
-            try {
-                st = connection.prepareStatement(insertStr);
-
-                st.setString(1, commento.getContenuto());
-                st.setInt(2, commento.getNumeroMiPiace());
-                st.setInt(3, commento.getNumeroNonMiPiace());
-                st.setInt(4, commento.getRecensione());
-                st.setString(5, commento.getUtente());
-
-                st.executeUpdate();
-
-            } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+    public int save(Commento commento) throws SQLException {
+        String insertStr = "INSERT INTO DatabaseProg.commento (contenuto, recensione, utente) VALUES (?, ?, ?) returning id";
+        PreparedStatement st = connection.prepareStatement(insertStr);
+        st.setString(1, commento.getContenuto());
+        st.setInt(2, commento.getRecensione());
+        st.setString(3, commento.getUtente());
+        ResultSet resultSet = st.executeQuery();
+        return resultSet.next() ? resultSet.getInt(1) : -1;
     }
 
     @Override
-    public void update(Commento commento) {
-            String updateStr = "UPDATE DatabaseProg.commento set contenuto = ?, "
-                    + "numero_mi_piace = ?, "
-                    + "numero_non_mi_piace = ?, "
-                    + "recensione = ?, "
-                    + "utente = ? "
-                    + "where id = ?";
-
-            PreparedStatement st;
-            try {
-                st = connection.prepareStatement(updateStr);
-
-                st.setString(1, commento.getContenuto());
-                st.setInt(2, commento.getNumeroMiPiace());
-                st.setInt(3, commento.getNumeroNonMiPiace());
-                st.setInt(4, commento.getRecensione());
-                st.setString(5, commento.getUtente());
-                st.setInt(6, commento.getId());
-
-                st.executeUpdate();
-
-            } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+    public void update(Commento commento) throws SQLException {
+        String updateStr = "UPDATE DatabaseProg.commento set contenuto = ? where id = ?";
+        PreparedStatement st = connection.prepareStatement(updateStr);
+        st.setString(1, commento.getContenuto());
+        st.setInt(2, commento.getId());
+        st.executeUpdate();
     }
 
 
     @Override
-    public void delete(Commento commento) {
-        String query = "DELETE FROM DatabaseProg.feedback_commento WHERE commento = ?";
-        try {
-            PreparedStatement st = connection.prepareStatement(query);
-            st.setLong(1, commento.getId());
-            st.executeUpdate();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        query = "DELETE FROM DatabaseProg.commento WHERE id = ?";
-        try {
-            PreparedStatement st = connection.prepareStatement(query);
-            st.setLong(1, commento.getId());
-            st.executeUpdate();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+    public void delete(Commento commento) throws SQLException {
+        String deleteCommentsFeedback = "DELETE FROM DatabaseProg.feedback_commenti where commento = ?";
+        String deleteComment = "DELETE FROM DatabaseProg.commento WHERE id = ?";
+        PreparedStatement st = connection.prepareStatement(deleteCommentsFeedback);
+        st.setLong(1, commento.getId());
+        st.executeUpdate();
+        PreparedStatement st2 = connection.prepareStatement(deleteComment);
+        st2.setLong(1, commento.getId());
+        st2.executeUpdate();
     }
 }

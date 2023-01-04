@@ -1,5 +1,6 @@
 package com.webapplication.gamespring.persistenza.Dao.postgres;
 
+import com.webapplication.gamespring.model.Commento;
 import com.webapplication.gamespring.model.Recensione;
 import com.webapplication.gamespring.model.Segnalazione;
 import com.webapplication.gamespring.model.Utente;
@@ -72,60 +73,25 @@ public class RecensioneDaoPostgres implements RecensioneDao {
         return recensione;
     }
 
+
+
     @Override
-    public void saveOrUpdate(Recensione recensione) {
-        if (!alreadyInDatabase(recensione.getUtente(), recensione.getGioco())) {
-            String insertStr = "INSERT INTO DatabaseProg.recensione(titolo, contenuto, voto, numero_mi_piace, numero_non_mi_piace, utente, gioco) VALUES (?, ?, ?, ?, ?, ?, ?)";
-
-            PreparedStatement st;
-            try {
-                st = connection.prepareStatement(insertStr);
-
-                st.setString(1, recensione.getTitolo());
-                st.setString(2, recensione.getContenuto());
-                st.setInt(3, recensione.getVoto());
-                st.setInt(4, recensione.getNumeroMiPiace());
-                st.setInt(5, recensione.getNumeroNonMiPiace());
-                st.setString(6, recensione.getUtente());
-                st.setInt(7, recensione.getGioco());
-
-                st.executeUpdate();
-
-            } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+    public int save(Recensione recensione) {
+        String query = "insert into DatabaseProg.recensione(titolo, contenuto,voto, utente, gioco) values (?, ?, ?, ?, ?) returning id";
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            st.setString(1, recensione.getTitolo());
+            st.setString(2, recensione.getContenuto());
+            st.setInt(3, recensione.getVoto());
+            st.setString(4, recensione.getUtente());
+            st.setLong(5, recensione.getGioco());
+            ResultSet resultSet = st.executeQuery();
+            return resultSet.next() ? resultSet.getInt(1) : -1;
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
-        else {
-            String updateStr = "UPDATE DatabaseProg.recensione set titolo = ?, "
-                    + "contenuto = ?, "
-                    + "voto = ?, "
-                    + "numero_mi_piace = ?, "
-                    + "numero_non_mi_piace = ?, "
-                    + "utente = ?, "
-                    + "gioco = ? "
-                    + "where id = ?";
-
-            PreparedStatement st;
-            try {
-                st = connection.prepareStatement(updateStr);
-
-                st.setString(1, recensione.getTitolo());
-                st.setString(2, recensione.getContenuto());
-                st.setInt(3, recensione.getVoto());
-                st.setInt(4, recensione.getNumeroMiPiace());
-                st.setInt(5, recensione.getNumeroNonMiPiace());
-                st.setString(6, recensione.getUtente());
-                st.setInt(7, recensione.getGioco());
-                st.setInt(8, recensione.getId());
-
-                st.executeUpdate();
-
-            } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
+        return -1;
     }
 
     @Override
@@ -182,24 +148,20 @@ public class RecensioneDaoPostgres implements RecensioneDao {
     }
 
     @Override
-    public boolean alreadyInDatabase(String utente, int gioco) {
-        String query = "select * from DatabaseProg.recensione where gioco = ? and utente = ?";
+    public boolean update(Recensione recensione) {
+        String query = "update DatabaseProg.recensione set titolo = ?, contenuto = ?, voto = ? where id = ?";
         try {
             PreparedStatement st = connection.prepareStatement(query);
-            st.setLong(1, gioco);
-            st.setString(2, utente);
-            ResultSet rs = st.executeQuery();
-
-            if (rs.next()) {
-                System.out.println("v");
-                return true;
-            }
-
+            st.setString(1, recensione.getTitolo());
+            st.setString(2, recensione.getContenuto());
+            st.setInt(3, recensione.getVoto());
+            st.setLong(4, recensione.getId());
+            return st.executeUpdate() > 0;
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        System.out.println("f");
         return false;
     }
+
 }

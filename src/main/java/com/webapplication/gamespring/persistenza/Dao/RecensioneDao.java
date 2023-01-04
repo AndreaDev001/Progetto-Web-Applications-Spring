@@ -1,5 +1,6 @@
 package com.webapplication.gamespring.persistenza.Dao;
 
+import com.webapplication.gamespring.model.Commento;
 import com.webapplication.gamespring.model.Recensione;
 
 import java.util.List;
@@ -9,9 +10,10 @@ public interface RecensioneDao {
 
     public Recensione findByPrimaryKey(int id);
 
-    public void saveOrUpdate(Recensione recensione);
+    public int save(Recensione recensione);
 
     public void delete(Recensione recensione);
 
-    public boolean alreadyInDatabase(String utente, int gioco);
+    public boolean update(Recensione recensione);
+
 }
