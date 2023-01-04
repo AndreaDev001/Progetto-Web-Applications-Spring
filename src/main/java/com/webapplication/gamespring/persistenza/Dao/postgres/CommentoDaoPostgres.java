@@ -7,10 +7,8 @@ import com.webapplication.gamespring.persistenza.Dao.CommentoDao;
 import com.webapplication.gamespring.persistenza.DatabaseManager;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.Date;
 
 public class CommentoDaoPostgres implements CommentoDao {
     Connection connection;
@@ -34,6 +32,7 @@ public class CommentoDaoPostgres implements CommentoDao {
                 commento.setNumeroNonMiPiace(rs.getInt("numero_non_mi_piace"));
                 commento.setRecensione(rs.getInt("recensione"));
                 commento.setUtente(rs.getString("utente"));
+                commento.setData(rs.getDate("data"));
 
                 commenti.add(commento);
             }
@@ -69,6 +68,8 @@ public class CommentoDaoPostgres implements CommentoDao {
                 commento.setNumeroNonMiPiace(rs.getInt("numero_non_mi_piace"));
                 commento.setRecensione(rs.getInt("recensione"));
                 commento.setUtente(rs.getString("utente"));
+                commento.setData(rs.getDate("data"));
+
 
 
                 FeedbackCommento feedbackCommento = DatabaseManager.getInstance().getFeedbackCommentoDao().findByPrimaryKey("Pie_Oxx", commento.getId());
@@ -101,6 +102,8 @@ public class CommentoDaoPostgres implements CommentoDao {
                 commento.setNumeroNonMiPiace(rs.getInt("numero_non_mi_piace"));
                 commento.setRecensione(rs.getInt("recensione"));
                 commento.setUtente(rs.getString("utente"));
+                commento.setData(rs.getDate("data"));
+
             }
 
         } catch (SQLException e) {
