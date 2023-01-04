@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+    <link rel="stylesheet" href="Css/style.css">
+
+</head>
+<body>
+
+<div class="upper-board"></div>
+
+<div class="main-wrap">
+    <h2 th:text="${gen1}" style="text-transform: uppercase"></h2>
+    <div class=container id="container1"></div>
+    <h2 th:text="${gen2}" style="text-transform: uppercase"></h2>
+    <div class=container id="container2"></div>
+    <h2 th:text="${gen3}" style="text-transform: uppercase"></h2>
+    <div class=container id="container3"></div>
+</div>
+
+<p hidden id="api1" th:text="${api1}">...</p>
+<p hidden id="api2" th:text="${api2}">...</p>
+<p hidden id="api3" th:text="${api3}">...</p>
+
+
+<script src="js/main.js"></script>
+</body>
+</html>

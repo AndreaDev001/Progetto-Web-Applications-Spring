@@ -41,6 +41,7 @@ public class DatabaseManager {
     public RecensioneDao getRecensioneDao(){return new RecensioneDaoPostgres(getConnection());}
     public GiocoDao getGiocoDao(){return new GiocoDaoPostgres(getConnection());}
     public CommentoDao getCommentoDao(){return new CommentoDaoPostgres(getConnection());}
+    public WishlistDao getWishlistDao(){return new WishlistDaoPostgres(getConnection());}
     public FeedbackCommentoDao getFeedbackCommentoDao(){ return new FeedbackCommentoDaoPostgres(getConnection());}
 
 }
