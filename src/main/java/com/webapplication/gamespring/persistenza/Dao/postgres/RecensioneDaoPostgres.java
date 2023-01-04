@@ -133,7 +133,47 @@ public class RecensioneDaoPostgres implements RecensioneDao {
 
     @Override
     public void delete(Recensione recensione) {
-        String query = "DELETE FROM DatabaseProg.recensione WHERE id = ?";
+
+        String query = "DELETE FROM DatabaseProg.feedback_recensione WHERE recensione = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            st.setLong(1, recensione.getId());
+            st.executeUpdate();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        query = "SELECT FROM DatabaseProg.commento WHERE recensione = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            st.setInt(1, recensione.getId());
+            ResultSet rs = st.executeQuery();
+
+
+            while (rs.next()){
+                String query2 = "DELETE FROM DatabaseProg.feedback_commento WHERE commento = ?";
+                PreparedStatement st2 = connection.prepareStatement(query2);
+                st.setLong(1, rs.getInt("commento"));
+                st.executeUpdate();
+
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+
+        query = "DELETE FROM DatabaseProg.commento WHERE recensione = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            st.setLong(1, recensione.getId());
+            st.executeUpdate();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        query = "DELETE FROM DatabaseProg.recensione WHERE id = ?";
         try {
             PreparedStatement st = connection.prepareStatement(query);
             st.setLong(1, recensione.getId());
