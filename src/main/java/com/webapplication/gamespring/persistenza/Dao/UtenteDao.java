@@ -11,7 +11,7 @@ public interface UtenteDao {
 
     public void saveOrUpdate(Utente utente);
 
-    public void delete(Utente utente);
+    public void delete(String username);
 
     public List<Utente> fuzzySearch(String username);
 
