@@ -110,6 +110,7 @@ public class CommentoDaoPostgres implements CommentoDao {
         return commento;
     }
 
+
     @Override
     public int save(Commento commento) throws SQLException {
         String insertStr = "INSERT INTO DatabaseProg.commento (contenuto, recensione, utente) VALUES (?, ?, ?) returning id";

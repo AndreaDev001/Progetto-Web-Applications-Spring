@@ -1,5 +1,6 @@
 package com.webapplication.gamespring.persistenza.Dao;
 
+import com.webapplication.gamespring.model.Commento;
 import com.webapplication.gamespring.model.Recensione;
 
 import java.util.List;

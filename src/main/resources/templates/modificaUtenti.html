@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header class="headerPrincipale">
+    <h1>Gestione Account</h1>
+    <button type="button" class="admin">Amministratore</button>
+    <button type="button" class="personal-account">Personal account</button>
+    </header>
+
+    <div>
+    <h4 class="ban-account">Gestione account segnalati</h4>
+    </div>
+
+
+
+
+
+
+    <div class="data">
+    <form action="modifyUser" method="post" >
+
+        <div class="div-username">
+            <p class="label_username">Username</p>
+            <input name="username" th:value="${modify_utente.username}" readonly></input>
+        </div>
+
+        <div class="div-password">
+            <p class="label_password">Password</p>
+            <input name="password" th:value="${modify_utente.password}"></input>
+        </div>
+
+        <div class="div-email">
+            <p class="label_email">Email</p>
+            <input type="email" name="email" th:value="${modify_utente.email}"></input>
+        </div>
+
+        <div class="div-checkbox">
+            <div>
+                <p class="label_admin">Admin</p>
+                <input name="admin" type="checkbox" th:checked="${modify_utente.amministratore}" class="checkbox_admin"></input>
+            </div>
+
+            <div>
+                <p class="label_ban">Bandito</p>
+                <input name="ban" type="checkbox" th:checked="${modify_utente.bandito}" class="checkbox_ban"></input>
+            </div>
+        </div>
+
+        <div>
+            <button class="button-mod" type="submit" value="Submit">modifica dati account</button>
+        </div>
+    </form>
+
+    <form action="deleteUser" method="post">
+        <input type="hidden" name="username" th:value="${modify_utente.username}">
+        <button onclick="alertDelete()" class="button-del">elimina account</button>
+    </form>
+
+    </div>
+
+    <script>
+        function alertDelete() {
+            alert("Sei sicuro di voler eliminare questo account?");
+        }
+    </script>
+
+</body>
+</html>
