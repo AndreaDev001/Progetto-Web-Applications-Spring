@@ -141,6 +141,5 @@ public class CommentoDaoPostgres implements CommentoDao {
         PreparedStatement st2 = connection.prepareStatement(deleteComment);
         st2.setLong(1, commento.getId());
         st2.executeUpdate();
-
     }
 }
