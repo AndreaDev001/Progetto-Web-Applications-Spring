@@ -18,14 +18,14 @@ public class SearchSegnalati extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String keyword = req.getParameter("keyword");
         if(keyword.equals("")){
-            List<Utente> utenti = DatabaseManager.getInstance().getUtenteDao().findAll();
-            req.setAttribute("lista_utenti", utenti);
+            List<Utente> all = DatabaseManager.getInstance().getUtenteDao().findAll();
+            req.setAttribute("lista_utenti", all);
 
             RequestDispatcher dispacher = req.getRequestDispatcher("views/utenti.html");
             dispacher.forward(req, resp);
         }
         else{
-            Utente utenti = DatabaseManager.getInstance().getUtenteDao().findByPrimaryKey(keyword);
+            List<Utente> utenti = DatabaseManager.getInstance().getUtenteDao().fuzzySearch(keyword);
             req.setAttribute("lista_utenti", utenti);
 
             RequestDispatcher dispacher = req.getRequestDispatcher("views/utenti.html");

@@ -41,10 +41,10 @@ public class UtenteDaoPostgres implements UtenteDao {
     @Override
     public Utente findByPrimaryKey(String username) {
         Utente utente = null;
-        String query = "select * from DatabaseProg.utente where username LIKE ?";
+        String query = "select * from DatabaseProg.utente where username = ?";
         try {
             PreparedStatement st = connection.prepareStatement(query);
-            st.setString(1, "%"+username+"%");
+            st.setString(1, username);
             ResultSet rs = st.executeQuery();
 
             if (rs.next()) {
@@ -62,6 +62,34 @@ public class UtenteDaoPostgres implements UtenteDao {
         }
         return utente;
     }
+
+    @Override
+    public List<Utente> fuzzySearch(String username) {
+        List<Utente> utenti = new ArrayList<Utente>();
+        String query = "select * from DatabaseProg.utente where username LIKE ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            st.setString(1, "%"+username+"%");
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                Utente utente = new Utente();
+                utente.setUsername(rs.getString("username"));
+                utente.setEmail(rs.getString("email"));
+                utente.setPassword(rs.getString("password"));
+                utente.setAmministratore(rs.getBoolean("amministratore"));
+                utente.setBandito(rs.getBoolean("bandito"));
+
+                utenti.add(utente);
+            }
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return utenti;
+    }
+
 
     @Override
     public void saveOrUpdate(Utente utente) {
