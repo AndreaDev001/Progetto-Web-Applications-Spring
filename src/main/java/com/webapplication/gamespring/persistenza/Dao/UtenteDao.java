@@ -13,5 +13,7 @@ public interface UtenteDao {
 
     public void delete(String username);
 
+    public List<Utente> fuzzySearch(String username);
+
     public boolean alreadyInDatabase(String username);
 }
