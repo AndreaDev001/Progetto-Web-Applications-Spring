@@ -26,7 +26,7 @@ public class DatabaseManager {
     public Connection getConnection() {
         if (connection == null) {
             try {
-                connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "francesca");
+                connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "postgres");
                 System.out.println("Connesso");
             } catch (SQLException e) {
                 e.printStackTrace();
