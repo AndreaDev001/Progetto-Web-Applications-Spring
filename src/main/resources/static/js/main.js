@@ -36,7 +36,7 @@
         innerDiv.appendChild(title)
 
         const rat = document.createElement("p")
-        rat.appendChild(document.createTextNode(data.rating))
+        rat.appendChild(document.createTextNode(data.metacritic))
         innerDiv.appendChild(rat)
 
         const date = document.createElement("p")
