@@ -17,9 +17,9 @@ import java.util.List;
 public class ReviewRestController {
 
     @GetMapping(value = "/getReviews")
-    public List<Recensione> getReviews(@RequestParam int gameID, @RequestParam int startIndex, @RequestParam int size)
+    public List<Recensione> getReviews(@RequestParam int gameID)
     {
-        return new LinkedList<>();
+        return DatabaseManager.getInstance().getRecensioneDao().getGameReviews(gameID);
     }
 
     @GetMapping(value = "/getReview")
