@@ -8,6 +8,8 @@ import java.util.List;
 public interface RecensioneDao {
     public List<Recensione> findAll();
 
+    public List<Recensione> getGameReviews(int gameID);
+
     public Recensione findByPrimaryKey(int id);
 
     public int save(Recensione recensione);
