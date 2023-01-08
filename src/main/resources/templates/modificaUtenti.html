@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="css/modifica_utenti.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
 </head>
 <body>
 
@@ -23,7 +25,7 @@
 
 
     <div class="data">
-    <form action="modifyUser" method="post" >
+    <form id="form" action="modifyUser" method="post" onsubmit="formValidate()">
 
         <div class="div-username">
             <p class="label_username">Username</p>
@@ -32,12 +34,12 @@
 
         <div class="div-password">
             <p class="label_password">Password</p>
-            <input name="password" th:value="${modify_utente.password}"></input>
+            <input id="password" name="password" placeholder="Nuova Password" required></input>
         </div>
 
         <div class="div-email">
             <p class="label_email">Email</p>
-            <input type="email" name="email" th:value="${modify_utente.email}"></input>
+            <input id="email" type="email" name="email" th:value="${modify_utente.email}" required></input>
         </div>
 
         <div class="div-checkbox">
@@ -64,11 +66,7 @@
 
     </div>
 
-    <script>
-        function alertDelete() {
-            alert("Sei sicuro di voler eliminare questo account?");
-        }
-    </script>
+    <script src="js/modifyUser.js"></script>
 
 </body>
 </html>

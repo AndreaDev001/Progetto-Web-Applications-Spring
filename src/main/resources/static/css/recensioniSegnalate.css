@@ -1,0 +1,23 @@
+.container{
+    display: flex;
+    width: 400px;
+    height: 300px;
+}
+
+.contenuto{
+    overflow-x: scroll;
+    width: 50%;
+    text-align: left;
+}
+
+.list{
+    display: flex;
+    gap: 200px;
+    padding: 50px;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.bottone{
+    width: 100%;
+}

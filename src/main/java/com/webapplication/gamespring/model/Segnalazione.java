@@ -1,15 +1,15 @@
 package com.webapplication.gamespring.model;
 
 public class Segnalazione {
-    int recensione;
+    Recensione recensione;
     String utente;
     String motivazione;
 
-    public int getRecensione() {
+    public Recensione getRecensione() {
         return recensione;
     }
 
-    public void setRecensione(int recensione) {
+    public void setRecensione(Recensione recensione) {
         this.recensione = recensione;
     }
 

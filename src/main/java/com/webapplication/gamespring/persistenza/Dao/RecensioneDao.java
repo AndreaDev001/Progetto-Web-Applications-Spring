@@ -12,7 +12,7 @@ public interface RecensioneDao {
 
     public int save(Recensione recensione);
 
-    public void delete(Recensione recensione);
+    public void delete(int recensione);
 
     public boolean update(Recensione recensione);
 

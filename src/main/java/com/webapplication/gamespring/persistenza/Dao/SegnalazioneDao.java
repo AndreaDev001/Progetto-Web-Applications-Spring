@@ -11,6 +11,6 @@ public interface SegnalazioneDao {
 
     public void saveOrUpdate(Segnalazione segnalazione);
 
-    public void delete(Segnalazione segnalazione);
+    public void delete(int recensione, String utente);
     public boolean alreadyInDatabase(int recensione, String utente);
 }
