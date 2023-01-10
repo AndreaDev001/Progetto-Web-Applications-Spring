@@ -3,41 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-
+    <link rel="stylesheet" href="css/userList.css">
 </head>
 <body>
 
 
-<header class="headerPrincipale">
-    <h1>Gestione Account</h1>
-    <button type="button" class="admin">Amministratore</button>
-    <button type="button" class="personal-account">Personal account</button>
-</header>
+    <div class="main-wrap">
 
+        <div class="upperBar">
+            <p class="title">Gestione Utenti</p>
+        </div>
 
-
-    <div>
-        <h4 class="ban-account">Gestione account segnalati</h4>
-    </div>
-
-<div class="container mt-5">
-    <form action="search" method="post">
-        <input type="text" name="keyword" placeholder="Cerca utente per username" size="40" >
-        <button type="submit" class="btn btn-info" >Search</button>
-    </form>
-
-</div>
-
-    <div th:each="utenti, iterator : ${lista_utenti}" class="user-list">
-        <div th:unless="${iterator.index > 4}">
-            <td th:text="${utenti.username}">...</td>
-            <td th:text="${utenti.password}">...</td>
-            <td>
-                <form action="openModifyUser" method="post">
-                    <input type="hidden" name="username" th:value="${utenti.username}">
-                    <button type="submit" value="Submit" class="btn btn-info">modifica account</button>
+        <div class="sideBar">
+            <div class="buttons">
+                <form action="listaUtenti" method="get" class="gestioneUtenti">
+                    <button type="submit" value="Submit">Gestione Utenti</button>
                 </form>
-            </td>
+                <form action="recensioniSegnalate" method="get" class="gestioneSegnalazioni">
+                    <button type="submit" value="Submit">Gestione Segnalazioni</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="searchContainer">
+
+            <div class="searchBar">
+                <form action="search" method="post" class="searchBarForm">
+                    <input type="text" name="keyword" placeholder="Cerca utente per username" class="searchInput">
+                    <button type="submit" class="searchButton" >Search</button>
+                </form>
+            </div>
+
+            <div class="user">
+                <div th:if="${lista_utenti.isEmpty()}" class="failedSearch"> Nessun utente trovato</div>
+                    <div th:each="utenti, iterator : ${lista_utenti}" th:if="${iterator.index < 20}" class="user-list">
+                        <div class="inner-user">
+                            <p th:text="'Username: ' + ${utenti.username}" class="username" ></p>
+                            <p th:text="'Email: ' +${utenti.email}" class="email" ></p>
+                            <p th:text="'Admin: ' + ${utenti.amministratore}" class="admin" ></p>
+                            <p th:text="'Bannato: ' + ${utenti.bandito}" class="ban" ></p>
+                        </div>
+
+                        <div>
+                            <form action="openModifyUser" method="post" class="modifyButton">
+                                <input type="hidden" name="username" th:value="${utenti.username}">
+                                <button type="submit" value="Submit">modifica account</button>
+                            </form>
+                        </div>
+                    </div>
+            </div>
         </div>
     </div>
 

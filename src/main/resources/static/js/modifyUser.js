@@ -22,7 +22,6 @@ function formValidate() {
     if(!email.value.match(mailformat)){
         alert('Invalid email');
 
-
         form.setAttribute("action", "openModifyUser")
     }
 
