@@ -13,77 +13,72 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
-@WebServlet("/consigliati")
-public class Consigliati extends HttpServlet {
+@WebServlet("/recommended")
+public class Recommended extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         List<Wishlist> wishlists = DatabaseManager.getInstance().getWishlistDao().findByUser("a");
-        HashMap<String, Integer> generi = new HashMap<String, Integer>();
+        HashMap<String, Integer> genres = new HashMap<String, Integer>();
+
+        genres.put("action", 0);
+        genres.put("indie", 0);
+        genres.put("adventure", 0);
+        genres.put("rpg", 0);
+        genres.put("strategy", 0);
+        genres.put("shooter", 0);
+        genres.put("casual", 0);
+        genres.put("simulation", 0);
+        genres.put("puzzle", 0);
+        genres.put("arcade", 0);
+        genres.put("platformer", 0);
+        genres.put("racing", 0);
+        genres.put("sports", 0);
+        genres.put("fighting", 0);
+        genres.put("family", 0);
+        genres.put("educational", 0);
+        genres.put("cards", 0);
 
 
-        generi.put("action", 0);
-        generi.put("indie", 0);
-        generi.put("adventure", 0);
-        generi.put("rpg", 0);
-        generi.put("strategy", 0);
-        generi.put("shooter", 0);
-        generi.put("casual", 0);
-        generi.put("simulation", 0);
-        generi.put("puzzle", 0);
-        generi.put("arcade", 0);
-        generi.put("platformer", 0);
-        generi.put("racing", 0);
-        generi.put("sports", 0);
-        generi.put("fighting", 0);
-        generi.put("family", 0);
-        generi.put("educational", 0);
-        generi.put("cards", 0);
-
-
-        String string [] = {"action", "indie", "adventure", "rpg", "strategy", "shooter", "casual", "simulation",
-                            "puzzle", "arcade", "platformer", "racing", "sports", "fighting", "family", "educational", "cards"};
-
-
-        List<Gioco> giochi = new ArrayList<Gioco>();
+        List<Gioco> games = new ArrayList<Gioco>();
 
         for (Wishlist element : wishlists)
         {
-            giochi.add(DatabaseManager.getInstance().getGiocoDao().findByPrimaryKey(element.getGioco()));
+            games.add(DatabaseManager.getInstance().getGiocoDao().findByPrimaryKey(element.getGioco()));
         }
 
-        for (int i=0; i<giochi.size(); i++){
+        for (int i=0; i<games.size(); i++){
 
-            generi.replace(giochi.get(i).getGenere(), generi.get(giochi.get(i).getGenere()) +1);
-            System.out.println(generi);
+            genres.replace(games.get(i).getGenere(), genres.get(games.get(i).getGenere()) +1);
+            System.out.println(genres);
         }
 
-        int max = Collections.max(generi.values());
+        int max = Collections.max(genres.values());
         String index = "";
 
-        for (Map.Entry<String, Integer> entry : generi.entrySet()){
+        for (Map.Entry<String, Integer> entry : genres.entrySet()){
             if(max == entry.getValue())
                 index = entry.getKey();
 
         }
 
-        generi.remove(index);
+        genres.remove(index);
 
-        max = Collections.max(generi.values());
+        max = Collections.max(genres.values());
         String index2 = "";
 
-        for (Map.Entry<String, Integer> entry : generi.entrySet()){
+        for (Map.Entry<String, Integer> entry : genres.entrySet()){
             if(max == entry.getValue())
                 index2 = entry.getKey();
 
         }
 
-        generi.remove(index2);
+        genres.remove(index2);
 
-        max = Collections.max(generi.values());
+        max = Collections.max(genres.values());
         String index3 = "";
 
-        for (Map.Entry<String, Integer> entry : generi.entrySet()){
+        for (Map.Entry<String, Integer> entry : genres.entrySet()){
             if(max == entry.getValue())
                 index3 = entry.getKey();
 
@@ -106,7 +101,7 @@ public class Consigliati extends HttpServlet {
         System.out.println(api);
         System.out.println(api2);
         System.out.println(api3);
-        RequestDispatcher dispacher = req.getRequestDispatcher("views/consigliati.html");
+        RequestDispatcher dispacher = req.getRequestDispatcher("views/recommended.html");
         dispacher.forward(req, resp);
 
 

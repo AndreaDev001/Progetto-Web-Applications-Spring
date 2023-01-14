@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/search")
-public class SearchSegnalati extends HttpServlet {
+public class Search extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String keyword = req.getParameter("keyword");
@@ -21,14 +21,14 @@ public class SearchSegnalati extends HttpServlet {
             List<Utente> all = DatabaseManager.getInstance().getUtenteDao().findAll();
             req.setAttribute("lista_utenti", all);
 
-            RequestDispatcher dispacher = req.getRequestDispatcher("views/utenti.html");
+            RequestDispatcher dispacher = req.getRequestDispatcher("views/userList.html");
             dispacher.forward(req, resp);
         }
         else{
             List<Utente> utenti = DatabaseManager.getInstance().getUtenteDao().fuzzySearch(keyword);
             req.setAttribute("lista_utenti", utenti);
 
-            RequestDispatcher dispacher = req.getRequestDispatcher("views/utenti.html");
+            RequestDispatcher dispacher = req.getRequestDispatcher("views/userList.html");
             dispacher.forward(req, resp);
         }
 

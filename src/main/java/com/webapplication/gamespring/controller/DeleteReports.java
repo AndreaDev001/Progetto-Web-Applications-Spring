@@ -13,25 +13,22 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/eliminaRecensione")
-public class EliminaRecensione extends HttpServlet {
+@WebServlet("/deleteReports")
+public class DeleteReports extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String recensione = req.getParameter("recensione");
-        String utente = req.getParameter("utente");
+        String review = req.getParameter("recensione");
+        String user = req.getParameter("utente");
+
+        int intReview = Integer.parseInt(review);
 
 
-        int recensione2 = Integer.parseInt(recensione);
+        DatabaseManager.getInstance().getSegnalazioneDao().delete(intReview, user);
 
+        List<Segnalazione> reports = DatabaseManager.getInstance().getSegnalazioneDao().findAll();
 
-        DatabaseManager.getInstance().getRecensioneDao().delete(recensione2);
-        Utente u = DatabaseManager.getInstance().getUtenteDao().findByPrimaryKey(utente);
-        u.setBandito(true);
-        DatabaseManager.getInstance().getUtenteDao().saveOrUpdate(u);
+        req.setAttribute("recensioni_segnalate", reports);
 
-
-        List<Segnalazione> segnalazioni = DatabaseManager.getInstance().getSegnalazioneDao().findAll();
-        req.setAttribute("recensioni_segnalate", segnalazioni);
         RequestDispatcher dispacher = req.getRequestDispatcher("views/recensioni.html");
         dispacher.forward(req, resp);
 

@@ -1,60 +1,32 @@
 package com.webapplication.gamespring.controller;
 
-import com.webapplication.gamespring.model.Segnalazione;
+import com.webapplication.gamespring.model.Commento;
+import com.webapplication.gamespring.model.Recensione;
 import com.webapplication.gamespring.model.Utente;
-import com.webapplication.gamespring.persistenza.Dao.UtenteDao;
 import com.webapplication.gamespring.persistenza.DatabaseManager;
-import com.webapplication.gamespring.util.ValidationHandler;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.io.IOException;
 import java.util.List;
-
 @WebServlet("/modifyUser")
 public class ModifyUser extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-
         String username = req.getParameter("username");
-        String password = req.getParameter("password");
-        String email = req.getParameter("email");
-        String admin= req.getParameter("admin");
-        String ban = req.getParameter("ban");
 
-        String encryptedPassword = BCrypt.hashpw(password, BCrypt.gensalt(12));
+        Utente user = DatabaseManager.getInstance().getUtenteDao().findByPrimaryKey(username);
 
-        Utente u = new Utente();
-        u.setUsername(username);
-        u.setEmail(email);
-        u.setPassword(encryptedPassword);
+        req.setAttribute("modify_utente", user);
 
-        if(admin == null){
-            u.setAmministratore(false);
-        }
-        else
-            u.setAmministratore(true);
+        RequestDispatcher dispacher = req.getRequestDispatcher("views/modificaUtenti.html");
+        dispacher.forward(req, resp);
 
-        if(ban == null){
-            u.setBandito(false);
-        }
-        else
-            u.setBandito(true);
-
-        DatabaseManager.getInstance().getUtenteDao().saveOrUpdate(u);
-
-            List<Utente> listaUtenti = DatabaseManager.getInstance().getUtenteDao().findAll();
-
-            req.setAttribute("lista_utenti", listaUtenti);
-
-            RequestDispatcher dispacher = req.getRequestDispatcher("views/utenti.html");
-            dispacher.forward(req, resp);
 
 
     }

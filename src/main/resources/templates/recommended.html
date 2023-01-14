@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+    <link rel="stylesheet" href="css/recommended.css">
+
+</head>
+<body>
+
+<div class="main-wrap">
+
+<div class="upperBar">
+    <p class="title">Consigliati</p>
+</div>
+
+<div class="sideBar">
+</div>
+    <div class="container-wrap">
+        <div class="recommended">
+            <h2 th:text="${gen1}" style="text-transform: uppercase"></h2>
+            <div class=container id="container1"></div>
+            <h2 th:text="${gen2}" style="text-transform: uppercase"></h2>
+            <div class=container id="container2"></div>
+            <h2 th:text="${gen3}" style="text-transform: uppercase"></h2>
+            <div class=container id="container3"></div>
+        </div>
+    </div>
+
+<p hidden id="api1" th:text="${api1}">...</p>
+<p hidden id="api2" th:text="${api2}">...</p>
+<p hidden id="api3" th:text="${api3}">...</p>
+
+
+</div>
+
+
+<script src="js/recommended.js"></script>
+</body>
+</html>
