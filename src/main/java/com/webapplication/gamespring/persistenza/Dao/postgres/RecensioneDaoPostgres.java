@@ -5,6 +5,7 @@ import com.webapplication.gamespring.model.Recensione;
 import com.webapplication.gamespring.model.Segnalazione;
 import com.webapplication.gamespring.model.Utente;
 import com.webapplication.gamespring.persistenza.Dao.RecensioneDao;
+import org.jsoup.Jsoup;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class RecensioneDaoPostgres implements RecensioneDao {
                 Recensione recensione = new Recensione();
                 recensione.setId(rs.getInt("id"));
                 recensione.setTitolo(rs.getString("titolo"));
-                recensione.setContenuto(rs.getString("contenuto"));
+                recensione.setContenuto(Jsoup.parse(rs.getString("contenuto")).wholeText());
                 recensione.setVoto(rs.getInt("voto"));
                 recensione.setNumeroMiPiace(rs.getInt("numero_mi_piace"));
                 recensione.setNumeroNonMiPiace(rs.getInt("numero_non_mi_piace"));
@@ -58,7 +59,7 @@ public class RecensioneDaoPostgres implements RecensioneDao {
                 recensione = new Recensione();
                 recensione.setId(rs.getInt("id"));
                 recensione.setTitolo(rs.getString("titolo"));
-                recensione.setContenuto(rs.getString("contenuto"));
+                recensione.setContenuto(Jsoup.parse(rs.getString("contenuto")).wholeText());
                 recensione.setVoto(rs.getInt("voto"));
                 recensione.setNumeroMiPiace(rs.getInt("numero_mi_piace"));
                 recensione.setNumeroNonMiPiace(rs.getInt("numero_non_mi_piace"));

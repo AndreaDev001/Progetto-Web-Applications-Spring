@@ -40,11 +40,11 @@
 
                         <div class="contenuto">
                             <h4>Recensione</h4>
-                            <p th:text="${segnalazione.recensione.contenuto}"></p>
+                            <p th:text="${segnalazione.recensione.contenuto}" class="text"></p>
                         </div>
 
                         <div class="dati_utente">
-                            <p th:text="'Segnalata da: ' +${segnalazione.utente}"></p>
+                            <p th:text="'Segnalata da: ' +${segnalazione.utente}" class="text"></p>
                             <p th:text="${segnalazione.motivazione}"></p>
                         </div>
 

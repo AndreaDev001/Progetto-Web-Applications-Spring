@@ -34,11 +34,7 @@ html, body {
     text-align: center;
 }
 
-.contenuto{
-    margin-left: 5px;
-    margin-bottom: 5px;
-    margin-right: 5px;
-}
+
 
 .dati_utente{
     overflow-x: scroll;
@@ -54,6 +50,10 @@ html, body {
     text-align: center;
 }
 
+textarea{
+    height: 100%;
+    width: 100%;
+}
 
 .buttons{
     margin-top: 150px;
@@ -73,7 +73,9 @@ html, body {
     gap: 150px;
     overflow-y: scroll;
 }
-
+.text{
+    word-break: break-all;
+}
 
 .container{
     display: flex;
@@ -85,6 +87,9 @@ html, body {
     overflow-x: scroll;
     width: 50%;
     text-align: left;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    margin-right: 5px;
 }
 
 .bottone{
