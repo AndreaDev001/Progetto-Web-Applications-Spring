@@ -1,0 +1,102 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.main-wrap{
+    display: flex;
+}
+
+.sideBar{
+    width: 100px;
+    height: 100%;
+    background-color: #0f2027;
+    position: absolute;
+}
+
+.upperBar{
+    width: 100%;
+    height: 100px;
+    background-color: #0f2027;
+    position: absolute;
+
+
+}
+
+.cardList{
+    height: 100%;
+    width: 100%;
+    margin: 150px 50px 50px 150px;
+
+}
+
+.titolo{
+    text-align: center;
+}
+
+.contenuto{
+    margin-left: 5px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+}
+
+.dati_utente{
+    overflow-x: scroll;
+    width: 50%;
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+
+.title{
+    font-size: 30px;
+    color: #f0f0f0;
+    text-align: center;
+}
+
+
+.buttons{
+    margin-top: 150px;
+
+}
+
+.gestioneSegnalazioni{
+    margin-top: 20px;
+}
+
+.containerCard{
+    width: 1600px;
+    height: 700px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 150px;
+    overflow-y: scroll;
+}
+
+
+.container{
+    display: flex;
+    width: 400px;
+    height: 300px;
+}
+
+.contenuto{
+    overflow-x: scroll;
+    width: 50%;
+    text-align: left;
+}
+
+.bottone{
+    width: 100%;
+
+}
+
+.bottoni{
+    margin-top: 50px;
+}
+
+.sub-card{
+    border: 1px solid #0f2027;
+}
+
