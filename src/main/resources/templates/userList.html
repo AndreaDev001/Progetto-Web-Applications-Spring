@@ -1,29 +1,24 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"     xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="css/userList.css">
 </head>
 <body>
-
+    <header class="header">
+            <h1 class="title">Gestione Utenti</h1>
+        <div class="buttons">
+            <form action="userList" method="get" class="gestioneUtenti">
+                <button type="submit" value="Submit">Gestione Utenti</button>
+            </form>
+            <form action="reports" method="get" class="gestioneSegnalazioni">
+                <button type="submit" value="Submit">Gestione Segnalazioni</button>
+            </form>
+        </div>
+    </header>
 
     <div class="main-wrap">
-
-        <div class="upperBar">
-            <p class="title">Gestione Utenti</p>
-        </div>
-
-        <div class="sideBar">
-            <div class="buttons">
-                <form action="userList" method="get" class="gestioneUtenti">
-                    <button type="submit" value="Submit">Gestione Utenti</button>
-                </form>
-                <form action="reports" method="get" class="gestioneSegnalazioni">
-                    <button type="submit" value="Submit">Gestione Segnalazioni</button>
-                </form>
-            </div>
-        </div>
 
         <div class="searchContainer">
 
