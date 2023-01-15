@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"     xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/userList.css">
+</head>
+<body>
+
+
+    <div class="main-wrap">
+
+        <div class="upperBar">
+            <p class="title">Gestione Utenti</p>
+        </div>
+
+        <div class="sideBar">
+            <div class="buttons">
+                <form action="userList" method="get" class="gestioneUtenti">
+                    <button type="submit" value="Submit">Gestione Utenti</button>
+                </form>
+                <form action="reports" method="get" class="gestioneSegnalazioni">
+                    <button type="submit" value="Submit">Gestione Segnalazioni</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="searchContainer">
+
+            <div class="searchBar">
+                <form action="search" method="post" class="searchBarForm">
+                    <input type="text" name="keyword" placeholder="Cerca utente per username" class="searchInput">
+                    <button type="submit" class="searchButton" >Search</button>
+                </form>
+            </div>
+
+            <div class="user">
+                <div th:if="${lista_utenti.isEmpty()}" class="failedSearch"> Nessun utente trovato</div>
+                    <div th:each="utenti, iterator : ${lista_utenti}" th:if="${iterator.index < 20}" class="user-list">
+                        <div class="inner-user">
+                            <p th:text="'Username: ' + ${utenti.username}" class="username" ></p>
+                            <p th:text="'Email: ' +${utenti.email}" class="email" ></p>
+                            <p th:text="'Admin: ' + ${utenti.amministratore}" class="admin" ></p>
+                            <p th:text="'Bannato: ' + ${utenti.bandito}" class="ban" ></p>
+                        </div>
+
+                        <div>
+                            <form action="modifyUser" method="post" class="modifyButton">
+                                <input type="hidden" name="username" th:value="${utenti.username}">
+                                <button type="submit" value="Submit">modifica account</button>
+                            </form>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -8,9 +8,6 @@ public interface FeedbackCommentoDao {
 
     public FeedbackCommento findByPrimaryKey(String utente, int commento);
 
-
-
-
     public boolean saveOrUpdate(FeedbackCommento feedbackCommento);
 
     public boolean delete(FeedbackCommento feedbackCommento);

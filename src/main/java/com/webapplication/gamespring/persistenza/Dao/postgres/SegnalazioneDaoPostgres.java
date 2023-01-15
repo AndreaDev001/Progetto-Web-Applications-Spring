@@ -3,6 +3,7 @@ package com.webapplication.gamespring.persistenza.Dao.postgres;
 import com.webapplication.gamespring.model.Segnalazione;
 import com.webapplication.gamespring.model.Utente;
 import com.webapplication.gamespring.persistenza.Dao.SegnalazioneDao;
+import com.webapplication.gamespring.persistenza.DatabaseManager;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class SegnalazioneDaoPostgres implements SegnalazioneDao {
 
             while (rs.next()) {
                 Segnalazione segnalazione = new Segnalazione();
-                segnalazione.setRecensione(rs.getInt("recensione"));
+                segnalazione.setRecensione(DatabaseManager.getInstance().getRecensioneDao().findByPrimaryKey(rs.getInt("recensione")));
                 segnalazione.setUtente(rs.getString("utente"));
                 segnalazione.setMotivazione(rs.getString("motivazione"));
 
@@ -49,7 +50,7 @@ public class SegnalazioneDaoPostgres implements SegnalazioneDao {
 
             if (rs.next()) {
                 segnalazione = new Segnalazione();
-                segnalazione.setRecensione(rs.getInt("recensione"));
+                segnalazione.setRecensione(DatabaseManager.getInstance().getRecensioneDao().findByPrimaryKey(rs.getInt("recensione")));
                 segnalazione.setUtente(rs.getString("utente"));
                 segnalazione.setMotivazione(rs.getString("motivazione"));
             }
@@ -63,14 +64,14 @@ public class SegnalazioneDaoPostgres implements SegnalazioneDao {
 
     @Override
     public void saveOrUpdate(Segnalazione segnalazione) {
-        if (!alreadyInDatabase(segnalazione.getRecensione(), segnalazione.getUtente())) {
+        if (!alreadyInDatabase(segnalazione.getRecensione().getId(), segnalazione.getUtente())) {
             String insertStr = "INSERT INTO DatabaseProg.segnalazione VALUES (?, ?, ?)";
 
             PreparedStatement st;
             try {
                 st = connection.prepareStatement(insertStr);
 
-                st.setInt(1, segnalazione.getRecensione());
+                st.setInt(1, segnalazione.getRecensione().getId());
                 st.setString(2, segnalazione.getUtente());
                 st.setString(3, segnalazione.getMotivazione());
 
@@ -91,7 +92,7 @@ public class SegnalazioneDaoPostgres implements SegnalazioneDao {
                 st = connection.prepareStatement(updateStr);
 
                 st.setString(1, segnalazione.getMotivazione());
-                st.setInt(2, segnalazione.getRecensione());
+                st.setInt(2, segnalazione.getRecensione().getId());
                 st.setString(3, segnalazione.getUtente());
 
 
@@ -105,12 +106,12 @@ public class SegnalazioneDaoPostgres implements SegnalazioneDao {
     }
 
     @Override
-    public void delete(Segnalazione segnalazione) {
+    public void delete(int recensione, String utente) {
         String query = "DELETE FROM DatabaseProg.segnalazione WHERE utente = ? and recensione = ?";
         try {
             PreparedStatement st = connection.prepareStatement(query);
-            st.setString(1, segnalazione.getUtente());
-            st.setInt(2, segnalazione.getRecensione());
+            st.setString(1, utente);
+            st.setInt(2, recensione);
             st.executeUpdate();
         } catch (SQLException e) {
             // TODO Auto-generated catch block

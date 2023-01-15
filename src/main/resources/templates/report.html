@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/report.css">
+</head>
+<body>
+
+
+
+<div class="main-wrap">
+
+    <div class="upperBar">
+        <p class="title">Gestione Segnalazioni</p>
+    </div>
+
+    <div class="sideBar">
+        <div class="buttons">
+            <form action="userList" method="get" class="gestioneUtenti">
+                <button type="submit" value="Submit">Gestione Utenti</button>
+            </form>
+            <form action="reports" method="get" class="gestioneSegnalazioni">
+                <button type="submit" value="Submit">Gestione Segnalazioni</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="cardList">
+        <div class="containerCard">
+            <div th:each="segnalazione : ${recensioni_segnalate}">
+
+                <div class="card">
+                    <div class="sub-card">
+                    <div class="titolo">
+                        <h1 th:text="${segnalazione.recensione.titolo}"></h1>
+                    </div>
+
+                    <div class="container">
+
+                        <div class="contenuto">
+                            <h4>Recensione</h4>
+                            <p th:text="${segnalazione.recensione.contenuto}" class="text"></p>
+                        </div>
+
+                        <div class="dati_utente">
+                            <p th:text="'Segnalata da: ' +${segnalazione.utente}" class="text"></p>
+                            <p th:text="${segnalazione.motivazione}"></p>
+                        </div>
+
+                    </div>
+                    </div>
+
+                    <div class="bottoni">
+
+                        <form action="deleteReports" method="get">
+                            <input type="hidden" name="utente" th:value="${segnalazione.utente}">
+                            <input type="hidden" name="recensione" th:value="${segnalazione.recensione.id}">
+                            <button type="submit" class="bottone">elimina Recensione</button>
+                        </form>
+
+                        <form action="deleteReview" method="get">
+                            <input type="hidden" name="utente" th:value="${segnalazione.utente}">
+                            <input type="hidden" name="recensione" th:value="${segnalazione.recensione.id}">
+                            <button type="submit" class="bottone">elimina segnalazione</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
