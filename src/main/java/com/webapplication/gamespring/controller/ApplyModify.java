@@ -53,7 +53,7 @@ public class ApplyModify extends HttpServlet {
 
             req.setAttribute("lista_utenti", userList);
 
-            RequestDispatcher dispacher = req.getRequestDispatcher("views/utenti.html");
+            RequestDispatcher dispacher = req.getRequestDispatcher("views/userList.html");
             dispacher.forward(req, resp);
 
 
