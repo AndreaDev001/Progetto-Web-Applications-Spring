@@ -120,7 +120,32 @@ public class RecensioneDaoPostgres implements RecensioneDao {
         }
         return -1;
     }
-
+    @Override
+    public Recensione getUserReview(String username, int gameID) {
+        Recensione current = new Recensione();
+        String query = "select * FROM DatabaseProg.recensione where utente=? and gioco=?";
+        try
+        {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1,username);
+            preparedStatement.setInt(2,gameID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                current.setId(resultSet.getInt(1));
+                current.setTitolo(resultSet.getString(2));
+                current.setContenuto(resultSet.getString(3));
+                current.setVoto(resultSet.getInt(4));
+                current.setNumeroMiPiace(resultSet.getInt(5));
+                current.setNumeroNonMiPiace(resultSet.getInt(6));
+                current.setUtente(resultSet.getString(7));
+                current.setGioco(resultSet.getInt(8));
+            }
+        }
+        catch (SQLException exception){
+            throw  new RuntimeException(exception);
+        }
+        return current;
+    }
     @Override
     public void delete(int recensione) {
 

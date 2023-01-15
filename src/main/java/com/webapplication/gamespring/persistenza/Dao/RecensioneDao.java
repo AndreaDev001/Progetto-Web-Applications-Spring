@@ -11,6 +11,7 @@ public interface RecensioneDao {
     public List<Recensione> getGameReviews(int gameID);
 
     public Recensione findByPrimaryKey(int id);
+    public Recensione getUserReview(String username,int gameID);
 
     public int save(Recensione recensione);
 

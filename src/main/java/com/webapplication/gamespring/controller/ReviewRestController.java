@@ -1,6 +1,7 @@
 package com.webapplication.gamespring.controller;
 
 import com.webapplication.gamespring.model.Recensione;
+import com.webapplication.gamespring.persistenza.Dao.RecensioneDao;
 import com.webapplication.gamespring.persistenza.DatabaseManager;
 import org.jsoup.Jsoup;
 import org.springframework.http.HttpStatus;
@@ -28,11 +29,11 @@ public class ReviewRestController {
         return DatabaseManager.getInstance().getRecensioneDao().findByPrimaryKey(reviewID);
     }
     @GetMapping(value = "/getUserReview")
-    public Recensione getUserReview(@RequestParam int gameID)
+    public Recensione getUserReview(@RequestParam String username,@RequestParam int gameID)
     {
-        return DatabaseManager.getInstance().getRecensioneDao().findByPrimaryKey(gameID);
+        RecensioneDao recensioneDao = DatabaseManager.getInstance().getRecensioneDao();
+        return recensioneDao.getUserReview(username,gameID);
     }
-
     @PostMapping(value = "/publishReview")
     public int publishReview(@RequestBody Recensione review) throws IllegalArgumentException {
 
