@@ -48,13 +48,13 @@
 
                     <div class="bottoni">
 
-                        <form action="deleteReports" method="get">
+                        <form action="deleteReview" method="get">
                             <input type="hidden" name="utente" th:value="${segnalazione.utente}">
                             <input type="hidden" name="recensione" th:value="${segnalazione.recensione.id}">
                             <button type="submit" class="bottone">elimina Recensione</button>
                         </form>
 
-                        <form action="deleteReview" method="get">
+                        <form action="deleteReports" method="get">
                             <input type="hidden" name="utente" th:value="${segnalazione.utente}">
                             <input type="hidden" name="recensione" th:value="${segnalazione.recensione.id}">
                             <button type="submit" class="bottone">elimina segnalazione</button>

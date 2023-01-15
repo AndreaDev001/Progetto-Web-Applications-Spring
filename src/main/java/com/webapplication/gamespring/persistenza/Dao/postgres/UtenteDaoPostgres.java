@@ -141,7 +141,7 @@ public class UtenteDaoPostgres implements UtenteDao {
     @Override
     public void delete(String username) {
 
-        String query = "DELETE FROM DatabaseProg.feedback_commento WHERE utente = ?";
+        String query = "DELETE FROM DatabaseProg.feedback_commenti WHERE utente = ?";
         try {
             PreparedStatement st = connection.prepareStatement(query);
             st.setString(1, username);
