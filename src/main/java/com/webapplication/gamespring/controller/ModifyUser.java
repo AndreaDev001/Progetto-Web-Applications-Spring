@@ -24,7 +24,7 @@ public class ModifyUser extends HttpServlet {
 
         req.setAttribute("modify_utente", user);
 
-        RequestDispatcher dispacher = req.getRequestDispatcher("views/modificaUtenti.html");
+        RequestDispatcher dispacher = req.getRequestDispatcher("views/modifyUser.html");
         dispacher.forward(req, resp);
 
 
