@@ -17,6 +17,13 @@ html, body {
 
 }
 
+.title{
+    font-size: 30px;
+    color: #f0f0f0;
+    text-align: center;
+    margin: auto;
+}
+
 .searchContainer{
     height: 100%;
     width: 100%;
@@ -92,12 +99,7 @@ html, body {
 }
 
 
-.title{
-    font-size: 30px;
-    color: #f0f0f0;
-    text-align: center;
-    margin: auto;
-}
+
 
 .buttons{
     display: flex;

@@ -9,25 +9,30 @@
 </head>
 <body>
 
+<header class="header">
+    <h1 class="title">Consigliati</h1>
+</header>
 
 
-
-    <div class="data">
+    <div class="main-wrap">
     <form id="form" action="applyModify" method="post" onsubmit="formValidate()">
 
-        <div class="div-username">
-            <p class="label_username">Username</p>
-            <input name="username" th:value="${modify_utente.username}" readonly></input>
-        </div>
+        <div class="userData">
+            <div class="div-username">
+                <p class="label_username">Username</p>
+                <input name="username" th:value="${modify_utente.username}" readonly></input>
+            </div>
 
-        <div class="div-password">
-            <p class="label_password">Password</p>
-            <input id="password" name="password" placeholder="Nuova Password" required></input>
-        </div>
+            <div class="div-password">
+                <p class="label_password">Password</p>
+                <input id="password" name="password" placeholder="Nuova Password" required></input>
+            </div>
 
-        <div class="div-email">
-            <p class="label_email">Email</p>
-            <input id="email" type="email" name="email" th:value="${modify_utente.email}" required></input>
+
+            <div class="div-email">
+                <p class="label_email">Email</p>
+                <input id="email" type="email" name="email" th:value="${modify_utente.email}" required></input>
+            </div>
         </div>
 
         <div class="div-checkbox">
@@ -42,14 +47,16 @@
             </div>
         </div>
 
-        <div>
+        <div class="modifyDiv">
             <button class="button-mod" type="submit" value="Submit">modifica dati account</button>
         </div>
     </form>
 
     <form action="deleteUser" method="post">
         <input type="hidden" name="username" th:value="${modify_utente.username}">
-        <button onclick="alertDelete()" class="button-del">elimina account</button>
+        <div class="deleteDiv">
+            <button onclick="alertDelete()" class="button-del" >elimina account</button>
+        </div>
     </form>
 
     </div>
