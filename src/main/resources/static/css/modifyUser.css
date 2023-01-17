@@ -26,14 +26,6 @@ html, body{
     display: flex;
 }
 
-.button-del{
-    height: 10%;
-}
-
-.button-mod{
-
-    height: 10%;
-}
 
 .header{
     text-align: center;
