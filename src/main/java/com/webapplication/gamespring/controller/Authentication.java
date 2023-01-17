@@ -1,6 +1,7 @@
 package com.webapplication.gamespring.controller;
 
 import com.webapplication.gamespring.model.Utente;
+import com.webapplication.gamespring.model.dto.UtenteDto;
 import com.webapplication.gamespring.persistenza.Dao.UtenteDao;
 import com.webapplication.gamespring.persistenza.DatabaseManager;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,13 +29,13 @@ public class Authentication {
         }
     }
     @GetMapping("/getUser")
-    public String getUtente(HttpServletRequest request){
+    public UtenteDto getUtente(HttpServletRequest request){
         String jsessionid = request.getQueryString().split("=")[1];
         Utente result = null;
         HttpSession session = (HttpSession)request.getServletContext().getAttribute(jsessionid);
         if(session != null)
             result = (Utente)session.getAttribute("user");
-        return result != null ? result.getUsername() : null;
+        return result != null ? new UtenteDto(result) : null;
     }
     @PostMapping("/doLogin")
     public String[] doLogin(HttpServletRequest req){

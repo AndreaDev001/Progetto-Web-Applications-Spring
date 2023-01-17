@@ -13,6 +13,11 @@ public class GameController {
         GiocoDao giocoDao = DatabaseManager.getInstance().getGiocoDao();
         return giocoDao.alreadyInDatabase(gameID);
     }
+    @GetMapping("getGame")
+    public Gioco getGame(@RequestParam int gameID){
+        GiocoDao giocoDao = DatabaseManager.getInstance().getGiocoDao();
+        return giocoDao.findByPrimaryKey(gameID);
+    }
     @PostMapping("addGame")
     public void addGame(@RequestParam int gameID,@RequestParam String genere, @RequestParam String titolo, @RequestParam String immagine){
         GiocoDao giocoDao = DatabaseManager.getInstance().getGiocoDao();

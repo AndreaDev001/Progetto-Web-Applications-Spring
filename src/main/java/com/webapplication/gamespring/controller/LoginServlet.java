@@ -74,17 +74,12 @@ public class LoginServlet extends HttpServlet {
                     logged = false;
                 }
             }
-
             // se loggato
             if (logged) {
                 System.out.println("logged as " + username);
-
-                resp.sendRedirect("");  // 2. faccio una redirect verso la homePage (HomeServlet)
+                String desiredRedirect = "http://localhost:4200/games?jsessionid=" + req.getSession().getAttribute("sessionId");
+                resp.sendRedirect(desiredRedirect);  // 2. faccio una redirect verso la homePage (HomeServlet)
             }
-
         }
-
-
-
     }
 }
