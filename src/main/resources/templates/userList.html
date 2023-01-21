@@ -1,29 +1,31 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"     xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="css/userList.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.0.4/popper.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
 </head>
 <body>
-
+    <header class="header">
+            <h1 class="title">Gestione Utenti</h1>
+        <div class="buttons">
+            <form action="userList" method="get" class="gestioneUtenti">
+                <button type="submit" value="Submit">Gestione Utenti</button>
+            </form>
+            <form action="reports" method="get" class="gestioneSegnalazioni">
+                <button type="submit" value="Submit">Gestione Segnalazioni</button>
+            </form>
+        </div>
+    </header>
 
     <div class="main-wrap">
-
-        <div class="upperBar">
-            <p class="title">Gestione Utenti</p>
-        </div>
-
-        <div class="sideBar">
-            <div class="buttons">
-                <form action="userList" method="get" class="gestioneUtenti">
-                    <button type="submit" value="Submit">Gestione Utenti</button>
-                </form>
-                <form action="reports" method="get" class="gestioneSegnalazioni">
-                    <button type="submit" value="Submit">Gestione Segnalazioni</button>
-                </form>
-            </div>
-        </div>
 
         <div class="searchContainer">
 
@@ -37,19 +39,44 @@
             <div class="user">
                 <div th:if="${lista_utenti.isEmpty()}" class="failedSearch"> Nessun utente trovato</div>
                     <div th:each="utenti, iterator : ${lista_utenti}" th:if="${iterator.index < 20}" class="user-list">
-                        <div class="inner-user">
+                        <!--<div class="inner-user">
                             <p th:text="'Username: ' + ${utenti.username}" class="username" ></p>
                             <p th:text="'Email: ' +${utenti.email}" class="email" ></p>
                             <p th:text="'Admin: ' + ${utenti.amministratore}" class="admin" ></p>
                             <p th:text="'Bannato: ' + ${utenti.bandito}" class="ban" ></p>
+                        </div>-->
+
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h3 class="card-title" th:text="'Username: ' + ${utenti.username}"></h3>
+                                <p th:text="'Email: ' +${utenti.email}"></p>
+                                <div class="checkboxDiv">
+                                    <p class="label_admin">Admin: </p>
+                                    <input name="admin" type="checkbox" th:checked="${utenti.amministratore}" class="checkboxView" readonly="readonly"></input>
+                                </div>
+
+                                <div class="checkboxDiv">
+                                    <p class="label_ban">Bandito: </p>
+                                    <input name="admin" type="checkbox" th:checked="${utenti.bandito}" class="checkboxView" readonly="readonly"></input>
+                                </div>
+
+                                <div>
+                                    <form action="modifyUser" method="post" class="modifyButton">
+                                        <input type="hidden" name="username" th:value="${utenti.username}">
+                                        <button type="submit" value="Submit" class="btn btn-primary">modifica account</button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
 
-                        <div>
+
+
+                        <!--<div>
                             <form action="modifyUser" method="post" class="modifyButton">
                                 <input type="hidden" name="username" th:value="${utenti.username}">
-                                <button type="submit" value="Submit">modifica account</button>
+                                <button type="submit" value="Submit" class="btn btn-primary">modifica account</button>
                             </form>
-                        </div>
+                        </div>-->
                     </div>
             </div>
         </div>
