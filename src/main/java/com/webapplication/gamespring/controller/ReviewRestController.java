@@ -35,11 +35,7 @@ public class ReviewRestController {
         return recensioneDao.getUserReview(username,gameID);
     }
     @PostMapping(value = "/publishReview")
-    public int publishReview(@RequestBody Recensione review) throws IllegalArgumentException {
-
-
-        review.setUtente("pier");
-        review.setGioco(11);
+    public int publishReview(@RequestBody Recensione review) throws IllegalArgumentException, SQLException {
         isReviewValid((review));
         return DatabaseManager.getInstance().getRecensioneDao().save(review);
     }
@@ -52,8 +48,8 @@ public class ReviewRestController {
 
     private void isReviewValid(Recensione review) throws IllegalArgumentException
     {
-        if(review.getTitolo().length() > 20)
-            throw new IllegalArgumentException("Invalid Title Length");
+        if(review.getTitolo().isEmpty())
+            throw new IllegalArgumentException("Must Have Title");
         if(review.getVoto() < 0 || review.getVoto() > 10)
             throw new IllegalArgumentException("Invalid Vote");
 

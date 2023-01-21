@@ -93,8 +93,8 @@ public class GiocoDaoPostgres implements GiocoDao {
 
                 st.setLong(1, gioco.getId());
                 st.setString(2, gioco.getGenere());
-                st.setString(3, gioco.getTitolo());
-                st.setString(4, gioco.getImmagine());
+                st.setString(3, gioco.getImmagine());
+                st.setString(4, gioco.getTitolo());
                 st.executeUpdate();
 
             } catch (SQLException e) {

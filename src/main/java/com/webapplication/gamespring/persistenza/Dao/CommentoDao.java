@@ -9,14 +9,10 @@ import java.util.List;
 
 public interface CommentoDao {
 
-    public List<Commento> findAll();
     List<Commento> getReviewComments(int reviewID, int startIndex, int commentsSize);
-
-    public Commento findByPrimaryKey(int id);
-
-    public int save(Commento commento) throws SQLException;
-    public void update(Commento commento) throws SQLException;
-
-    public void delete(Commento commento) throws SQLException;
+    Commento findByPrimaryKey(int id);
+    int save(Commento commento) throws SQLException;
+    void update(Commento commento) throws SQLException;
+    void delete(Commento commento) throws SQLException;
 
 }
