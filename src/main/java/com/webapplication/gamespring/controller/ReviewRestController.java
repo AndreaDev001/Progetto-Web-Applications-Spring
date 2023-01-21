@@ -1,6 +1,7 @@
 package com.webapplication.gamespring.controller;
 
 import com.webapplication.gamespring.model.Recensione;
+import com.webapplication.gamespring.persistenza.Dao.RecensioneDao;
 import com.webapplication.gamespring.persistenza.DatabaseManager;
 import org.jsoup.Jsoup;
 import org.springframework.http.HttpStatus;
@@ -17,9 +18,9 @@ import java.util.List;
 public class ReviewRestController {
 
     @GetMapping(value = "/getReviews")
-    public List<Recensione> getReviews(@RequestParam int gameID, @RequestParam int startIndex, @RequestParam int size)
+    public List<Recensione> getReviews(@RequestParam int gameID)
     {
-        return new LinkedList<>();
+        return DatabaseManager.getInstance().getRecensioneDao().getGameReviews(gameID);
     }
 
     @GetMapping(value = "/getReview")
@@ -28,17 +29,13 @@ public class ReviewRestController {
         return DatabaseManager.getInstance().getRecensioneDao().findByPrimaryKey(reviewID);
     }
     @GetMapping(value = "/getUserReview")
-    public Recensione getUserReview(@RequestParam int gameID)
+    public Recensione getUserReview(@RequestParam String username,@RequestParam int gameID)
     {
-        return DatabaseManager.getInstance().getRecensioneDao().findByPrimaryKey(gameID);
+        RecensioneDao recensioneDao = DatabaseManager.getInstance().getRecensioneDao();
+        return recensioneDao.getUserReview(username,gameID);
     }
-
     @PostMapping(value = "/publishReview")
-    public int publishReview(@RequestBody Recensione review) throws IllegalArgumentException {
-
-
-        review.setUtente("pier");
-        review.setGioco(11);
+    public int publishReview(@RequestBody Recensione review) throws IllegalArgumentException, SQLException {
         isReviewValid((review));
         return DatabaseManager.getInstance().getRecensioneDao().save(review);
     }
@@ -51,8 +48,8 @@ public class ReviewRestController {
 
     private void isReviewValid(Recensione review) throws IllegalArgumentException
     {
-        if(review.getTitolo().length() > 20)
-            throw new IllegalArgumentException("Invalid Title Length");
+        if(review.getTitolo().isEmpty())
+            throw new IllegalArgumentException("Must Have Title");
         if(review.getVoto() < 0 || review.getVoto() > 10)
             throw new IllegalArgumentException("Invalid Vote");
 

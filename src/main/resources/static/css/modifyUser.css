@@ -1,39 +1,45 @@
+html, body{
+    margin: 0;
+    padding: 0;
 
-.div-checkbox {
+}
+
+.userData{
     display: flex;
-    text-align: center;
-    margin-right: 30%;
-    margin-left: 30%;
-
+    justify-content: center;
+    gap: 50px;
 }
 
-.div-email, .div-password, .div-username{
-    text-align: center;
-    align-items: center;
-    font-size: 30px;
-
+.div-checkbox{
+    display: flex;
+    justify-content: center;
+    gap: 100px;
 }
 
-.div-checkbox div{
-    padding: 10px;
-    font-size: 30px;
-    width: 150px;
+.deleteDiv{
+    justify-content: center;
+    display: flex;
+}
+
+.modifyDiv{
+    justify-content: center;
+    display: flex;
+}
+
+
+.header{
+    text-align: center;
+    background-color: #0f2027;
     height: 100px;
-    margin: auto;
+    width: 100%;
+    justify-content: center;
 
 }
 
-.div-checkbox input{
-    width: 15px;
-    height: 15px;
+.title{
+    font-size: 30px;
+    color: #f0f0f0;
     text-align: center;
-}
-
-.button-mod, .button-del{
-
-    display: flex;
-    margin-top: 50px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: auto;
 }
 

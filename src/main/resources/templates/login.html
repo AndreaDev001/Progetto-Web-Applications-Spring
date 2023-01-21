@@ -11,39 +11,103 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
         <script defer src="js/togglePassword.js"></script>
+        <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/authentication.css">
+        <link rel="stylesheet" href="css/login.css">
     </head>
     <body>
-        <div class="container">
-            <form action="login" method="post" id="loginForm">
-                <h1>Login</h1>
-                <div class="form-group input-control">
-                    <label for="username">Username*:</label>
-                    <input type="text" class="form-control" placeholder="Enter username" id="username" name="username" autofocus>
-                    <div th:if="${session.emptyFields == true}" class="error">Mandatory field</div>
-                </div>
-                <div class="form-group input-control">
-                    <label for="password">Password*:</label>
-                    <div class="d-inline-flex w-100 justify-content-between">
-                        <input class="form-control" style="width: 96%" type="password" placeholder="Enter password" id="password" name="password">
-                        <i class="far fa-eye" style="width: 3%;" id="togglePassword"></i>
+        <nav style="z-index: 1000" class="navbar navbar-expand-lg navbar-light bg-light position-sticky top-0" >
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="http://localhost:4200/games">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://localhost:4200/news" >News</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About us</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                            Account
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="http://localhost:8080/login">Login</a>
+                            <a class="dropdown-item" href="http://localhost:4200/registration">Sign up</a>
+                            <a class="dropdown-item" href="http://localhost:8080/wishlist">Wishlist</a>
+                            <a class = "dropdown-item" href="http://localhost:8080/recommended">Consigliati</a>
+                            <a class = "dropdown-item" href="http://localhost:8080/userList">Lista Utenti</a>
+                            <a class = "dropdown-item" href="http://localhost:8080/reports">Lista Segnalazioni</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container-fluid">
+            <section id ="reg-holder">
+                <form action="login" method="post" id="loginForm" style="background-color: var(--background-secondary);border-radius: 30px;padding: 2% 0">
+                    <h1 class="text-center heading">Login</h1>
+
+                    <section class="form-group d-flex w-100 justify-content-center" style="padding: 0.2% 0">
+                        <div class="w-50">
+                            <label style="color: whitesmoke" for="username">Username*:</label>
+                            <input type="text" class="form-control" placeholder="Enter username" id="username" name="username" autofocus>
+                            <div th:if="${session.emptyFields == true}" class="error-message">Mandatory field</div>
+                        </div>
+                    </section>
+
+                    <div class="d-flex justify-content-center w-100">
+                        <div class="w-50">
+                            <label for="password" style="color: whitesmoke">Password*:</label>
+                        </div>
                     </div>
+                    <section class="form-group d-flex w-100 justify-content-center" style="padding: 0.2% 0">
+                        <div class="w-50 d-inline-flex">
+                            <div class="w-75">
+                                <input class="form-control" style="width: 96%" type="password" placeholder="Enter password" id="password" name="password">
+                                <i class="far fa-eye" style="width: 3%;color: whitesmoke" id="togglePassword"></i>
+                                <div th:if="${session.emptyFields == true}" class="error-message">Mandatory field</div>
+                            </div>
 
-                    <div th:if="${session.emptyFields == true}" class="error">Mandatory field</div>
-                </div>
-                <div>
-                    <button type="submit" class="btn btn-primary" id="loginButton">Login</button>
-                </div>
-                <div>
-                    <label>Non hai un account?</label>
+                        </div>
+                    </section>
 
-                    <a href="http://localhost:4200/registration">Registrati</a>
-                </div>
-                <div>
-                    <label>Hai dimenticato la password?</label>
-                    <a href="recoverAccount">Recupera password</a>
-                </div>
-            </form>
+                    <section class="d-flex w-100 justify-content-center">
+                        <div class="w-50 d-flex row" style="padding: 0px 0px 30px;">
+                            <button type="submit" class="btn button button-primary w-100" id="loginButton">Login</button>
+                        </div>
+                    </section>
+
+                    <section class="d-flex w-100 justify-content-center">
+                        <div class="w-50 d-flex row py-1">
+                           <button class="btn button button-secondary w-100">
+                               <a href="http://localhost:4200/registration" class="button-link">Sign up</a>
+                           </button>
+                        </div>
+                    </section>
+                    <section class="d-flex w-100 justify-content-center">
+                        <div class="w-50 d-flex row py-1">
+                            <button class="btn button button-secondary w-100">
+                                <a href="recoverAccount" class="button-link">Recover password</a>
+                            </button>
+
+                        </div>
+                    </section>
+
+
+
+                    <div>
+                        <label>Hai dimenticato la password?</label>
+
+                    </div>
+                </form>
+            </section>
+
         </div>
 
     </body>

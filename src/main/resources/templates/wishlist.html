@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title th:text="|${utente.username} Wishlist|"></title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.0.4/popper.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="js/wishlist.js"></script>
+    </head>
+    <body>
+        <div class="container-fluid row mx-auto overflow-auto">
+            <div th:attr="gameid=${gioco.id}" th:each="gioco : ${giochi}" class="card col-md-4 col-sm-5 col-12" style="width: 18rem;">
+              <img class="card-img-top" th:src="${gioco.immagine}" th:alt="|${gioco.titolo} Image Card|">
+              <div class="card-body">
+                <h5 th:text="${gioco.titolo}" class="card-title"></h5>
+                <a th:href="|http://localhost:4200/games/${gioco.id}|" class="btn btn-primary">Visita</a>
+                <button th:onclick="|removeWishlistEntry(${gioco.id})|" class="btn btn-danger">Rimuovi</button>
+              </div>
+            </div>
+        </div>
+    </body>
+</html>

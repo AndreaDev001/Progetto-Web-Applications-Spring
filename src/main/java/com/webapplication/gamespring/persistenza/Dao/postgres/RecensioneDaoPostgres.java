@@ -8,6 +8,9 @@ import com.webapplication.gamespring.persistenza.Dao.RecensioneDao;
 import org.jsoup.Jsoup;
 
 import java.sql.*;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,32 +19,29 @@ public class RecensioneDaoPostgres implements RecensioneDao {
     Connection connection;
     public RecensioneDaoPostgres(Connection connection){this.connection = connection;}
 
-
     @Override
-    public List<Recensione> findAll() {
+    public List<Recensione> getGameReviews(int gameID) {
         List<Recensione> recensioni = new ArrayList<Recensione>();
-        String query = "select * from DatabaseProg.recensione";
+        String query = "select * from DatabaseProg.recensione where gioco = ?";
         try {
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(query);
+            PreparedStatement st = connection.prepareStatement(query);
+            st.setInt(1, gameID);
+            ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
                 Recensione recensione = new Recensione();
                 recensione.setId(rs.getInt("id"));
                 recensione.setTitolo(rs.getString("titolo"));
-                recensione.setContenuto(Jsoup.parse(rs.getString("contenuto")).wholeText());
+                recensione.setContenuto(rs.getString("contenuto"));
                 recensione.setVoto(rs.getInt("voto"));
                 recensione.setNumeroMiPiace(rs.getInt("numero_mi_piace"));
                 recensione.setNumeroNonMiPiace(rs.getInt("numero_non_mi_piace"));
                 recensione.setUtente(rs.getString("utente"));
                 recensione.setGioco(rs.getInt("gioco"));
-
+                recensione.setData(rs.getObject("data", OffsetDateTime.class));
                 recensioni.add(recensione);
             }
-
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        } catch (SQLException ignore) {
         }
         return recensioni;
     }
@@ -59,12 +59,13 @@ public class RecensioneDaoPostgres implements RecensioneDao {
                 recensione = new Recensione();
                 recensione.setId(rs.getInt("id"));
                 recensione.setTitolo(rs.getString("titolo"));
-                recensione.setContenuto(Jsoup.parse(rs.getString("contenuto")).wholeText());
+                recensione.setContenuto(rs.getString("contenuto"));
                 recensione.setVoto(rs.getInt("voto"));
                 recensione.setNumeroMiPiace(rs.getInt("numero_mi_piace"));
                 recensione.setNumeroNonMiPiace(rs.getInt("numero_non_mi_piace"));
                 recensione.setUtente(rs.getString("utente"));
                 recensione.setGioco(rs.getInt("gioco"));
+                recensione.setData(rs.getObject("data", OffsetDateTime.class));
             }
 
         } catch (SQLException e) {
@@ -77,24 +78,47 @@ public class RecensioneDaoPostgres implements RecensioneDao {
 
 
     @Override
-    public int save(Recensione recensione) {
-        String query = "insert into DatabaseProg.recensione(titolo, contenuto,voto, utente, gioco) values (?, ?, ?, ?, ?) returning id";
-        try {
-            PreparedStatement st = connection.prepareStatement(query);
-            st.setString(1, recensione.getTitolo());
-            st.setString(2, recensione.getContenuto());
-            st.setInt(3, recensione.getVoto());
-            st.setString(4, recensione.getUtente());
-            st.setLong(5, recensione.getGioco());
-            ResultSet resultSet = st.executeQuery();
-            return resultSet.next() ? resultSet.getInt(1) : -1;
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return -1;
+    public int save(Recensione recensione) throws SQLException {
+        String query = "insert into DatabaseProg.recensione(titolo, contenuto,voto, utente, gioco, data) values (?, ?, ?, ?, ?, ?) returning id";
+        PreparedStatement st = connection.prepareStatement(query);
+        st.setString(1, recensione.getTitolo());
+        st.setString(2, recensione.getContenuto());
+        st.setInt(3, recensione.getVoto());
+        st.setString(4, recensione.getUtente());
+        st.setLong(5, recensione.getGioco());
+        ZonedDateTime zdt = ZonedDateTime.now(ZoneId.of("Etc/UTC"));
+        Timestamp timestamp = Timestamp.valueOf(zdt.toLocalDateTime());
+        st.setTimestamp(6, timestamp);
+        ResultSet resultSet = st.executeQuery();
+        return resultSet.next() ? resultSet.getInt(1) : -1;
     }
-
+    @Override
+    public Recensione getUserReview(String username, int gameID) {
+        Recensione current = new Recensione();
+        String query = "select * FROM DatabaseProg.recensione where utente=? and gioco=?";
+        try
+        {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1,username);
+            preparedStatement.setInt(2,gameID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                current.setId(resultSet.getInt(1));
+                current.setTitolo(resultSet.getString(2));
+                current.setContenuto(resultSet.getString(3));
+                current.setVoto(resultSet.getInt(4));
+                current.setNumeroMiPiace(resultSet.getInt(5));
+                current.setNumeroNonMiPiace(resultSet.getInt(6));
+                current.setUtente(resultSet.getString(7));
+                current.setGioco(resultSet.getInt(8));
+                current.setData(resultSet.getObject("data", OffsetDateTime.class));
+            }
+        }
+        catch (SQLException exception){
+            throw  new RuntimeException(exception);
+        }
+        return current;
+    }
     @Override
     public void delete(int recensione) {
 

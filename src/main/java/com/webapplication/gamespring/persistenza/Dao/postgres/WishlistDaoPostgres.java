@@ -2,11 +2,11 @@ package com.webapplication.gamespring.persistenza.Dao.postgres;
 
 import com.webapplication.gamespring.model.Segnalazione;
 import com.webapplication.gamespring.model.Wishlist;
-import com.webapplication.gamespring.persistenza.Dao.WishlistDao;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import com.webapplication.gamespring.persistenza.Dao.WishlistDao;
 
 public class WishlistDaoPostgres implements WishlistDao {
 
@@ -95,7 +95,6 @@ public class WishlistDaoPostgres implements WishlistDao {
 
                 st.setString(1, wishlist.getUtente());
                 st.setInt(2, wishlist.getGioco());
-
                 st.executeUpdate();
 
             } catch (SQLException e) {

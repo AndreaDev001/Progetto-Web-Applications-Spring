@@ -2,54 +2,24 @@ package com.webapplication.gamespring.persistenza.Dao.postgres;
 
 import com.webapplication.gamespring.model.Commento;
 import com.webapplication.gamespring.model.FeedbackCommento;
-import com.webapplication.gamespring.model.Recensione;
 import com.webapplication.gamespring.persistenza.Dao.CommentoDao;
 import com.webapplication.gamespring.persistenza.DatabaseManager;
 
 import java.sql.*;
-import java.util.*;
-import java.util.Date;
+import java.time.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CommentoDaoPostgres implements CommentoDao {
     Connection connection;
     public CommentoDaoPostgres(Connection connection){this.connection = connection;}
-
-
-    @Override
-    public List<Commento> findAll() {
-        List<Commento> commenti = new ArrayList<Commento>();
-        String query = "select * from DatabaseProg.commento";
-        try {
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(query);
-
-            while (rs.next()) {
-                Commento commento = new Commento();
-
-                commento.setId(rs.getInt("id"));
-                commento.setContenuto(rs.getString("contenuto"));
-                commento.setNumeroMiPiace(rs.getInt("numero_mi_piace"));
-                commento.setNumeroNonMiPiace(rs.getInt("numero_non_mi_piace"));
-                commento.setRecensione(rs.getInt("recensione"));
-                commento.setUtente(rs.getString("utente"));
-                commento.setData(rs.getDate("data"));
-
-                commenti.add(commento);
-            }
-
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return commenti;
-    }
 
     @Override
     public List<Commento> getReviewComments(int reviewID, int startIndex, int commentsSize) {
 
 
         List<Commento> commenti = new ArrayList<>();
-        String query = "select * from DatabaseProg.commento where recensione = ? order by numero_mi_piace offset ? limit ?";
+        String query = "select * from DatabaseProg.commento where recensione = ? order by data desc offset ? limit ?";
         try {
 
 
@@ -68,13 +38,12 @@ public class CommentoDaoPostgres implements CommentoDao {
                 commento.setNumeroNonMiPiace(rs.getInt("numero_non_mi_piace"));
                 commento.setRecensione(rs.getInt("recensione"));
                 commento.setUtente(rs.getString("utente"));
-                commento.setData(rs.getDate("data"));
+                commento.setData(rs.getObject("data", OffsetDateTime.class));
 
 
 
                 FeedbackCommento feedbackCommento = DatabaseManager.getInstance().getFeedbackCommentoDao().findByPrimaryKey("Pie_Oxx", commento.getId());
-
-                Commento.Feedback feedback = feedbackCommento != null ? (feedbackCommento.isTipo() ? Commento.Feedback.Like : Commento.Feedback.Dislike) : Commento.Feedback.None;
+                //Commento.Feedback feedback = feedbackCommento != null ? (feedbackCommento.isTipo() ? Commento.Feedback.Like : Commento.Feedback.Dislike) : Commento.Feedback.None;
                 commenti.add(commento);
             }
 
@@ -102,7 +71,7 @@ public class CommentoDaoPostgres implements CommentoDao {
                 commento.setNumeroNonMiPiace(rs.getInt("numero_non_mi_piace"));
                 commento.setRecensione(rs.getInt("recensione"));
                 commento.setUtente(rs.getString("utente"));
-                commento.setData(rs.getDate("data"));
+                commento.setData(rs.getObject("data", OffsetDateTime.class));
 
             }
 
@@ -116,11 +85,14 @@ public class CommentoDaoPostgres implements CommentoDao {
 
     @Override
     public int save(Commento commento) throws SQLException {
-        String insertStr = "INSERT INTO DatabaseProg.commento (contenuto, recensione, utente) VALUES (?, ?, ?) returning id";
+        String insertStr = "INSERT INTO DatabaseProg.commento (contenuto, recensione, utente, data) VALUES (?, ?, ?, ?) returning id";
         PreparedStatement st = connection.prepareStatement(insertStr);
         st.setString(1, commento.getContenuto());
         st.setInt(2, commento.getRecensione());
         st.setString(3, commento.getUtente());
+        ZonedDateTime zdt = ZonedDateTime.now(ZoneId.of("Etc/UTC"));
+        Timestamp timestamp = Timestamp.valueOf(zdt.toLocalDateTime());
+        st.setTimestamp(4, timestamp);
         ResultSet resultSet = st.executeQuery();
         return resultSet.next() ? resultSet.getInt(1) : -1;
     }

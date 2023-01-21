@@ -3,6 +3,8 @@ package com.webapplication.gamespring.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
 
+import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 import java.util.Date;
 
 public class Commento {
@@ -12,7 +14,7 @@ public class Commento {
     int numeroNonMiPiace;
     int recensione;
     String utente;
-    Date data;
+    OffsetDateTime data;
 
     public int getId() {
         return id;
@@ -62,17 +64,11 @@ public class Commento {
         this.utente = utente;
     }
 
-    public Date getData() {
+    public OffsetDateTime getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(OffsetDateTime data) {
         this.data = data;
-    }
-
-    public enum Feedback {
-        Like,
-        Dislike,
-        None
     }
 }

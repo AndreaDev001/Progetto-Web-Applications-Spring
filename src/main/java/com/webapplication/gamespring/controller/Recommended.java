@@ -12,7 +12,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-
 import java.io.IOException;
 import java.util.*;
 
@@ -20,12 +19,13 @@ import java.util.*;
 public class Recommended extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //HttpSession session = req.getSession();
-        //Utente utente = (Utente)session.getAttribute("user");
 
-        List<Wishlist> wishlists = DatabaseManager.getInstance().getWishlistDao().findByUser("a");
+        HttpSession session = req.getSession();
+        Utente utente = (Utente)session.getAttribute("user");
+        
+        List<Wishlist> wishlists = DatabaseManager.getInstance().getWishlistDao().findByUser(utente.getUsername());
+
         HashMap<String, Integer> genres = new HashMap<String, Integer>();
-
         genres.put("action", 0);
         genres.put("indie", 0);
         genres.put("adventure", 0);
@@ -51,7 +51,6 @@ public class Recommended extends HttpServlet {
         {
             games.add(DatabaseManager.getInstance().getGiocoDao().findByPrimaryKey(element.getGioco()));
         }
-
         for (int i=0; i<games.size(); i++){
 
             genres.replace(games.get(i).getGenere(), genres.get(games.get(i).getGenere()) +1);

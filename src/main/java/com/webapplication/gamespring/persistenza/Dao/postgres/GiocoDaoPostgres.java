@@ -49,6 +49,8 @@ public class GiocoDaoPostgres implements GiocoDao {
                 gioco = new Gioco();
                 gioco.setId(rs.getInt("id"));
                 gioco.setGenere(rs.getString("genere"));
+                gioco.setTitolo(rs.getString("titolo"));
+                gioco.setImmagine(rs.getString("immagine"));
 
             }
 
@@ -83,7 +85,7 @@ public class GiocoDaoPostgres implements GiocoDao {
     @Override
     public void saveOrUpdate(Gioco gioco) {
         if (!alreadyInDatabase(gioco.getId())) {
-            String insertStr = "INSERT INTO DatabaseProg.gioco VALUES (?,?)";
+            String insertStr = "INSERT INTO DatabaseProg.gioco VALUES (?, ?, ?, ?)";
 
             PreparedStatement st;
             try {
@@ -91,10 +93,11 @@ public class GiocoDaoPostgres implements GiocoDao {
 
                 st.setLong(1, gioco.getId());
                 st.setString(2, gioco.getGenere());
+                st.setString(3, gioco.getImmagine());
+                st.setString(4, gioco.getTitolo());
                 st.executeUpdate();
 
             } catch (SQLException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
 

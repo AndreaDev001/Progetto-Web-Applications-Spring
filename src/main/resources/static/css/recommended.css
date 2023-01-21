@@ -13,12 +13,22 @@ html, body{
 
 }
 
+.header{
+    text-align: center;
+    background-color: #0f2027;
+    height: 100px;
+    width: 100%;
+    justify-content: center;
+
+}
+
 .title{
     font-size: 30px;
     color: #f0f0f0;
     text-align: center;
     margin: auto;
 }
+
 
 .recommended {
     display: flex;
@@ -28,6 +38,7 @@ html, body{
     width: 100%;
 
 }
+
 
 .container{
     display: flex;

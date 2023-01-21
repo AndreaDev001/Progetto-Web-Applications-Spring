@@ -6,12 +6,22 @@ html, body {
 .main-wrap{
     display: flex;
 }
+
 .header{
     text-align: center;
     background-color: #0f2027;
     height: 100px;
     width: 100%;
     justify-content: center;
+}
+
+.cardList{
+    height: 100%;
+    width: 100%;
+    margin: 50px 50px 50px 50px;
+
+}
+
 
 }
 
@@ -20,12 +30,6 @@ html, body {
     color: #f0f0f0;
     text-align: center;
     margin: auto;
-}
-
-.cardList{
-    height: 100%;
-    width: 100%;
-    margin: 150px 50px 50px 150px;
 
 }
 
@@ -41,11 +45,9 @@ html, body {
     height: 40px;
     width: 60px;
     font-size: 15px;
-
 }
 
 .containerCard{
-
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
