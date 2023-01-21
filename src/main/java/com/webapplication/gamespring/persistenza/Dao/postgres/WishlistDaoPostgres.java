@@ -95,7 +95,6 @@ public class WishlistDaoPostgres implements WishlistDao {
 
                 st.setString(1, wishlist.getUtente());
                 st.setInt(2, wishlist.getGioco());
-
                 st.executeUpdate();
 
             } catch (SQLException e) {

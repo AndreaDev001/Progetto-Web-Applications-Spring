@@ -57,4 +57,12 @@ public class Authentication {
         }
         return results;
     }
+    @PostMapping("/logout")
+    public void logout(HttpServletRequest req){
+        HttpSession session = req.getSession();
+        session.removeAttribute("sessionId");
+        session.removeAttribute("user");
+        session.invalidate();
+        System.out.println("Logout: sessionsID: " + session);
+    }
 }
