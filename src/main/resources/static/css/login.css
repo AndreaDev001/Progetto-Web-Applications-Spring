@@ -4,7 +4,9 @@ input.ng-invalid.ng-touched {
 .error-message {
     color: var(--danger);
 }
-
+.success-message {
+    color: var(--success);
+}
 .btn-outline-danger {
     border-radius: 70%;
     font-size: 11px;
