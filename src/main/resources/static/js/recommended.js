@@ -23,23 +23,27 @@
     function creaCard(data, parent){
         const card = document.createElement("div")
         card.classList.add("card")
-
-        const innerDiv = document.createElement("div")
-        card.appendChild(innerDiv)
+        card.setAttribute("class", "card")
+        card.setAttribute("style", "width: 18rem;")
 
         const imm = document.createElement("img")
+        imm.setAttribute("class", "card-img-top")
         imm.setAttribute("src", data.short_screenshots[0].image)
-        innerDiv.appendChild(imm)
+        imm.setAttribute("alt", "Card image cap")
+        card.appendChild(imm)
 
-        const title = document.createElement("h3")
+        const innerDiv = document.createElement("div")
+        innerDiv.setAttribute("class", "card-body")
+        card.appendChild(innerDiv)
+
+
+        const title = document.createElement("h5")
+        title.setAttribute("class", "card-title")
         title.appendChild(document.createTextNode(data.name))
         innerDiv.appendChild(title)
 
-        const rat = document.createElement("p")
-        rat.appendChild(document.createTextNode(data.metacritic))
-        innerDiv.appendChild(rat)
-
         const date = document.createElement("p")
+        date.setAttribute("class", "card-text")
         date.appendChild(document.createTextNode(data.released))
         innerDiv.appendChild(date)
 
