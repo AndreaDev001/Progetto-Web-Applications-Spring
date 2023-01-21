@@ -69,13 +69,10 @@
                         </div>
                     </div>
                     <section class="form-group d-flex w-100 justify-content-center" style="padding: 0.2% 0">
-                        <div class="w-50 d-inline-flex">
-                            <div class="w-75">
-                                <input class="form-control" style="width: 96%" type="password" placeholder="Enter password" id="password" name="password">
-                                <i class="far fa-eye" style="width: 3%;color: whitesmoke" id="togglePassword"></i>
-                                <div th:if="${session.emptyFields == true}" class="error-message">Mandatory field</div>
-                            </div>
-
+                        <div class="w-50 d-inline-flex justify-content-between">
+                            <input class="form-control" style="width: 90%" type="password" placeholder="Enter password" id="password" name="password">
+                            <i class="far fa-eye align-middle pt-2" style="width: 8%;color: whitesmoke" id="togglePassword"></i>
+                            <div th:if="${session.emptyFields == true}" class="error-message">Mandatory field</div>
                         </div>
                     </section>
 
