@@ -1,5 +1,7 @@
 package com.webapplication.gamespring.model;
 
+import java.time.OffsetDateTime;
+
 public class Recensione {
     int id;
     String titolo;
@@ -9,6 +11,7 @@ public class Recensione {
     int numeroNonMiPiace;
     String utente;
     int gioco;
+    OffsetDateTime data;
 
     public int getId() {
         return id;
@@ -72,5 +75,14 @@ public class Recensione {
 
     public void setGioco(int gioco) {
         this.gioco = gioco;
+    }
+
+
+    public OffsetDateTime getData() {
+        return data;
+    }
+
+    public void setData(OffsetDateTime data) {
+        this.data = data;
     }
 }
