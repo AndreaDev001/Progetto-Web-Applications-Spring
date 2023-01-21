@@ -30,23 +30,10 @@ html, body {
     margin-top: 50px;
 }
 
-.user-list{
-    height: 200px;
-    width: 300px;
-    margin: auto;
-    text-align: left;
-    border: 2px solid #0f2027;
-}
-
-.inner-user{
+.checkboxDiv{
     display: flex;
-    flex-wrap: wrap;
-    margin: auto;
-    column-gap: 5px;
-    row-gap: 5px;
+    gap: 10px
 }
-
-
 
 .searchBarForm{
 
@@ -78,13 +65,18 @@ html, body {
     font-size: 30px;
 }
 
+
+.checkboxView{
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
 .user{
     margin-top: 50px;
     margin-left: 10%;
     margin-right: 10%;
     display: flex;
     flex-wrap: wrap;
-    text-align: center;
     width: 80%;
     height: 600px;
     overflow-y: scroll;

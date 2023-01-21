@@ -2,12 +2,14 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+     <title>Title</title>
     <link rel="stylesheet" href="css/userList.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.0.4/popper.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
 </head>
 <body>
     <header class="header">
@@ -36,19 +38,44 @@
             <div class="user">
                 <div th:if="${lista_utenti.isEmpty()}" class="failedSearch"> Nessun utente trovato</div>
                     <div th:each="utenti, iterator : ${lista_utenti}" th:if="${iterator.index < 20}" class="user-list">
-                        <div class="inner-user">
+                        <!--<div class="inner-user">
                             <p th:text="'Username: ' + ${utenti.username}" class="username" ></p>
                             <p th:text="'Email: ' +${utenti.email}" class="email" ></p>
                             <p th:text="'Admin: ' + ${utenti.amministratore}" class="admin" ></p>
                             <p th:text="'Bannato: ' + ${utenti.bandito}" class="ban" ></p>
+                        </div>-->
+
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h3 class="card-title" th:text="'Username: ' + ${utenti.username}"></h3>
+                                <p th:text="'Email: ' +${utenti.email}"></p>
+                                <div class="checkboxDiv">
+                                    <p class="label_admin">Admin: </p>
+                                    <input name="admin" type="checkbox" th:checked="${utenti.amministratore}" class="checkboxView" readonly="readonly"></input>
+                                </div>
+
+                                <div class="checkboxDiv">
+                                    <p class="label_ban">Bandito: </p>
+                                    <input name="admin" type="checkbox" th:checked="${utenti.bandito}" class="checkboxView" readonly="readonly"></input>
+                                </div>
+
+                                <div>
+                                    <form action="modifyUser" method="post" class="modifyButton">
+                                        <input type="hidden" name="username" th:value="${utenti.username}">
+                                        <button type="submit" value="Submit" class="btn btn-primary">modifica account</button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
 
-                        <div>
+
+
+                        <!--<div>
                             <form action="modifyUser" method="post" class="modifyButton">
                                 <input type="hidden" name="username" th:value="${utenti.username}">
                                 <button type="submit" value="Submit" class="btn btn-primary">modifica account</button>
                             </form>
-                        </div>
+                        </div>-->
                     </div>
             </div>
         </div>

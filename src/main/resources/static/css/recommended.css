@@ -4,17 +4,12 @@ html, body{
 
 }
 
-.upper-board{
+.header{
+    text-align: center;
+    background-color: #0f2027;
     height: 100px;
-
-}
-
-.recommended {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 50px;
     width: 100%;
+    justify-content: center;
 
 }
 
@@ -34,15 +29,16 @@ html, body{
     margin: auto;
 }
 
-.container-wrap{
-    overflow-y: scroll;
-    height: 800px;
-}
 
-
-.main-wrap{
+.recommended {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+    width: 100%;
+
 }
+
 
 .container{
     display: flex;

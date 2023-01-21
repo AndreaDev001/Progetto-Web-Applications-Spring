@@ -14,7 +14,7 @@ function formValidate() {
             'Password can\'t contain space and must be at least 8 characters long');
 
 
-        form.setAttribute("action", "openModifyUser")
+        form.setAttribute("action", "modifyUser")
     }
 
 
@@ -22,7 +22,7 @@ function formValidate() {
     if(!email.value.match(mailformat)){
         alert('Invalid email');
 
-        form.setAttribute("action", "openModifyUser")
+        form.setAttribute("action", "modifyUser")
     }
 
 
