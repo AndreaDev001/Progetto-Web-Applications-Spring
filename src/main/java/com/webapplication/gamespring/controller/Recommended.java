@@ -1,6 +1,7 @@
 package com.webapplication.gamespring.controller;
 
 import com.webapplication.gamespring.model.Gioco;
+import com.webapplication.gamespring.model.Utente;
 import com.webapplication.gamespring.model.Wishlist;
 import com.webapplication.gamespring.persistenza.DatabaseManager;
 import jakarta.servlet.RequestDispatcher;
@@ -9,6 +10,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 
 import java.io.IOException;
 import java.util.*;
@@ -17,6 +20,8 @@ import java.util.*;
 public class Recommended extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //HttpSession session = req.getSession();
+        //Utente utente = (Utente)session.getAttribute("user");
 
         List<Wishlist> wishlists = DatabaseManager.getInstance().getWishlistDao().findByUser("a");
         HashMap<String, Integer> genres = new HashMap<String, Integer>();

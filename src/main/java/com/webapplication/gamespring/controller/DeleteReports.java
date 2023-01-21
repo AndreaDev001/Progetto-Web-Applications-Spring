@@ -29,7 +29,7 @@ public class DeleteReports extends HttpServlet {
 
         req.setAttribute("recensioni_segnalate", reports);
 
-        RequestDispatcher dispacher = req.getRequestDispatcher("views/recensioni.html");
+        RequestDispatcher dispacher = req.getRequestDispatcher("views/report.html");
         dispacher.forward(req, resp);
 
 

@@ -23,7 +23,7 @@ public class DeleteUser extends HttpServlet{
 
             List<Utente> utenti = DatabaseManager.getInstance().getUtenteDao().findAll();
             req.setAttribute("lista_utenti", utenti);
-            RequestDispatcher dispacher = req.getRequestDispatcher("views/utenti.html");
+            RequestDispatcher dispacher = req.getRequestDispatcher("views/userList.html");
             dispacher.forward(req, resp);
 
 
