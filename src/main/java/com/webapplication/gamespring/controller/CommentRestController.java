@@ -24,10 +24,8 @@ public class CommentRestController {
     }
 
     @PostMapping(value = "/changeFeedback")
-    public String changeFeedback(@RequestBody FeedbackCommento feedbackCommento, HttpServletResponse response)
+    public String changeFeedback(@RequestBody FeedbackCommento feedbackCommento)
     {
-
-        feedbackCommento.setUtente("Pie_Oxx");
         if(DatabaseManager.getInstance().getFeedbackCommentoDao().saveOrUpdate(feedbackCommento))
             return feedbackCommento.isTipo() ? "like" : "dislike";
         return "none";
@@ -46,13 +44,11 @@ public class CommentRestController {
 
     @PostMapping(value = "/addComment")
     public int addComment(@RequestBody Commento commento) throws SQLException {
-        commento.setUtente("Pie_Oxx");
         return DatabaseManager.getInstance().getCommentoDao().save(commento);
     }
 
     @PostMapping(value = "/editComment")
     public void editComment(@RequestBody Commento commento) throws SQLException {
-        commento.setUtente("Pie_Oxx");
         DatabaseManager.getInstance().getCommentoDao().update(commento);
     }
 

@@ -3,20 +3,19 @@ package com.webapplication.gamespring.persistenza.Dao;
 import com.webapplication.gamespring.model.Commento;
 import com.webapplication.gamespring.model.Recensione;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface RecensioneDao {
-    public List<Recensione> findAll();
+    List<Recensione> getGameReviews(int gameID);
 
-    public List<Recensione> getGameReviews(int gameID);
+    Recensione findByPrimaryKey(int id);
+    Recensione getUserReview(String username, int gameID);
 
-    public Recensione findByPrimaryKey(int id);
-    public Recensione getUserReview(String username,int gameID);
+    int save(Recensione recensione) throws SQLException;
 
-    public int save(Recensione recensione);
+    void delete(int recensione);
 
-    public void delete(int recensione);
-
-    public boolean update(Recensione recensione);
+    boolean update(Recensione recensione);
 
 }
