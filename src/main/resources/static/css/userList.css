@@ -7,49 +7,40 @@ html, body {
     display: flex;
 }
 
-.sideBar{
-    width: 100px;
-    height: 100%;
+
+.header{
+    text-align: center;
     background-color: #0f2027;
-    position: absolute;
+    height: 100px;
+    width: 100%;
+    justify-content: center;
+
 }
 
-.upperBar{
-    width: 100%;
-    height: 100px;
-    background-color: #0f2027;
-    position: absolute;
+.title{
+    font-size: 30px;
+    color: #f0f0f0;
+    text-align: center;
+    margin: auto;
 }
 
 .searchContainer{
-    margin: 150px 50px 50px 150px;
     height: 100%;
     width: 100%;
+    margin-top: 50px;
 }
 
-.user-list{
-    height: 200px;
-    width: 300px;
-    margin: auto;
-    text-align: left;
-    border: 2px solid #0f2027;
-}
-
-.inner-user{
+.checkboxDiv{
     display: flex;
-    flex-wrap: wrap;
-    margin: auto;
-    column-gap: 5px;
-    row-gap: 5px;
+    gap: 10px
 }
-
-
 
 .searchBarForm{
 
     width: 100%;
     justify-content: center;
     display: flex;
+    margin: 1px;
 
 }
 
@@ -74,14 +65,19 @@ html, body {
     font-size: 30px;
 }
 
+
+.checkboxView{
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
 .user{
     margin-top: 50px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 10%;
+    margin-right: 10%;
     display: flex;
     flex-wrap: wrap;
-    text-align: center;
-    width: 1200px;
+    width: 80%;
     height: 600px;
     overflow-y: scroll;
     justify-content: space-evenly;
@@ -94,25 +90,13 @@ html, body {
     margin-top: 10px;
 }
 
-.username, .email, .admin, .ban{
 
-}
 
-.title{
-    font-size: 30px;
-    color: #f0f0f0;
-    text-align: center;
-}
 
 .buttons{
-    margin-top: 150px;
-
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    gap: 30px;
 }
 
-.gestioneSegnalazioni{
-    margin-top: 20px;
-}
-
-.gestioneUtenti{
-
-}
