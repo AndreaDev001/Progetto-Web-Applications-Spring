@@ -4,9 +4,20 @@ html, body{
 
 }
 
-.upper-board{
+.header{
+    text-align: center;
+    background-color: #0f2027;
     height: 100px;
+    width: 100%;
+    justify-content: center;
 
+}
+
+.title{
+    font-size: 30px;
+    color: #f0f0f0;
+    text-align: center;
+    margin: auto;
 }
 
 .recommended {
@@ -16,37 +27,6 @@ html, body{
     gap: 50px;
     width: 100%;
 
-}
-
-.title{
-    font-size: 30px;
-    color: #f0f0f0;
-    text-align: center;
-}
-
-.container-wrap{
-    overflow-y: scroll;
-    height: 900px;
-}
-
-.sideBar{
-    width: 100px;
-    height: 100%;
-    background-color: #0f2027;
-    position: absolute;
-}
-
-.upperBar{
-    width: 100%;
-    height: 100px;
-    background-color: #0f2027;
-    position: absolute;
-
-
-}
-
-.main-wrap{
-    display: flex;
 }
 
 .container{
