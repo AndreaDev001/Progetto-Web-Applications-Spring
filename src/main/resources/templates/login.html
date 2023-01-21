@@ -37,12 +37,13 @@
                             Account
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="http://localhost:8080/login">Login</a>
+                            <a th:if="!${session.sessionId}" class="dropdown-item" href="http://localhost:8080/login">Login</a>
+                            <a th:if="${session.sessionId}" class="dropdown-item" href="logout">Logout</a>
                             <a class="dropdown-item" href="http://localhost:4200/registration">Sign up</a>
-                            <a class="dropdown-item" href="http://localhost:8080/wishlist">Wishlist</a>
-                            <a class = "dropdown-item" href="http://localhost:8080/recommended">Consigliati</a>
-                            <a class = "dropdown-item" href="http://localhost:8080/userList">Lista Utenti</a>
-                            <a class = "dropdown-item" href="http://localhost:8080/reports">Lista Segnalazioni</a>
+                            <a th:if="${session.sessionId}" class="dropdown-item" href="http://localhost:8080/wishlist">Wishlist</a>
+                            <a th:if="${session.sessionId}" class = "dropdown-item" href="http://localhost:8080/recommended">Consigliati</a>
+                            <a th:if="${session.sessionId} AND ${session.user} AND ${session.user.amministratore}" class = "dropdown-item" href="http://localhost:8080/userList">Lista Utenti</a>
+                            <a th:if="${session.sessionId} AND ${session.user} AND ${session.user.amministratore}" class = "dropdown-item" href="http://localhost:8080/reports">Lista Segnalazioni</a>
                         </div>
                     </li>
                 </ul>
