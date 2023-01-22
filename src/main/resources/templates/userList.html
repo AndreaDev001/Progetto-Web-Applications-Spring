@@ -2,84 +2,94 @@
 <html>
 <head>
     <meta charset="UTF-8">
-     <title>Title</title>
+    <title>Title</title>
     <link rel="stylesheet" href="css/userList.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.0.4/popper.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/authentication.css">
+    <link rel="stylesheet" href="css/header.css">
 </head>
 <body>
-    <header class="header">
-            <h1 class="title">Gestione Utenti</h1>
-        <div class="buttons">
-            <form action="userList" method="get" class="gestioneUtenti">
-                <button type="submit" value="Submit">Gestione Utenti</button>
-            </form>
-            <form action="reports" method="get" class="gestioneSegnalazioni">
-                <button type="submit" value="Submit">Gestione Segnalazioni</button>
+<nav class="navbar navbar-expand-lg position-sticky top-0" >
+    <a class="navbar-brand text-white" href="#">Navbar</a>
+    <button class="navbar-toggler navbar-light" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ">
+            <li class="nav-item active header-item">
+                <a class="nav-link header-link" href="http://localhost:4200/games">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item header-item">
+                <a class="nav-link header-link" href="http://localhost:4200/news" >News</a>
+            </li>
+            <li class="nav-item header-item">
+                <a class="nav-link header-link" href="#">About us</a>
+            </li>
+            <li class="nav-item dropdown header-item">
+                <a class="nav-link dropdown-toggle header-link" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                    Account
+                </a>
+                <div class="dropdown-menu" style="background-color: var(--background-secondary)">
+                    <a th:if="!${session.sessionId}" class="dropdown-item dropdown-link" href="http://localhost:8080/login">Login</a>
+                    <a th:if="${session.sessionId}" class="dropdown-item dropdown-link" href="logout">Logout</a>
+                    <a class="dropdown-item dropdown-link" href="http://localhost:4200/registration">Sign up</a>
+                    <a th:if="${session.sessionId}" class="dropdown-item dropdown-link" href="http://localhost:8080/wishlist">Wishlist</a>
+                    <a th:if="${session.sessionId}" class = "dropdown-item dropdown-link" href="http://localhost:8080/recommended">Consigliati</a>
+                    <a th:if="${session.sessionId} AND ${session.user} AND ${session.user.amministratore}" class = "dropdown-item dropdown-link" href="http://localhost:8080/userList">Lista Utenti</a>
+                    <a th:if="${session.sessionId} AND ${session.user} AND ${session.user.amministratore}" class = "dropdown-item dropdown-link" href="http://localhost:8080/reports">Lista Segnalazioni</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="main-wrap">
+
+    <div class="searchContainer">
+
+        <div class="searchBar">
+            <form action="search" method="post" class="searchBarForm">
+                <input type="text" name="keyword" placeholder="Cerca utente per username" class="searchInput">
+                <button type="submit" class="btn button button-primary" >Search</button>
             </form>
         </div>
-    </header>
 
-    <div class="main-wrap">
+        <div class="user">
+            <div th:if="${lista_utenti.isEmpty()}" class="failedSearch"> Nessun utente trovato</div>
+            <div th:each="utenti, iterator : ${lista_utenti}" th:if="${iterator.index < 20}" class="user-list">
 
-        <div class="searchContainer">
-
-            <div class="searchBar">
-                <form action="search" method="post" class="searchBarForm">
-                    <input type="text" name="keyword" placeholder="Cerca utente per username" class="searchInput">
-                    <button type="submit" class="searchButton" >Search</button>
-                </form>
-            </div>
-
-            <div class="user">
-                <div th:if="${lista_utenti.isEmpty()}" class="failedSearch"> Nessun utente trovato</div>
-                    <div th:each="utenti, iterator : ${lista_utenti}" th:if="${iterator.index < 20}" class="user-list">
-                        <!--<div class="inner-user">
-                            <p th:text="'Username: ' + ${utenti.username}" class="username" ></p>
-                            <p th:text="'Email: ' +${utenti.email}" class="email" ></p>
-                            <p th:text="'Admin: ' + ${utenti.amministratore}" class="admin" ></p>
-                            <p th:text="'Bannato: ' + ${utenti.bandito}" class="ban" ></p>
-                        </div>-->
-
-                        <div class="card" style="width: 18rem;">
-                            <div class="card-body">
-                                <h3 class="card-title" th:text="'Username: ' + ${utenti.username}"></h3>
-                                <p th:text="'Email: ' +${utenti.email}"></p>
-                                <div class="checkboxDiv">
-                                    <p class="label_admin">Admin: </p>
-                                    <input name="admin" type="checkbox" th:checked="${utenti.amministratore}" class="checkboxView" readonly="readonly"></input>
-                                </div>
-
-                                <div class="checkboxDiv">
-                                    <p class="label_ban">Bandito: </p>
-                                    <input name="admin" type="checkbox" th:checked="${utenti.bandito}" class="checkboxView" readonly="readonly"></input>
-                                </div>
-
-                                <div>
-                                    <form action="modifyUser" method="post" class="modifyButton">
-                                        <input type="hidden" name="username" th:value="${utenti.username}">
-                                        <button type="submit" value="Submit" class="btn btn-primary">modifica account</button>
-                                    </form>
-                                </div>
-                            </div>
+                <div class="card" style="width: 18rem; background-color: var(--background-secondary);">
+                    <div class="card-body">
+                        <h3 class="card-title" th:text="'Username: ' + ${utenti.username}" style="color: whitesmoke"></h3>
+                        <p th:text="'Email: ' +${utenti.email}" style="color: whitesmoke"></p>
+                        <div class="checkboxDiv">
+                            <p class="label_admin" style="color: whitesmoke">Admin: </p>
+                            <input name="admin" type="checkbox" th:checked="${utenti.amministratore}" class="checkboxView" onclick="this.checked=!this.checked;"></input>
                         </div>
 
+                        <div class="checkboxDiv">
+                            <p class="label_ban" style="color: whitesmoke">Bandito: </p>
+                            <input name="admin" type="checkbox" th:checked="${utenti.bandito}" class="checkboxView" onclick="this.checked=!this.checked;"></input>
+                        </div>
 
-
-                        <!--<div>
-                            <form action="modifyUser" method="post" class="modifyButton">
+                        <div>
+                            <form action="modifyUser" method="post" class="modifyButton" >
                                 <input type="hidden" name="username" th:value="${utenti.username}">
-                                <button type="submit" value="Submit" class="btn btn-primary">modifica account</button>
+                                <button type="submit" value="Submit" class="btn button button-primary" >modifica account</button>
                             </form>
-                        </div>-->
+                        </div>
                     </div>
+                </div>
             </div>
         </div>
     </div>
+</div>
 
 </body>
 </html>

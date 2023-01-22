@@ -6,7 +6,8 @@
     --lighter: #b093ed;
 
     /* aggiunti */
-    --danger: #de645b;
+    --danger: #ee3128;
+    --danger-hover: #EE3128FF;
     --success: #75a34e;
     --warning: #e0a55c;
 }
@@ -51,4 +52,15 @@ body
 .button-secondary:hover {
     background-color: whitesmoke;
     color: var(--background-secondary);
+}
+
+.button-delete {
+    background-color: var(--danger);
+    border: transparent;
+    color: whitesmoke;
+}
+
+.button-delete:hover {
+    background-color: whitesmoke;
+    color: var(--danger-hover);
 }

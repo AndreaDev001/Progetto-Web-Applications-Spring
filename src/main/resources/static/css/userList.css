@@ -1,34 +1,20 @@
 html, body {
     height: 100%;
     margin: 0;
+
 }
 
 .main-wrap{
     display: flex;
 }
 
-
-.header{
-    text-align: center;
-    background-color: #0f2027;
-    height: 100px;
-    width: 100%;
-    justify-content: center;
-
-}
-
-.title{
-    font-size: 30px;
-    color: #f0f0f0;
-    text-align: center;
-    margin: auto;
-}
-
 .searchContainer{
     height: 100%;
-    width: 100%;
+    width: 99%;
     margin-top: 50px;
 }
+
+
 
 .checkboxDiv{
     display: flex;
@@ -50,6 +36,9 @@ html, body {
     width: 40%;
     padding: 0;
     font-size: 15px;
+    border-radius: 10px 10px 10px 10px;
+    border: 2px solid var(--primary);
+    background-color: whitesmoke;
 }
 
 
@@ -87,7 +76,9 @@ html, body {
 }
 
 .modifyButton{
-    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 

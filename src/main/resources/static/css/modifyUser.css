@@ -26,20 +26,13 @@ html, body{
     display: flex;
 }
 
-
-.header{
-    text-align: center;
-    background-color: #0f2027;
-    height: 100px;
-    width: 100%;
-    justify-content: center;
+.admindiv-checkbox, .bandiv-checkbox{
+    display: flex;
+    gap: 10px
 
 }
 
-.title{
-    font-size: 30px;
-    color: #f0f0f0;
-    text-align: center;
-    margin: auto;
-}
 
+.label_ban, .label_admin{
+    margin: 0;
+}
