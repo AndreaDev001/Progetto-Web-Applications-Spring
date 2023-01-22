@@ -25,7 +25,7 @@ public class ChangePasswordServlet extends HttpServlet {
         if (session.getAttribute("user") == null) {
             System.out.println("non autorizzato al cambio pw"); // todo: debug
             // resp.sendRedirect("loginError.html");
-            RequestDispatcher dispatcher = req.getRequestDispatcher("views/loginError.html"); // todo: cambia con pag not authorized
+            RequestDispatcher dispatcher = req.getRequestDispatcher("views/notAuthorized.html"); // todo: cambia con pag not authorized
             dispatcher.forward(req, resp);
         }
         else {
