@@ -59,7 +59,9 @@
                         <div class="w-50">
                             <label style="color: whitesmoke" for="username">Username*:</label>
                             <input type="text" class="form-control" placeholder="Enter username" id="username" name="username" autofocus>
-                            <div th:if="${session.emptyFields == true}" class="error-message">Mandatory field</div>
+                            <div th:if="${session.emptyFields == true}" class="error-message">
+                                <small>Mandatory field</small>
+                            </div>
                         </div>
                     </section>
 
@@ -72,7 +74,9 @@
                         <div class="w-50 d-inline-flex justify-content-between">
                             <input class="form-control" style="width: 90%" type="password" placeholder="Enter password" id="password" name="password">
                             <i class="far fa-eye align-middle pt-2" style="width: 8%;color: whitesmoke" id="togglePassword"></i>
-                            <div th:if="${session.emptyFields == true}" class="error-message">Mandatory field</div>
+                            <div th:if="${session.emptyFields == true}" class="error-message">
+                                <small>Mandatory field</small>
+                            </div>
                         </div>
                     </section>
 

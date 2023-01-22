@@ -52,7 +52,9 @@ public class LoginServlet extends HttpServlet {
             // se l'utente è nullo (cioè non esiste un account con questo username)
             if (utente == null) {
                 logged = false;
-                resp.sendRedirect("loginError.html");
+                RequestDispatcher dispatcher = req.getRequestDispatcher("views/loginError.html");
+                dispatcher.forward(req, resp);
+                // resp.sendRedirect("loginError.html");
             }
             else {
                 // se le credenziali sono entrambe giuste
@@ -70,7 +72,9 @@ public class LoginServlet extends HttpServlet {
                 }
                 // se username giusto ma password sbagliata
                 else {
-                    resp.sendRedirect("loginError.html");
+                    // resp.sendRedirect("loginError.html");
+                    RequestDispatcher dispatcher = req.getRequestDispatcher("views/loginError.html");
+                    dispatcher.forward(req, resp);
                     logged = false;
                 }
             }
