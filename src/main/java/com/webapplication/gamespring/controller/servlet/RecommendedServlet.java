@@ -20,10 +20,10 @@ public class RecommendedServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        HttpSession session = req.getSession();
-        Utente utente = (Utente)session.getAttribute("user");
+        //HttpSession session = req.getSession();
+        //Utente utente = (Utente)session.getAttribute("user");
         
-        List<Wishlist> wishlists = DatabaseManager.getInstance().getWishlistDao().findByUser(utente.getUsername());
+        List<Wishlist> wishlists = DatabaseManager.getInstance().getWishlistDao().findByUser("utente.getUsername()");
 
         HashMap<String, Integer> genres = new HashMap<String, Integer>();
         genres.put("action", 0);
@@ -88,23 +88,38 @@ public class RecommendedServlet extends HttpServlet {
 
         }
 
+        genres.remove(index3);
+
+        max = Collections.max(genres.values());
+        String index4 = "";
+
+        for (Map.Entry<String, Integer> entry : genres.entrySet()){
+            if(max == entry.getValue())
+                index4 = entry.getKey();
+
+        }
+
 
         String api = "https://api.rawg.io/api/games?key=9970cebdf7b244e6bc80319c9e29e10c&genres=" + index ;
         String api2 = "https://api.rawg.io/api/games?key=9970cebdf7b244e6bc80319c9e29e10c&genres=" + index2 ;
         String api3 = "https://api.rawg.io/api/games?key=9970cebdf7b244e6bc80319c9e29e10c&genres=" + index3 ;
+        String api4 = "https://api.rawg.io/api/games?key=9970cebdf7b244e6bc80319c9e29e10c&genres=" + index4;
 
 
         req.setAttribute("api1", api);
         req.setAttribute("api2", api2);
         req.setAttribute("api3", api3);
+        req.setAttribute("api4", api4);
 
         req.setAttribute("gen1", index);
         req.setAttribute("gen2", index2);
         req.setAttribute("gen3", index3);
+        req.setAttribute("gen4", index4);
 
         System.out.println(api);
         System.out.println(api2);
         System.out.println(api3);
+        System.out.println(api4);
         RequestDispatcher dispacher = req.getRequestDispatcher("views/recommended.html");
         dispacher.forward(req, resp);
 
