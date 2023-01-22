@@ -4,31 +4,6 @@ html, body{
 
 }
 
-.header{
-    text-align: center;
-    background-color: #0f2027;
-    height: 100px;
-    width: 100%;
-    justify-content: center;
-
-}
-
-.header{
-    text-align: center;
-    background-color: #0f2027;
-    height: 100px;
-    width: 100%;
-    justify-content: center;
-
-}
-
-.title{
-    font-size: 30px;
-    color: #f0f0f0;
-    text-align: center;
-    margin: auto;
-}
-
 
 .recommended {
     display: flex;
@@ -50,7 +25,7 @@ html, body{
 }
 
 .card {
-    border: 1px solid gray;
+    border: 1px solid var(--primary);
     padding: 10px;
     border-radius: 10px;
     width: 200px;
