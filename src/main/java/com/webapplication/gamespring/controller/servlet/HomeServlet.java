@@ -1,4 +1,4 @@
-package com.webapplication.gamespring.controller;
+package com.webapplication.gamespring.controller.servlet;
 
 
 import jakarta.servlet.RequestDispatcher;

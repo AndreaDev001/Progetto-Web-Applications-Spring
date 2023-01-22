@@ -1,10 +1,33 @@
 package com.webapplication.gamespring.model;
 
-public class FeedbackRecensione {
-    String utente;
-    int recensione;
-    boolean tipo;
+public class FeedbackRecensione
+{
+    private String utente;
+    private int recensione;
+    private boolean tipo;
 
+    public FeedbackRecensione()
+    {
+
+    }
+    public FeedbackRecensione(String utente,int recensione,boolean tipo){
+        this.utente = utente;
+        this.recensione = recensione;
+        this.tipo = tipo;
+    }
+    public FeedbackRecensione(FeedbackRecensione other){
+        this.utente = other.utente;
+        this.recensione = other.recensione;
+        this.tipo = other.tipo;
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null)
+            return false;
+        if(!(obj instanceof FeedbackRecensione feedbackRecensione))
+            return false;
+        return this.utente.equals(feedbackRecensione.utente) && this.recensione == feedbackRecensione.getRecensione();
+    }
     public String getUtente() {
         return utente;
     }

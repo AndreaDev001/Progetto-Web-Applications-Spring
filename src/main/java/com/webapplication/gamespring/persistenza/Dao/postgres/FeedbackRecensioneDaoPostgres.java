@@ -20,87 +20,73 @@ public class FeedbackRecensioneDaoPostgres implements FeedbackRecensioneDao {
         try {
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(query);
-
-            while (rs.next()) {
-                FeedbackRecensione feedbackRecensione = new FeedbackRecensione();
-
-                feedbackRecensione.setUtente(rs.getString("utente"));
-                feedbackRecensione.setRecensione(rs.getInt("recensione"));
-                feedbackRecensione.setTipo(rs.getBoolean("tipo"));
-
-                feedbackRecensioni.add(feedbackRecensione);
-            }
-
-        } catch (SQLException e) {
+            while (rs.next())
+                feedbackRecensioni.add(readFeedbackRecensione(rs));
+        } catch (SQLException exception){
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new RuntimeException(exception);
         }
         return feedbackRecensioni;
     }
-
     @Override
     public FeedbackRecensione findByPrimaryKey(String utente, int recensione) {
-        FeedbackRecensione feedbackRecensione = null;
         String query = "select * from DatabaseProg.feedback_recensione where utente = ? and recensione = ?";
-        try {
+        try
+        {
             PreparedStatement st = connection.prepareStatement(query);
             st.setString(1, utente);
             st.setInt(2, recensione);
             ResultSet rs = st.executeQuery();
+            if (rs.next())
+                return readFeedbackRecensione(rs);
 
-            if (rs.next()) {
-                feedbackRecensione = new FeedbackRecensione();
-                feedbackRecensione.setUtente(rs.getString("utente"));
-                feedbackRecensione.setRecensione(rs.getInt("recensione"));
-                feedbackRecensione.setTipo(rs.getBoolean("tipo"));
-            }
-
-        } catch (SQLException e) {
+        } catch (SQLException exception) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new RuntimeException(exception);
         }
-        return feedbackRecensione;
+        return null;
     }
-
+    @Override
+    public FeedbackRecensione readFeedbackRecensione(ResultSet resultSet) throws SQLException {
+        String utente = resultSet.getString("utente");
+        int recensione = resultSet.getInt("recensione");
+        boolean tipo = resultSet.getBoolean("tipo");
+        return new FeedbackRecensione(utente,recensione,tipo);
+    }
     @Override
     public void saveOrUpdate(FeedbackRecensione feedbackRecensione) {
         if (!alreadyInDatabase(feedbackRecensione.getUtente(), feedbackRecensione.getRecensione())) {
             String insertStr = "INSERT INTO DatabaseProg.feedback_recensione VALUES (?, ?, ?)";
-
             PreparedStatement st;
-            try {
+            try
+            {
                 st = connection.prepareStatement(insertStr);
-
                 st.setString(1, feedbackRecensione.getUtente());
                 st.setInt(2, feedbackRecensione.getRecensione());
                 st.setBoolean(3, feedbackRecensione.isTipo());
-
-
                 st.executeUpdate();
 
-            } catch (SQLException e) {
+            } catch (SQLException exception) {
                 // TODO Auto-generated catch block
-                e.printStackTrace();
+                throw new RuntimeException(exception);
             }
         }
-        else {
+        else
+        {
             String updateStr = "UPDATE DatabaseProg.feedback_recensione set tipo = ?, "
                     + "where commento = ? and utente = ?";
-
             PreparedStatement st;
-            try {
+            try
+            {
                 st = connection.prepareStatement(updateStr);
-
                 st.setBoolean(1, feedbackRecensione.isTipo());
                 st.setInt(2, feedbackRecensione.getRecensione());
                 st.setString(3, feedbackRecensione.getUtente());
-
-
                 st.executeUpdate();
 
-            } catch (SQLException e) {
+            } catch (SQLException exception){
                 // TODO Auto-generated catch block
-                e.printStackTrace();
+                throw new RuntimeException(exception);
             }
         }
     }
@@ -113,31 +99,27 @@ public class FeedbackRecensioneDaoPostgres implements FeedbackRecensioneDao {
             st.setString(1, feedbackRecensione.getUtente());
             st.setInt(2, feedbackRecensione.getRecensione());
             st.executeUpdate();
-        } catch (SQLException e) {
+        } catch (SQLException exception) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new RuntimeException(exception);
         }
     }
 
     @Override
     public boolean alreadyInDatabase(String utente, int recensione) {
         String query = "select * from DatabaseProg.feedback_recensione where utente = ? and recensione = ?";
-        try {
+        try
+        {
             PreparedStatement st = connection.prepareStatement(query);
             st.setString(1, utente);
             st.setInt(2, recensione);
             ResultSet rs = st.executeQuery();
-
-            if (rs.next()) {
-                System.out.println("v");
+            if (rs.next())
                 return true;
-            }
-
-        } catch (SQLException e) {
+        } catch (SQLException exception){
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new RuntimeException(exception);
         }
-        System.out.println("f");
         return false;
     }
 }

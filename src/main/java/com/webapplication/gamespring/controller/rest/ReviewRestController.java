@@ -1,4 +1,4 @@
-package com.webapplication.gamespring.controller;
+package com.webapplication.gamespring.controller.rest;
 
 import com.webapplication.gamespring.model.Recensione;
 import com.webapplication.gamespring.persistenza.Dao.RecensioneDao;
@@ -22,7 +22,6 @@ public class ReviewRestController {
     {
         return DatabaseManager.getInstance().getRecensioneDao().getGameReviews(gameID);
     }
-
     @GetMapping(value = "/getReview")
     public Recensione getReview(@RequestParam int reviewID)
     {
@@ -34,18 +33,21 @@ public class ReviewRestController {
         RecensioneDao recensioneDao = DatabaseManager.getInstance().getRecensioneDao();
         return recensioneDao.getUserReview(username,gameID);
     }
+    @GetMapping(value = "/getUserReviews")
+    public List<Recensione> getUserReviews(@RequestParam String username){
+        RecensioneDao recensioneDao = DatabaseManager.getInstance().getRecensioneDao();
+        return recensioneDao.getUserReviews(username);
+    }
     @PostMapping(value = "/publishReview")
     public int publishReview(@RequestBody Recensione review) throws IllegalArgumentException, SQLException {
         isReviewValid((review));
         return DatabaseManager.getInstance().getRecensioneDao().save(review);
     }
-
     @PostMapping(value = "/editReview")
     public boolean editReview(@RequestBody Recensione review) throws IllegalArgumentException {
         isReviewValid(review);
         return DatabaseManager.getInstance().getRecensioneDao().update(review);
     }
-
     private void isReviewValid(Recensione review) throws IllegalArgumentException
     {
         if(review.getTitolo().isEmpty())
@@ -60,8 +62,6 @@ public class ReviewRestController {
 
 
     }
-
-
     @ResponseBody
     @ExceptionHandler({MissingServletRequestParameterException.class, MethodArgumentTypeMismatchException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)

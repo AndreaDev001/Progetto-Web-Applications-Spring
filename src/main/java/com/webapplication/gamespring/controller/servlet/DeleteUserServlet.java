@@ -1,4 +1,4 @@
-package com.webapplication.gamespring.controller;
+package com.webapplication.gamespring.controller.servlet;
 
 import com.webapplication.gamespring.model.Utente;
 import com.webapplication.gamespring.persistenza.DatabaseManager;
@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/deleteUser")
-public class DeleteUser extends HttpServlet{
+public class DeleteUserServlet extends HttpServlet{
         @Override
         protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
             String username = req.getParameter("username");

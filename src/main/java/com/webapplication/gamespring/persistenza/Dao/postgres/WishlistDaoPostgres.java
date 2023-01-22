@@ -21,45 +21,36 @@ public class WishlistDaoPostgres implements WishlistDao {
         try {
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(query);
-
-            while (rs.next()) {
-                Wishlist wishlist = new Wishlist();
-                wishlist.setGioco(rs.getInt("gioco"));
-                wishlist.setUtente(rs.getString("utente"));
-
-                wishlists.add(wishlist);
-            }
-
-        } catch (SQLException e) {
+            while (rs.next())
+                wishlists.add(readWishlist(rs));
+        } catch (SQLException exception) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new RuntimeException(exception);
         }
         return wishlists;
     }
-
     @Override
     public Wishlist findByPrimaryKey(int gioco, String utente) {
-        Wishlist wishlist = null;
         String query = "select * from DatabaseProg.wishlist where utente = ? and gioco = ?";
         try {
             PreparedStatement st = connection.prepareStatement(query);
             st.setString(1, utente);
             st.setInt(2, gioco);
             ResultSet rs = st.executeQuery();
-
-            if (rs.next()) {
-                wishlist = new Wishlist();
-                wishlist.setGioco(rs.getInt("gioco"));
-                wishlist.setUtente(rs.getString("utente"));
-            }
-
-        } catch (SQLException e) {
+            if (rs.next())
+                return readWishlist(rs);
+        } catch (SQLException exception) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new RuntimeException(exception);
         }
-        return wishlist;
+        return null;
     }
-
+    @Override
+    public Wishlist readWishlist(ResultSet resultSet) throws SQLException {
+        int gioco = resultSet.getInt("gioco");
+        String utente = resultSet.getString("utente");
+        return new Wishlist(gioco,utente);
+    }
     @Override
     public List<Wishlist> findByUser(String utente) {
         List<Wishlist> wishlists = new ArrayList<Wishlist>();
@@ -68,42 +59,30 @@ public class WishlistDaoPostgres implements WishlistDao {
             PreparedStatement st = connection.prepareStatement(query);
             st.setString(1, utente);
             ResultSet rs = st.executeQuery();
-
-            while (rs.next()) {
-                Wishlist wishlist = new Wishlist();
-                wishlist.setGioco(rs.getInt("gioco"));
-                wishlist.setUtente(rs.getString("utente"));
-
-                wishlists.add(wishlist);
-            }
-
-        } catch (SQLException e) {
+            while (rs.next())
+                wishlists.add(readWishlist(rs));
+        } catch (SQLException exception) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new RuntimeException(exception);
         }
         return wishlists;
     }
-
     @Override
     public void save(Wishlist wishlist) {
         if (!alreadyInDatabase(wishlist.getGioco(), wishlist.getUtente())) {
             String insertStr = "INSERT INTO DatabaseProg.wishlist VALUES (?, ?)";
-
             PreparedStatement st;
             try {
                 st = connection.prepareStatement(insertStr);
-
                 st.setString(1, wishlist.getUtente());
                 st.setInt(2, wishlist.getGioco());
                 st.executeUpdate();
-
-            } catch (SQLException e) {
+            } catch (SQLException exception){
                 // TODO Auto-generated catch block
-                e.printStackTrace();
+                throw new RuntimeException(exception);
             }
         }
     }
-
     @Override
     public void delete(Wishlist wishlist) {
         String query = "DELETE FROM DatabaseProg.wishlist WHERE utente = ? and gioco = ?";
@@ -112,12 +91,11 @@ public class WishlistDaoPostgres implements WishlistDao {
             st.setString(1, wishlist.getUtente());
             st.setInt(2, wishlist.getGioco());
             st.executeUpdate();
-        } catch (SQLException e) {
+        } catch (SQLException exception) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new RuntimeException(exception);
         }
     }
-
     @Override
     public boolean alreadyInDatabase(int gioco, String utente) {
         String query = "select * from DatabaseProg.wishlist where utente = ? and gioco = ?";
@@ -126,17 +104,12 @@ public class WishlistDaoPostgres implements WishlistDao {
             st.setString(1, utente);
             st.setInt(2, gioco);
             ResultSet rs = st.executeQuery();
-
-            if (rs.next()) {
-                System.out.println("v");
+            if (rs.next())
                 return true;
-            }
-
-        } catch (SQLException e) {
+        } catch (SQLException exception) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new RuntimeException(exception);
         }
-        System.out.println("f");
         return false;
     }
 }

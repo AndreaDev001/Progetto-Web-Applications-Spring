@@ -9,7 +9,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FeedbackCommentoDaoPostgres implements FeedbackCommentoDao {
+public class FeedbackCommentoDaoPostgres implements FeedbackCommentoDao
+{
+
     Connection connection;
     public FeedbackCommentoDaoPostgres(Connection connection){this.connection = connection;}
 
@@ -21,48 +23,39 @@ public class FeedbackCommentoDaoPostgres implements FeedbackCommentoDao {
         try {
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(query);
-
-            while (rs.next()) {
-                FeedbackCommento feedbackCommento = new FeedbackCommento();
-
-                feedbackCommento.setUtente(rs.getString("utente"));
-                feedbackCommento.setCommento(rs.getInt("commento"));
-                feedbackCommento.setTipo(rs.getBoolean("tipo"));
-
-                feedbackCommenti.add(feedbackCommento);
-            }
-
-        } catch (SQLException e) {
+            while (rs.next())
+                feedbackCommenti.add(readFeedbackCommento(rs));
+        } catch (SQLException exception) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new RuntimeException(exception);
         }
         return feedbackCommenti;
     }
 
     @Override
     public FeedbackCommento findByPrimaryKey(String utente, int commento) {
-        FeedbackCommento feedbackCommento = null;
         String query = "select * from DatabaseProg.feedback_commenti where utente = ? and commento = ?";
         try {
             PreparedStatement st = connection.prepareStatement(query);
             st.setString(1, utente);
             st.setInt(2, commento);
             ResultSet rs = st.executeQuery();
+            if (rs.next())
+                return readFeedbackCommento(rs);
 
-            if (rs.next()) {
-                feedbackCommento = new FeedbackCommento();
-                feedbackCommento.setUtente(rs.getString("utente"));
-                feedbackCommento.setCommento(rs.getInt("commento"));
-                feedbackCommento.setTipo(rs.getBoolean("tipo"));
-            }
-
-        } catch (SQLException e) {
+        } catch (SQLException exception) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new RuntimeException(exception);
         }
-        return feedbackCommento;
+        return null;
     }
-
+    @Override
+    public FeedbackCommento readFeedbackCommento(ResultSet resultSet) throws SQLException {
+        String utente = resultSet.getString("utente");
+        int commento = resultSet.getInt("commento");
+        boolean tipo = resultSet.getBoolean("tipo");
+        return new FeedbackCommento(utente,commento,tipo);
+    }
     @Override
     public boolean saveOrUpdate(FeedbackCommento feedbackCommento) {
         try {
@@ -105,17 +98,13 @@ public class FeedbackCommentoDaoPostgres implements FeedbackCommentoDao {
                 st.setString(1, utente);
                 st.setInt(2, commento);
                 ResultSet rs = st.executeQuery();
-
-                if (rs.next()) {
-                    System.out.println("v");
+                if (rs.next())
                     return true;
-                }
 
-            } catch (SQLException e) {
+            } catch (SQLException exception) {
                 // TODO Auto-generated catch block
-                e.printStackTrace();
+                throw new RuntimeException(exception);
             }
-            System.out.println("f");
             return false;
     }
 }

@@ -1,4 +1,4 @@
-package com.webapplication.gamespring.controller;
+package com.webapplication.gamespring.controller.rest;
 
 import com.webapplication.gamespring.model.Gioco;
 import com.webapplication.gamespring.persistenza.Dao.GiocoDao;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-public class GameController {
+public class GameRestController {
     @GetMapping("containsGame")
     public boolean containsGame(@RequestParam int gameID){
         GiocoDao giocoDao = DatabaseManager.getInstance().getGiocoDao();

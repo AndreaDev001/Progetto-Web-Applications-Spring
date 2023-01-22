@@ -7,6 +7,7 @@ import com.webapplication.gamespring.model.Utente;
 import com.webapplication.gamespring.persistenza.Dao.RecensioneDao;
 import org.jsoup.Jsoup;
 
+import java.io.IOException;
 import java.sql.*;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
@@ -27,56 +28,31 @@ public class RecensioneDaoPostgres implements RecensioneDao {
             PreparedStatement st = connection.prepareStatement(query);
             st.setInt(1, gameID);
             ResultSet rs = st.executeQuery();
-
-            while (rs.next()) {
-                Recensione recensione = new Recensione();
-                recensione.setId(rs.getInt("id"));
-                recensione.setTitolo(rs.getString("titolo"));
-                recensione.setContenuto(rs.getString("contenuto"));
-                recensione.setVoto(rs.getInt("voto"));
-                recensione.setNumeroMiPiace(rs.getInt("numero_mi_piace"));
-                recensione.setNumeroNonMiPiace(rs.getInt("numero_non_mi_piace"));
-                recensione.setUtente(rs.getString("utente"));
-                recensione.setGioco(rs.getInt("gioco"));
-                recensione.setData(rs.getObject("data", OffsetDateTime.class));
-                recensioni.add(recensione);
-            }
-        } catch (SQLException ignore) {
+            while (rs.next())
+                recensioni.add(readRecensione(rs));
+        }
+        catch (SQLException exception){
+            throw new RuntimeException(exception);
         }
         return recensioni;
     }
 
     @Override
     public Recensione findByPrimaryKey(int id) {
-        Recensione recensione = null;
         String query = "select * from DatabaseProg.recensione where id = ?";
         try {
             PreparedStatement st = connection.prepareStatement(query);
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
-
-            if (rs.next()) {
-                recensione = new Recensione();
-                recensione.setId(rs.getInt("id"));
-                recensione.setTitolo(rs.getString("titolo"));
-                recensione.setContenuto(rs.getString("contenuto"));
-                recensione.setVoto(rs.getInt("voto"));
-                recensione.setNumeroMiPiace(rs.getInt("numero_mi_piace"));
-                recensione.setNumeroNonMiPiace(rs.getInt("numero_non_mi_piace"));
-                recensione.setUtente(rs.getString("utente"));
-                recensione.setGioco(rs.getInt("gioco"));
-                recensione.setData(rs.getObject("data", OffsetDateTime.class));
-            }
-
-        } catch (SQLException e) {
+            if (rs.next())
+                return readRecensione(rs);
+        }
+        catch (SQLException e){
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return recensione;
+        return null;
     }
-
-
-
     @Override
     public int save(Recensione recensione) throws SQLException {
         String query = "insert into DatabaseProg.recensione(titolo, contenuto,voto, utente, gioco, data) values (?, ?, ?, ?, ?, ?) returning id";
@@ -94,7 +70,6 @@ public class RecensioneDaoPostgres implements RecensioneDao {
     }
     @Override
     public Recensione getUserReview(String username, int gameID) {
-        Recensione current = new Recensione();
         String query = "select * FROM DatabaseProg.recensione where utente=? and gioco=?";
         try
         {
@@ -102,22 +77,44 @@ public class RecensioneDaoPostgres implements RecensioneDao {
             preparedStatement.setString(1,username);
             preparedStatement.setInt(2,gameID);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()){
-                current.setId(resultSet.getInt(1));
-                current.setTitolo(resultSet.getString(2));
-                current.setContenuto(resultSet.getString(3));
-                current.setVoto(resultSet.getInt(4));
-                current.setNumeroMiPiace(resultSet.getInt(5));
-                current.setNumeroNonMiPiace(resultSet.getInt(6));
-                current.setUtente(resultSet.getString(7));
-                current.setGioco(resultSet.getInt(8));
-                current.setData(resultSet.getObject("data", OffsetDateTime.class));
-            }
+            if(resultSet.next())
+                return readRecensione(resultSet);
         }
         catch (SQLException exception){
             throw  new RuntimeException(exception);
         }
-        return current;
+        return null;
+    }
+
+    @Override
+    public Recensione readRecensione(ResultSet resultSet) throws SQLException {
+        int id = resultSet.getInt(1);
+        String titolo = resultSet.getString(2);
+        String contenuto = resultSet.getString(3);
+        int voto = resultSet.getInt(4);
+        int numeroMiPiace = resultSet.getInt(5);
+        int numeroNonMiPiace = resultSet.getInt(6);
+        String utente = resultSet.getString(7);
+        int gioco = resultSet.getInt(8);
+        OffsetDateTime offsetDateTime = resultSet.getObject("data", OffsetDateTime.class);
+        return new Recensione(id,titolo,contenuto,voto,numeroMiPiace,numeroNonMiPiace,utente,gioco,offsetDateTime);
+    }
+    @Override
+    public List<Recensione> getUserReviews(String username){
+        List<Recensione> recensioni = new ArrayList<>();
+        String query = "select * from DatabaseProg.recensione where utente=?";
+        try
+        {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1,username);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next())
+                recensioni.add(readRecensione(resultSet));
+        }
+        catch (SQLException exception){
+            throw  new RuntimeException(exception);
+        }
+        return recensioni;
     }
     @Override
     public void delete(int recensione) {

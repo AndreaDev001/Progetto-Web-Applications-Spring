@@ -1,4 +1,4 @@
-package com.webapplication.gamespring.controller;
+package com.webapplication.gamespring.controller.rest;
 
 import com.webapplication.gamespring.model.Utente;
 import com.webapplication.gamespring.model.dto.UtenteDto;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin("http://localhost:4200")
-public class Authentication {
+public class AuthenticationRestController {
     @GetMapping("/checkAuth")
     public Boolean isAuth(HttpServletRequest req, String jsessionid) {
         System.out.println("Sono in Auth rest controller con jsessionid = " + jsessionid);  // todo: debug

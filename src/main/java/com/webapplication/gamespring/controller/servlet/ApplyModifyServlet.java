@@ -1,10 +1,7 @@
-package com.webapplication.gamespring.controller;
+package com.webapplication.gamespring.controller.servlet;
 
-import com.webapplication.gamespring.model.Segnalazione;
 import com.webapplication.gamespring.model.Utente;
-import com.webapplication.gamespring.persistenza.Dao.UtenteDao;
 import com.webapplication.gamespring.persistenza.DatabaseManager;
-import com.webapplication.gamespring.util.ValidationHandler;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -17,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/applyModify")
-public class ApplyModify extends HttpServlet {
+public class ApplyModifyServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 

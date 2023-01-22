@@ -1,4 +1,4 @@
-package com.webapplication.gamespring.controller;
+package com.webapplication.gamespring.controller.servlet;
 
 import com.webapplication.gamespring.model.Utente;
 import com.webapplication.gamespring.persistenza.DatabaseManager;
@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/userList")
-public class UserList extends HttpServlet {
+public class UserListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 

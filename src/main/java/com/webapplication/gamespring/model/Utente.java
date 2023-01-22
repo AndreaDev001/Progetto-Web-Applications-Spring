@@ -1,12 +1,39 @@
 package com.webapplication.gamespring.model;
 
-public class Utente {
-    String email;
-    String username;
-    String password;
-    boolean amministratore;
-    boolean bandito;
+public class Utente
+{
+    private String email;
+    private String username;
+    private String password;
+    private boolean amministratore;
+    private boolean bandito;
 
+    public Utente()
+    {
+
+    }
+    public Utente(String email,String username,String password,boolean amministratore,boolean bandito){
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.amministratore = amministratore;
+        this.bandito = bandito;
+    }
+    public Utente(Utente other){
+        this.email = other.email;
+        this.username = other.username;
+        this.password = other.password;
+        this.amministratore = other.amministratore;
+        this.bandito = other.bandito;
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null)
+            return false;
+        if(!(obj instanceof Utente utente))
+            return false;
+        return this.username.equals(utente.username);
+    }
     public String getEmail() {
         return email;
     }

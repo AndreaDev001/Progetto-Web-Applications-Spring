@@ -70,18 +70,23 @@
                             <label for="password" style="color: whitesmoke">Password*:</label>
                         </div>
                     </div>
-                    <section class="form-group d-flex w-100 justify-content-center" style="padding: 0.2% 0">
-                        <div class="w-50 d-inline-flex justify-content-between">
-                            <input class="form-control" style="width: 90%" type="password" placeholder="Enter password" id="password" name="password">
-                            <i class="far fa-eye align-middle pt-2" style="width: 8%;color: whitesmoke" id="togglePassword"></i>
-                            <div th:if="${session.emptyFields == true}" class="error-message">
+                    
+                    <section class="form-group w-100" style="padding: 0.2% 0">
+                        <div class = "w-100 d-flex justify-content-center">
+                            <div class="w-50 d-inline-flex justify-content-between">
+                                <input class="form-control" style="width: 90%" type="password" placeholder="Enter password" id="password" name="password">
+                                <i class="far fa-eye align-middle pt-2" style="width: 8%;color: whitesmoke" id="togglePassword"></i>
+                            </div>
+                        </div>
+                        <div class = "w-100 d-flex justify-content-center">
+                            <div th:if="${session.emptyFields == true}" class="w-50 error-message">
                                 <small>Mandatory field</small>
                             </div>
                         </div>
                     </section>
 
                     <section class="d-flex w-100 justify-content-center">
-                        <div class="w-50 d-flex row" style="padding: 0px 0px 30px;">
+                        <div class="w-50 d-flex row" style="padding: 0 30px;">
                             <button type="submit" class="btn button button-primary w-100" id="loginButton">Login</button>
                         </div>
                     </section>

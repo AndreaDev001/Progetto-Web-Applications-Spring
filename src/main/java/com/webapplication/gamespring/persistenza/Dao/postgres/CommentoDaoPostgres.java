@@ -30,18 +30,7 @@ public class CommentoDaoPostgres implements CommentoDao {
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
-                Commento commento = new Commento();
-
-                commento.setId(rs.getInt("id"));
-                commento.setContenuto(rs.getString("contenuto"));
-                commento.setNumeroMiPiace(rs.getInt("numero_mi_piace"));
-                commento.setNumeroNonMiPiace(rs.getInt("numero_non_mi_piace"));
-                commento.setRecensione(rs.getInt("recensione"));
-                commento.setUtente(rs.getString("utente"));
-                commento.setData(rs.getObject("data", OffsetDateTime.class));
-
-
-
+                Commento commento = readCommento(rs);
                 FeedbackCommento feedbackCommento = DatabaseManager.getInstance().getFeedbackCommentoDao().findByPrimaryKey("Pie_Oxx", commento.getId());
                 //Commento.Feedback feedback = feedbackCommento != null ? (feedbackCommento.isTipo() ? Commento.Feedback.Like : Commento.Feedback.Dislike) : Commento.Feedback.None;
                 commenti.add(commento);
@@ -56,33 +45,31 @@ public class CommentoDaoPostgres implements CommentoDao {
 
     @Override
     public Commento findByPrimaryKey(int id) {
-        Commento commento = null;
         String query = "select * from DatabaseProg.commento where id = ?";
         try {
             PreparedStatement st = connection.prepareStatement(query);
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
-
-            if (rs.next()) {
-                commento = new Commento();
-                commento.setId(rs.getInt("id"));
-                commento.setContenuto(rs.getString("contenuto"));
-                commento.setNumeroMiPiace(rs.getInt("numero_mi_piace"));
-                commento.setNumeroNonMiPiace(rs.getInt("numero_non_mi_piace"));
-                commento.setRecensione(rs.getInt("recensione"));
-                commento.setUtente(rs.getString("utente"));
-                commento.setData(rs.getObject("data", OffsetDateTime.class));
-
-            }
+            if (rs.next())
+                return readCommento(rs);
 
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return commento;
+        return null;
     }
-
-
+    @Override
+    public Commento readCommento(ResultSet resultSet) throws SQLException {
+        int id = resultSet.getInt("id");
+        String contenuto = resultSet.getString("contenuto");
+        int numeroMiPiace = resultSet.getInt("numero_mi_piace");
+        int numeroNonMiPiace = resultSet.getInt("numero_non_mi_piace");
+        int recensione = resultSet.getInt("recensione");
+        String utente = resultSet.getString("utente");
+        OffsetDateTime offsetDateTime = resultSet.getObject("data", OffsetDateTime.class);
+        return new Commento(id,contenuto,numeroMiPiace,numeroNonMiPiace,recensione,utente,offsetDateTime);
+    }
     @Override
     public int save(Commento commento) throws SQLException {
         String insertStr = "INSERT INTO DatabaseProg.commento (contenuto, recensione, utente, data) VALUES (?, ?, ?, ?) returning id";

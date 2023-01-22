@@ -1,4 +1,4 @@
-package com.webapplication.gamespring.controller;
+package com.webapplication.gamespring.controller.servlet;
 
 import com.webapplication.gamespring.model.Gioco;
 import com.webapplication.gamespring.model.Utente;
@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.*;
 
 @WebServlet("/recommended")
-public class Recommended extends HttpServlet {
+public class RecommendedServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 

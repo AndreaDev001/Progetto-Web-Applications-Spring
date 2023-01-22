@@ -2,17 +2,52 @@ package com.webapplication.gamespring.model;
 
 import java.time.OffsetDateTime;
 
-public class Recensione {
-    int id;
-    String titolo;
-    String contenuto;
-    int voto;
-    int numeroMiPiace;
-    int numeroNonMiPiace;
-    String utente;
-    int gioco;
-    OffsetDateTime data;
+public class Recensione
+{
+    private int id;
+    private String titolo;
+    private String contenuto;
+    private int voto;
+    private int numeroMiPiace;
+    private int numeroNonMiPiace;
+    private String utente;
+    private int gioco;
+    private OffsetDateTime data;
 
+    public Recensione()
+    {
+
+    }
+    public Recensione(int id,String titolo,String contenuto,int voto,int numeroMiPiace,int numeroNonMiPiace,String utente,int gioco,OffsetDateTime data){
+     this.id = id;
+     this.titolo = titolo;
+     this.contenuto = contenuto;
+     this.voto = voto;
+     this.numeroMiPiace = numeroMiPiace;
+     this.numeroNonMiPiace = numeroNonMiPiace;
+     this.utente = utente;
+     this.gioco = gioco;
+     this.data = data;
+    }
+    public Recensione(Recensione other){
+        this.id = other.id;
+        this.titolo = other.titolo;
+        this.contenuto = other.contenuto;
+        this.voto = other.voto;
+        this.numeroMiPiace = other.numeroMiPiace;
+        this.numeroNonMiPiace = other.numeroNonMiPiace;
+        this.utente = other.utente;
+        this.gioco = other.gioco;
+        this.data = other.data;
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null)
+            return false;
+        if(!(obj instanceof Recensione recensione))
+            return false;
+        return this.id == recensione.id;
+    }
     public int getId() {
         return id;
     }

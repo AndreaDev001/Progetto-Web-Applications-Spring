@@ -21,13 +21,8 @@ public class GiocoDaoPostgres implements GiocoDao {
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(query);
 
-            while (rs.next()) {
-                Gioco gioco = new Gioco();
-                gioco.setId(rs.getInt("id"));
-                gioco.setGenere(rs.getString("genere"));
-
-                giochi.add(gioco);
-            }
+            while (rs.next())
+                giochi.add(readGioco(rs));
 
         } catch (SQLException e) {
             // TODO Auto-generated catch block
@@ -35,30 +30,29 @@ public class GiocoDaoPostgres implements GiocoDao {
         }
         return giochi;
     }
-
     @Override
     public Gioco findByPrimaryKey(int id) {
-        Gioco gioco = null;
         String query = "select * from DatabaseProg.gioco where id = ?";
         try {
             PreparedStatement st = connection.prepareStatement(query);
             st.setLong(1, id);
             ResultSet rs = st.executeQuery();
-
-            if (rs.next()) {
-                gioco = new Gioco();
-                gioco.setId(rs.getInt("id"));
-                gioco.setGenere(rs.getString("genere"));
-                gioco.setTitolo(rs.getString("titolo"));
-                gioco.setImmagine(rs.getString("immagine"));
-
-            }
+            if (rs.next())
+                return readGioco(rs);
 
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return gioco;
+        return null;
+    }
+    @Override
+    public Gioco readGioco(ResultSet resultSet) throws SQLException {
+        int id = resultSet.getInt("id");
+        String genere = resultSet.getString("genere");
+        String titolo = resultSet.getString("titolo");
+        String immagine = resultSet.getString("immagine");
+        return new Gioco(id,genere,titolo,immagine);
     }
 
     @Override
@@ -69,19 +63,14 @@ public class GiocoDaoPostgres implements GiocoDao {
             PreparedStatement st = connection.prepareStatement(query);
             st.setLong(1, id);
             ResultSet rs = st.executeQuery();
-
-            if (rs.next()) {
+            if (rs.next())
                 return true;
-            }
-
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return false;
     }
-
-
     @Override
     public void saveOrUpdate(Gioco gioco) {
         if (!alreadyInDatabase(gioco.getId())) {

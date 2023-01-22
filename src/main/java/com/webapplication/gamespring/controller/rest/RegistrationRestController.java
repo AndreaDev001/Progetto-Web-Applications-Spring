@@ -1,4 +1,4 @@
-package com.webapplication.gamespring.controller;
+package com.webapplication.gamespring.controller.rest;
 
 import com.webapplication.gamespring.model.Utente;
 import com.webapplication.gamespring.persistenza.Dao.UtenteDao;
@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("http://localhost:4200")
-public class RegistrationHandler {
+public class RegistrationRestController {
     @PostMapping("/doRegistration")
     public String doRegistration(@RequestBody HashMap<String, String> body) {
         String email = body.get("email");

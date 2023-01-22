@@ -1,9 +1,6 @@
-package com.webapplication.gamespring.controller;
-
-import com.webapplication.gamespring.model.Recensione;
+package com.webapplication.gamespring.controller.servlet;
 
 import com.webapplication.gamespring.model.Segnalazione;
-import com.webapplication.gamespring.model.Utente;
 import com.webapplication.gamespring.persistenza.DatabaseManager;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -17,7 +14,7 @@ import java.util.List;
 
 
 @WebServlet("/reports")
-public class Reports extends HttpServlet{
+public class ReportsServlet extends HttpServlet{
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

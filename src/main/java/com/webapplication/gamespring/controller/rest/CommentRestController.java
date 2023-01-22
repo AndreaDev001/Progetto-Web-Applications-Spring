@@ -1,4 +1,4 @@
-package com.webapplication.gamespring.controller;
+package com.webapplication.gamespring.controller.rest;
 
 
 import com.webapplication.gamespring.model.Commento;
