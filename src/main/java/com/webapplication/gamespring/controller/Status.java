@@ -1,4 +1,4 @@
-package com.webapplication.gamespring.controller.enums;
+package com.webapplication.gamespring.controller;
 
 public enum Status {
     SUCCESS, NONEXISTENT_ACCOUNT, EMPTY_FIELDS, COULDNT_SEND_EMAIL,

@@ -1,6 +1,6 @@
 package com.webapplication.gamespring.controller.servlet;
 
-import com.webapplication.gamespring.controller.enums.Status;
+import com.webapplication.gamespring.controller.Status;
 import com.webapplication.gamespring.model.Utente;
 import com.webapplication.gamespring.persistenza.Dao.UtenteDao;
 import com.webapplication.gamespring.persistenza.DatabaseManager;

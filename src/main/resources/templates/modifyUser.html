@@ -16,18 +16,19 @@
 
 </head>
 <body>
-<nav class="navbar navbar-expand-lg position-sticky top-0" >
-    <a class="navbar-brand text-white" href="#">Navbar</a>
+<nav class="navbar navbar-expand-lg position-sticky top-0">
     <button class="navbar-toggler navbar-light" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav ">
             <li class="nav-item active header-item">
-                <a class="nav-link header-link" href="http://localhost:4200/games">Home <span class="sr-only">(current)</span></a>
+                <a th:if="${session.sessionId} AND ${session.user}" class="nav-link header-link" th:href="|http://localhost:4200/games?jsessionid=${session.sessionId}|">Home <span class="sr-only">(current)</span></a>
+                <a th:unless="${session.user} AND ${session.sessionId}" class="nav-link header-link" href="http://localhost:4200/games">Home</a>
             </li>
             <li class="nav-item header-item">
-                <a class="nav-link header-link" href="http://localhost:4200/news" >News</a>
+                <a th:if="${session.user} AND ${session.sessionId}" class="nav-link header-link" th:href="|http://localhost:4200/news?jsessionid=${session.sessionId}|">News</a>
+                <a th:unless="${session.user} AND ${session.sessionId}" class="nav-link header-link" href = "http://localhost:4200/news">News</a>
             </li>
             <li class="nav-item header-item">
                 <a class="nav-link header-link" href="#">About us</a>
@@ -41,63 +42,52 @@
                     <a th:if="${session.sessionId}" class="dropdown-item dropdown-link" href="logout">Logout</a>
                     <a class="dropdown-item dropdown-link" href="http://localhost:4200/registration">Sign up</a>
                     <a th:if="${session.sessionId}" class="dropdown-item dropdown-link" href="http://localhost:8080/wishlist">Wishlist</a>
-                    <a th:if="${session.sessionId}" class = "dropdown-item dropdown-link" href="http://localhost:8080/recommended">Consigliati</a>
-                    <a th:if="${session.sessionId} AND ${session.user} AND ${session.user.amministratore}" class = "dropdown-item dropdown-link" href="http://localhost:8080/userList">Lista Utenti</a>
-                    <a th:if="${session.sessionId} AND ${session.user} AND ${session.user.amministratore}" class = "dropdown-item dropdown-link" href="http://localhost:8080/reports">Lista Segnalazioni</a>
+                    <a th:if="${session.sessionId}" class = "dropdown-item dropdown-link" href="http://localhost:8080/recommended">Recommended for you</a>
+                    <a th:if="${session.sessionId} AND ${session.user} AND ${session.user.amministratore}" class = "dropdown-item dropdown-link" href="http://localhost:8080/userList">Users List</a>
+                    <a th:if="${session.sessionId} AND ${session.user} AND ${session.user.amministratore}" class = "dropdown-item dropdown-link" href="http://localhost:8080/reports">Reports List</a>
+                    <a th:if="${session.sessionId} AND ${session.user}" class = "dropdown-item dropdown-link" th:href="|http://localhost:4200/reviews?jsessionid=${session.sessionId}|">Your Reviews</a>
                 </div>
             </li>
         </ul>
     </div>
 </nav>
-
-    <div class="main-wrap">
+<div class="main-wrap">
     <form id="form" action="applyModify" method="post" onsubmit="formValidate()" style="margin-top: 50px">
-
         <div class="userData">
             <div class="div-username">
                 <p class="label_username" style="text-align: center; color: whitesmoke; font-size: 20px">Username</p>
                 <input name="username" th:value="${modify_utente.username} " style="font-size: 20px" readonly ></input>
             </div>
-
             <div class="div-password">
                 <p class="label_password" style="text-align: center; color: whitesmoke; font-size: 20px">Password</p>
                 <input id="password" name="password" placeholder="Nuova Password" style="font-size: 20px" required ></input>
             </div>
-
-
             <div class="div-email">
                 <p class="label_email" style="text-align: center; color: whitesmoke; font-size: 20px">Email</p>
                 <input id="email" type="email" name="email" th:value="${modify_utente.email}" style="font-size: 20px" required></input>
             </div>
         </div>
-
         <div class="div-checkbox" style="margin-top: 50px">
             <div class="admindiv-checkbox">
                 <p class="label_admin" style="text-align: center; color: whitesmoke; font-size: 20px">Admin:</p>
                 <input name="admin" type="checkbox" th:checked="${modify_utente.amministratore}" class="checkbox_admin"></input>
             </div>
-
             <div class="bandiv-checkbox">
                 <p class="label_ban" style="text-align: center; color: whitesmoke; font-size: 20px">Bandito:</p>
                 <input name="ban" type="checkbox" th:checked="${modify_utente.bandito}" class="checkbox_ban"></input>
             </div>
         </div>
-
         <div class="modifyDiv">
             <button class="btn btn-success" type="submit" value="Submit">modifica dati account</button>
         </div>
     </form>
-
     <form action="deleteUser" method="post">
         <input type="hidden" name="username" th:value="${modify_utente.username}">
         <div class="deleteDiv">
             <button onclick="alertDelete()" class="btn btn-danger" >elimina account</button>
         </div>
     </form>
-
     </div>
-
     <script src="js/modifyUser.js"></script>
-
 </body>
 </html>

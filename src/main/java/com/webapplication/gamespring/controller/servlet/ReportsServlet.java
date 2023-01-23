@@ -15,19 +15,11 @@ import java.util.List;
 
 @WebServlet("/reports")
 public class ReportsServlet extends HttpServlet{
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
         List<Segnalazione> reports = DatabaseManager.getInstance().getSegnalazioneDao().findAll();
-
         req.setAttribute("recensioni_segnalate", reports);
-
         RequestDispatcher dispacher = req.getRequestDispatcher("views/report.html");
         dispacher.forward(req, resp);
-
     }
-
-
 }

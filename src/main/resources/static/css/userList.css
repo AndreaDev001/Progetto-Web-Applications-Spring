@@ -1,93 +1,9 @@
-html, body {
-    height: 100%;
-    margin: 0;
-
-}
-
-.main-wrap{
-    display: flex;
-}
-
-.searchContainer{
-    height: 100%;
-    width: 99%;
-    margin-top: 50px;
-}
-
-
-
-.checkboxDiv{
-    display: flex;
-    gap: 10px
-}
-
-.searchBarForm{
-
-    width: 100%;
-    justify-content: center;
-    display: flex;
-    margin: 1px;
-
-}
-
 .searchInput{
-
     height: 36px;
     width: 40%;
-    padding: 0;
     font-size: 15px;
     border-radius: 10px 10px 10px 10px;
     border: 2px solid var(--primary);
     background-color: whitesmoke;
+    padding: 10px;
 }
-
-
-.searchButton{
-
-    height: 40px;
-    width: 60px;
-    font-size: 15px;
-
-}
-
-.failedSearch{
-    font-size: 30px;
-}
-
-
-.checkboxView{
-    margin-top: 0;
-    margin-bottom: 1rem;
-}
-
-.user{
-    margin-top: 50px;
-    margin-left: 10%;
-    margin-right: 10%;
-    display: flex;
-    flex-wrap: wrap;
-    width: 80%;
-    height: 600px;
-    overflow-y: scroll;
-    justify-content: space-evenly;
-    column-gap: 20px;
-    row-gap: 20px;
-
-}
-
-.modifyButton{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-
-
-
-.buttons{
-    display: flex;
-    justify-content: center;
-    margin-top: 30px;
-    gap: 30px;
-}
-

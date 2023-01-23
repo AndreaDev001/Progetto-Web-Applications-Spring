@@ -20,11 +20,11 @@ public class RecommendedServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        //HttpSession session = req.getSession();
-        //Utente utente = (Utente)session.getAttribute("user");
-        
-        List<Wishlist> wishlists = DatabaseManager.getInstance().getWishlistDao().findByUser("utente.getUsername()");
-
+        HttpSession session = req.getSession();
+        Utente utente = (Utente)session.getAttribute("user");
+        String sessionID = (String)session.getAttribute("sessionId");
+        System.out.println(sessionID);
+        List<Wishlist> wishlists = DatabaseManager.getInstance().getWishlistDao().findByUser(utente.getUsername());
         HashMap<String, Integer> genres = new HashMap<String, Integer>();
         genres.put("action", 0);
         genres.put("indie", 0);
@@ -43,7 +43,6 @@ public class RecommendedServlet extends HttpServlet {
         genres.put("family", 0);
         genres.put("educational", 0);
         genres.put("cards", 0);
-
 
         List<Gioco> games = new ArrayList<Gioco>();
 
@@ -114,7 +113,7 @@ public class RecommendedServlet extends HttpServlet {
         req.setAttribute("gen1", index);
         req.setAttribute("gen2", index2);
         req.setAttribute("gen3", index3);
-        req.setAttribute("gen4", index4);
+        req.setAttribute("gen4", index4);;
 
         System.out.println(api);
         System.out.println(api2);
@@ -122,7 +121,5 @@ public class RecommendedServlet extends HttpServlet {
         System.out.println(api4);
         RequestDispatcher dispacher = req.getRequestDispatcher("views/recommended.html");
         dispacher.forward(req, resp);
-
-
     }
 }

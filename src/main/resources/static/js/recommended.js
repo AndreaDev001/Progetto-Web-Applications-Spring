@@ -50,10 +50,8 @@
         date.setAttribute("style", "color: whitesmoke")
         date.appendChild(document.createTextNode(data.released))
         innerDiv.appendChild(date)
-
         parent.append(card)
-
         card.addEventListener("click", ()=> {
-            window.open("http://localhost:4200/games/" + data.id)
+            window.open("http://localhost:4200/games/" + data.id + "?" + "jsessionid=" + document.getElementById("sessionId").innerText);
         })
     }
