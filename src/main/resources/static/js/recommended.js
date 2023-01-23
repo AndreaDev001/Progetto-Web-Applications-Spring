@@ -54,6 +54,6 @@
         parent.append(card)
 
         card.addEventListener("click", ()=> {
-            window.open(data.short_screenshots[0].image)
+            window.open("http://localhost:4200/games/" + data.id)
         })
     }

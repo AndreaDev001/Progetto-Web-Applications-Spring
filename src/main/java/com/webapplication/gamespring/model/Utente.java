@@ -12,7 +12,7 @@ public class Utente
     {
 
     }
-    public Utente(String email,String username,String password,boolean amministratore,boolean bandito){
+    public Utente(String username,String email,String password,boolean amministratore,boolean bandito){
         this.email = email;
         this.username = username;
         this.password = password;
