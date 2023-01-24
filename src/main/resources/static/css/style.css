@@ -7,7 +7,6 @@
 
     /* aggiunti */
     --danger: #ee3128;
-    --danger-hover: #EE3128FF;
     --success: #75a34e;
     --warning: #e0a55c;
 }
@@ -62,5 +61,5 @@ body
 
 .button-delete:hover {
     background-color: whitesmoke;
-    color: var(--danger-hover);
+    color: var(--danger);
 }
