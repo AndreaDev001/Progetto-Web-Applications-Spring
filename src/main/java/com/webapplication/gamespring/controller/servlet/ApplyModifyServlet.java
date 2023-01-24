@@ -1,6 +1,7 @@
 package com.webapplication.gamespring.controller.servlet;
 
 import com.webapplication.gamespring.model.Utente;
+import com.webapplication.gamespring.persistenza.Dao.UtenteDao;
 import com.webapplication.gamespring.persistenza.DatabaseManager;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -32,6 +33,7 @@ public class ApplyModifyServlet extends HttpServlet {
         u.setEmail(email);
         u.setPassword(encryptedPassword);
 
+
         if(admin == null){
             u.setAmministratore(false);
         }
@@ -43,6 +45,21 @@ public class ApplyModifyServlet extends HttpServlet {
         }
         else
             u.setBandito(true);
+
+
+        UtenteDao uDao = DatabaseManager.getInstance().getUtenteDao();
+
+        // check email inesistente nel db
+        List<Utente> utenti = uDao.findAll();
+        for (Utente ut : utenti) {
+            if (ut.getEmail().equals(email)){
+
+                RequestDispatcher dispacher = req.getRequestDispatcher("views/errorModifyProfile.html");
+                dispacher.forward(req, resp);
+                break;
+            }
+
+        }
 
         DatabaseManager.getInstance().getUtenteDao().saveOrUpdate(u);
 
