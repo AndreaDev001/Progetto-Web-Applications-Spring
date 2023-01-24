@@ -52,7 +52,13 @@
 </nav>
 
 <div class = "w-100 text-center" >
-    <h1 class = "text-white" style="font-weight: bold">Email already existing</h1>
+
+    <div class = "w-100 text-center" th:unless="${session.sessionId} AND ${session.user} AND ${session.user.amministratore}">
+        <h1 class = "text-white" style="font-weight: bold">Not Authorized</h1>
+        <a class = "btn btn-lg button button-primary w-25">Back to home page</a>
+    </div>
+
+    <h1 class = "text-white" style="font-weight: bold" th:if="${session.sessionId} AND ${session.user} AND ${session.user.amministratore}">Email already existing</h1>
     <form action="userList" method="get">
         <button type="submit" class="btn btn-lg button button-primary w-25"> back to User List</button>
     </form>
