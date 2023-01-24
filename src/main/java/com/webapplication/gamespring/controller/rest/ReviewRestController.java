@@ -1,6 +1,8 @@
 package com.webapplication.gamespring.controller.rest;
 
+import com.webapplication.gamespring.model.FeedbackRecensione;
 import com.webapplication.gamespring.model.Recensione;
+import com.webapplication.gamespring.model.Segnalazione;
 import com.webapplication.gamespring.persistenza.Dao.RecensioneDao;
 import com.webapplication.gamespring.persistenza.DatabaseManager;
 import org.jsoup.Jsoup;
@@ -10,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -22,6 +23,7 @@ public class ReviewRestController {
     {
         return DatabaseManager.getInstance().getRecensioneDao().getGameReviews(gameID);
     }
+
     @GetMapping(value = "/getReview")
     public Recensione getReview(@RequestParam int reviewID)
     {
@@ -33,21 +35,43 @@ public class ReviewRestController {
         RecensioneDao recensioneDao = DatabaseManager.getInstance().getRecensioneDao();
         return recensioneDao.getUserReview(username,gameID);
     }
-    @GetMapping(value = "/getUserReviews")
-    public List<Recensione> getUserReviews(@RequestParam String username){
-        RecensioneDao recensioneDao = DatabaseManager.getInstance().getRecensioneDao();
-        return recensioneDao.getUserReviews(username);
-    }
     @PostMapping(value = "/publishReview")
     public int publishReview(@RequestBody Recensione review) throws IllegalArgumentException, SQLException {
         isReviewValid((review));
         return DatabaseManager.getInstance().getRecensioneDao().save(review);
     }
+
     @PostMapping(value = "/editReview")
     public boolean editReview(@RequestBody Recensione review) throws IllegalArgumentException {
         isReviewValid(review);
         return DatabaseManager.getInstance().getRecensioneDao().update(review);
     }
+
+    @DeleteMapping(value = "/deleteReview/{reviewID}")
+    public void deleteReview(@PathVariable int reviewID) throws IllegalArgumentException {
+        DatabaseManager.getInstance().getRecensioneDao().delete(reviewID);
+    }
+
+    @PostMapping(value = "/reportReview")
+    public void reportReview(@RequestBody Segnalazione segnalazione) throws IllegalArgumentException {
+        DatabaseManager.getInstance().getSegnalazioneDao().saveOrUpdate(segnalazione);
+    }
+
+    @PostMapping(value = "/changeReviewFeedback")
+    public String changeFeedback(@RequestBody FeedbackRecensione feedbackRecensione) throws SQLException {
+        if(DatabaseManager.getInstance().getFeedbackRecensioneDao().saveOrUpdate(feedbackRecensione))
+            return feedbackRecensione.isTipo() ? "like" : "dislike";
+        return "none";
+    }
+
+    @GetMapping(value = "/getReviewFeedback")
+    public String getReviewFeedback(@RequestParam String user, @RequestParam int reviewID) throws SQLException {
+        FeedbackRecensione feed = DatabaseManager.getInstance().getFeedbackRecensioneDao().findByPrimaryKey(user, reviewID);
+        if(feed == null)
+            return "none";
+        return feed.isTipo() ? "like" : "dislike";
+    }
+
     private void isReviewValid(Recensione review) throws IllegalArgumentException
     {
         if(review.getTitolo().isEmpty())
@@ -62,6 +86,8 @@ public class ReviewRestController {
 
 
     }
+
+
     @ResponseBody
     @ExceptionHandler({MissingServletRequestParameterException.class, MethodArgumentTypeMismatchException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
