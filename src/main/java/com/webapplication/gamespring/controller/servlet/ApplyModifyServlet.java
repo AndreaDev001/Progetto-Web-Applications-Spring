@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @WebServlet("/applyModify")
 public class ApplyModifyServlet extends HttpServlet {
@@ -46,19 +47,21 @@ public class ApplyModifyServlet extends HttpServlet {
         else
             u.setBandito(true);
 
+        Utente utente = DatabaseManager.getInstance().getUtenteDao().findByPrimaryKey(username);
+        if(!Objects.equals(utente.getEmail(), email)) {
 
-        UtenteDao uDao = DatabaseManager.getInstance().getUtenteDao();
+            UtenteDao uDao = DatabaseManager.getInstance().getUtenteDao();
+            // check email inesistente nel db
+            List<Utente> utenti = uDao.findAll();
+            for (Utente ut : utenti) {
+                if (ut.getEmail().equals(email)) {
 
-        // check email inesistente nel db
-        List<Utente> utenti = uDao.findAll();
-        for (Utente ut : utenti) {
-            if (ut.getEmail().equals(email)){
+                    RequestDispatcher dispacher = req.getRequestDispatcher("views/errorModifyProfile.html");
+                    dispacher.forward(req, resp);
+                    break;
+                }
 
-                RequestDispatcher dispacher = req.getRequestDispatcher("views/errorModifyProfile.html");
-                dispacher.forward(req, resp);
-                break;
             }
-
         }
 
         DatabaseManager.getInstance().getUtenteDao().saveOrUpdate(u);
