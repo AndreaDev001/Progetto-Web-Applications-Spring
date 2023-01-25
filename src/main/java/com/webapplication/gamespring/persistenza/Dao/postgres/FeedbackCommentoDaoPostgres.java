@@ -51,20 +51,4 @@ public class FeedbackCommentoDaoPostgres implements FeedbackCommentoDao {
         return false;
     }
 
-    @Override
-    public boolean delete(FeedbackCommento feedbackCommento) {
-        String query = "DELETE FROM databaseprog.feedback_commenti WHERE utente = ? and commento = ?";
-        try {
-            PreparedStatement st = connection.prepareStatement(query);
-            st.setString(1, feedbackCommento.getUtente());
-            st.setInt(2, feedbackCommento.getCommento());
-            st.executeUpdate();
-            return true;
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return false;
-    }
-
 }
