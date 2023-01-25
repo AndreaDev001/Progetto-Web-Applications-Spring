@@ -92,7 +92,7 @@ public class FeedbackCommentoDaoPostgres implements FeedbackCommentoDao
 
     @Override
     public boolean alreadyInDatabase(String utente, int commento) {
-            String query = "select * from DatabaseProg.feedback_commento where utente = ? and commento = ?";
+            String query = "select * from DatabaseProg.feedback_commenti where utente = ? and commento = ?";
             try {
                 PreparedStatement st = connection.prepareStatement(query);
                 st.setString(1, utente);
