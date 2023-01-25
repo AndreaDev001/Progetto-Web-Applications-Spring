@@ -50,9 +50,7 @@ public class ApplyModifyServlet extends HttpServlet {
         Utente utente = DatabaseManager.getInstance().getUtenteDao().findByPrimaryKey(username);
         if(!Objects.equals(utente.getEmail(), email)) {
 
-            UtenteDao uDao = DatabaseManager.getInstance().getUtenteDao();
-            // check email inesistente nel db
-            List<Utente> utenti = uDao.findAll();
+            List<Utente> utenti = DatabaseManager.getInstance().getUtenteDao().findAll();
             for (Utente ut : utenti) {
                 if (ut.getEmail().equals(email)) {
 
