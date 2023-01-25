@@ -44,5 +44,6 @@ public class DatabaseManager {
     public WishlistDao getWishlistDao(){return new WishlistDaoPostgres(getConnection());}
     public SegnalazioneDao getSegnalazioneDao(){return new SegnalazioneDaoPostgres(getConnection());}
     public FeedbackCommentoDao getFeedbackCommentoDao(){ return new FeedbackCommentoDaoPostgres(getConnection());}
+    public FeedbackRecensioneDao getFeedbackRecensioneDao(){ return new FeedbackRecensioneDaoPostgres(getConnection());}
 
 }

@@ -1,10 +1,8 @@
 package com.webapplication.gamespring.controller.rest;
 
-
 import com.webapplication.gamespring.model.Commento;
 import com.webapplication.gamespring.model.FeedbackCommento;
 import com.webapplication.gamespring.persistenza.DatabaseManager;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
@@ -31,16 +29,14 @@ public class CommentRestController {
         return "none";
     }
 
-
     @GetMapping(value = "/getCommentFeedback")
-    public String getCommentFeedback(@RequestParam int commentID)
+    public String getCommentFeedback(@RequestParam String username, @RequestParam int commentID)
     {
-        FeedbackCommento feed = DatabaseManager.getInstance().getFeedbackCommentoDao().findByPrimaryKey("Pie_Oxx", commentID);
+        FeedbackCommento feed = DatabaseManager.getInstance().getFeedbackCommentoDao().findByPrimaryKey(username, commentID);
         if(feed == null)
             return "none";
         return feed.isTipo() ? "like" : "dislike";
     }
-
 
     @PostMapping(value = "/addComment")
     public int addComment(@RequestBody Commento commento) throws SQLException {
