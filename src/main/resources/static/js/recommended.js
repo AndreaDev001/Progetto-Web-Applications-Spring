@@ -20,7 +20,7 @@
     funzione(document.getElementById("api1").textContent, container1El)
     funzione(document.getElementById("api2").textContent, container2El)
     funzione(document.getElementById("api3").textContent, container3El)
-    funzione(document.getElementById("api3").textContent, container4El)
+    funzione(document.getElementById("api4").textContent, container4El)
 
     function creaCard(data, parent){
         const card = document.createElement("div")
