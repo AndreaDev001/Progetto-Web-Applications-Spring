@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -53,8 +55,8 @@ public class ReviewRestController {
     }
 
     @PostMapping(value = "/reportReview")
-    public void reportReview(@RequestBody Segnalazione segnalazione) throws IllegalArgumentException {
-        DatabaseManager.getInstance().getSegnalazioneDao().saveOrUpdate(segnalazione);
+    public void reportReview(@RequestBody Segnalazione segnalazione) throws SQLException, IllegalArgumentException {
+        DatabaseManager.getInstance().getSegnalazioneDao().save(segnalazione);
     }
 
     @PostMapping(value = "/changeReviewFeedback")
@@ -89,17 +91,19 @@ public class ReviewRestController {
 
 
     @ResponseBody
-    @ExceptionHandler({MissingServletRequestParameterException.class, MethodArgumentTypeMismatchException.class})
+    @ExceptionHandler({MissingServletRequestParameterException.class, MethodArgumentTypeMismatchException.class, IllegalArgumentException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     String failedServetParameter(Exception ex) {
         return ex.getMessage();
     }
 
-    @ResponseBody
-    @ExceptionHandler({SQLException.class, IllegalArgumentException.class})
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    String failedQuery(Exception ex) {
-        return ex.getMessage();
-    }
 
+    @ResponseBody
+    @ExceptionHandler({SQLException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    Map<String,String> invalidData(SQLException ex) {
+        Map<String, String> result = new HashMap<>();
+        result.put("sqlError", ex.getSQLState());
+        return result;
+    }
 }

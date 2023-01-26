@@ -56,40 +56,15 @@ public class SegnalazioneDaoPostgres implements SegnalazioneDao {
         return new Segnalazione(DatabaseManager.getInstance().getRecensioneDao().findByPrimaryKey(idRecensione),utente,motivazione);
     }
     @Override
-    public void saveOrUpdate(Segnalazione segnalazione) {
-        if (!alreadyInDatabase(segnalazione.getRecensione().getId(), segnalazione.getUtente())) {
-            String insertStr = "INSERT INTO DatabaseProg.segnalazione VALUES (?, ?, ?)";
-            PreparedStatement st;
-            try
-            {
-                st = connection.prepareStatement(insertStr);
-                st.setInt(1, segnalazione.getRecensione().getId());
-                st.setString(2, segnalazione.getUtente());
-                st.setString(3, segnalazione.getMotivazione());
-                st.executeUpdate();
+    public void save(Segnalazione segnalazione) throws SQLException {
+        String insertStr = "INSERT INTO DatabaseProg.segnalazione VALUES (?, ?, ?)";
+        PreparedStatement st = connection.prepareStatement(insertStr);
+        st.setInt(1, segnalazione.getRecensione().getId());
+        st.setString(2, segnalazione.getUtente());
+        st.setString(3, segnalazione.getMotivazione());
+        st.executeUpdate();
 
-            } catch (SQLException exception){
-                // TODO Auto-generated catch block
-                throw new RuntimeException(exception);
-            }
-        }
-        else
-        {
-            String updateStr = "UPDATE DatabaseProg.segnalazione set motivazione = ?, "
-                    + "where recensione = ? and utente = ?";
-            PreparedStatement st;
-            try
-            {
-                st = connection.prepareStatement(updateStr);
-                st.setString(1, segnalazione.getMotivazione());
-                st.setInt(2, segnalazione.getRecensione().getId());
-                st.setString(3, segnalazione.getUtente());
-                st.executeUpdate();
-            } catch (SQLException exception) {
-                // TODO Auto-generated catch block
-                throw new RuntimeException(exception);
-            }
-        }
+
     }
     @Override
     public void delete(int recensione, String utente) {
@@ -103,21 +78,5 @@ public class SegnalazioneDaoPostgres implements SegnalazioneDao {
             // TODO Auto-generated catch block
             throw new RuntimeException(exception);
         }
-    }
-    @Override
-    public boolean alreadyInDatabase(int recensione, String utente) {
-        String query = "select * from DatabaseProg.utente where utente = ? and recensione = ?";
-        try {
-            PreparedStatement st = connection.prepareStatement(query);
-            st.setString(1, utente);
-            st.setInt(2, recensione);
-            ResultSet rs = st.executeQuery();
-            if (rs.next())
-                return true;
-        } catch (SQLException exception) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException(exception);
-        }
-        return false;
     }
 }

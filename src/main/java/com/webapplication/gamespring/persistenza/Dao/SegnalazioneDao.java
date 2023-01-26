@@ -11,8 +11,7 @@ public interface SegnalazioneDao {
 
     public Segnalazione findByPrimaryKey(int recensione, String utente);
     public Segnalazione readSegnalazione(ResultSet resultSet) throws SQLException;
-    public void saveOrUpdate(Segnalazione segnalazione);
+    public void save(Segnalazione segnalazione) throws SQLException;
 
     public void delete(int recensione, String utente);
-    public boolean alreadyInDatabase(int recensione, String utente);
 }
