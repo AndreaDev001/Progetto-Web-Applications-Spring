@@ -7,9 +7,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 @SpringBootApplication
 @ServletComponentScan
 public class GamespringApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(GamespringApplication.class, args);
     }
-
 }

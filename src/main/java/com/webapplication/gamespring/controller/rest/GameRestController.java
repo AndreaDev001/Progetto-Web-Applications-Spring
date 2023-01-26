@@ -26,6 +26,7 @@ public class GameRestController {
         gioco.setGenere(genere);
         gioco.setTitolo(titolo);
         gioco.setImmagine(immagine);
+        System.out.println(immagine);
         giocoDao.saveOrUpdate(gioco);
     }
     @PostMapping("removeGame")
