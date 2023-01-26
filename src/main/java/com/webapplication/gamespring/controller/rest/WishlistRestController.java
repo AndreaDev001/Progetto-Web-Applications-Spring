@@ -1,8 +1,10 @@
 package com.webapplication.gamespring.controller.rest;
 
+import com.webapplication.gamespring.model.Utente;
 import com.webapplication.gamespring.model.Wishlist;
 import com.webapplication.gamespring.persistenza.Dao.WishlistDao;
 import com.webapplication.gamespring.persistenza.DatabaseManager;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -49,5 +51,18 @@ public class WishlistRestController
             wishlist.setGioco(gameID);
             wishlistDao.delete(wishlist);
         }
+    }
+
+    @PostMapping("/removeGameWishlistSpring")
+    public void removeGameWishlist(HttpServletRequest req, @RequestParam int gameID) {
+        Utente utente = (Utente) req.getSession().getAttribute("user");
+        if(utente == null)
+            return;
+        WishlistDao wishlistDao = DatabaseManager.getInstance().getWishlistDao();
+        Wishlist wishlist = new Wishlist();
+        wishlist.setUtente(utente.getUsername());
+        wishlist.setGioco(gameID);
+        wishlistDao.delete(wishlist);
+
     }
 }

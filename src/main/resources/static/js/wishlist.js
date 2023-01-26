@@ -1,5 +1,14 @@
+
 function removeWishlistEntry(value)
 {
-    let element = document.getElementById(value);
-    element.remove();
+
+    $.post("http://localhost:8080/removeGameWishlistSpring", {gameID: value}
+    ).done(function() {
+        document.querySelector(`div[gameid="${value}"]`).remove();
+        alert("Wishlist entry successfully removed");
+    });
+
 }
+
+
+
