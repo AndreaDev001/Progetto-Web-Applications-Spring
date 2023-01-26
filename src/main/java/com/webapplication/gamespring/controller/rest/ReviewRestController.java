@@ -37,6 +37,11 @@ public class ReviewRestController {
         RecensioneDao recensioneDao = DatabaseManager.getInstance().getRecensioneDao();
         return recensioneDao.getUserReview(username,gameID);
     }
+    @GetMapping(value = "/getUserReviews")
+    public List<Recensione> getUserReviews(@RequestParam String username){
+        RecensioneDao recensioneDao = DatabaseManager.getInstance().getRecensioneDao();
+        return recensioneDao.getUserReviews(username);
+    }
     @PostMapping(value = "/publishReview")
     public int publishReview(@RequestBody Recensione review) throws IllegalArgumentException, SQLException {
         isReviewValid((review));

@@ -61,8 +61,8 @@
                 <div class = "col-12 text-center">
                     <h1 class = "text-white" style="font-weight: bold">Wishlist</h1>
                 </div>
-                <div th:attr="gameid=${gioco.id}" th:each="gioco : ${giochi}" class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
-                    <div th:id=gameId class = "card" style="background-color: var(--background-secondary)">
+                <div th:id="${gioco.id}" th:each="gioco : ${giochi}" class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
+                    <div class = "card" style="background-color: var(--background-secondary)">
                         <img class="card-img-top" th:src="${gioco.immagine}" alt="Not Found">
                         <div class="card-body">
                             <h5 th:text="${gioco.titolo}" class="card-title text-white"></h5>
