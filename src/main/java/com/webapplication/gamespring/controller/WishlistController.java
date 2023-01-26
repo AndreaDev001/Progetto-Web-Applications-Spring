@@ -18,19 +18,15 @@ public class WishlistController {
     @GetMapping("/wishlist")
     public String wishlistPage(HttpServletRequest req, HttpServletResponse response)
     {
-        req.setAttribute("pageTitle", "sus");
         Utente utente = (Utente) req.getSession().getAttribute("user");
         //if user is null redirect client to the login page
         if(utente == null)
             return "redirect:login";
-
         List<Wishlist> userWishList = DatabaseManager.getInstance().getWishlistDao().findByUser(utente.getUsername());
         List<Gioco> games = new LinkedList<>();
         userWishList.forEach((wishlist -> games.add(DatabaseManager.getInstance().getGiocoDao().findByPrimaryKey(wishlist.getGioco()))));
-
         req.setAttribute("utente", utente);
         req.setAttribute("giochi", games);
-
         return "wishlist.html";
     }
 }

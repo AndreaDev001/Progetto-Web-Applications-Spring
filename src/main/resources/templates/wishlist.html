@@ -55,18 +55,18 @@
         <div class="w-100" th:if="${session.sessionId} AND ${session.user}">
             <div class = "text-center text-white" th:if="${giochi.isEmpty()}">
                 <h1 style="font-weight: bold">Your wishlist is empty</h1>
-                <a class="btn btn-lg button button-primary">Back to home page</a>
+                <a class="btn btn-lg button button-primary" th:href="|http://localhost:4200/games?jsessionid=${session.sessionId}|">Back to home page</a>
             </div>
-            <div class = "row">
+            <div class = "row" th:unless="${giochi.isEmpty()}">
                 <div class = "col-12 text-center">
                     <h1 class = "text-white" style="font-weight: bold">Wishlist</h1>
                 </div>
                 <div th:attr="gameid=${gioco.id}" th:each="gioco : ${giochi}" class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
-                    <div class = "card" style="background-color: var(--background-secondary)">
+                    <div th:id=gameId class = "card" style="background-color: var(--background-secondary)">
                         <img class="card-img-top" th:src="${gioco.immagine}" alt="Not Found">
                         <div class="card-body">
                             <h5 th:text="${gioco.titolo}" class="card-title text-white"></h5>
-                            <a th:href="|http://localhost:4200/games/${gioco.id}|" class="btn btn-lg button button-primary">Visit</a>
+                            <a th:href="|http://localhost:4200/games/${gioco.id}?jessionid=${session.sessionId}|" class="btn btn-lg button button-primary">Visit</a>
                             <button th:onclick="|removeWishlistEntry(${gioco.id})|" class="btn btn-lg button button-delete">Remove</button>
                         </div>
                     </div>
