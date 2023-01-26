@@ -1,12 +1,5 @@
-let wishlistCards = document.querySelectorAll(".card")
-function removeWishlistEntry(event, value)
+function removeWishlistEntry(value)
 {
-    console.log(value);
     let element = document.getElementById(value);
-    element.delete();
+    element.remove();
 }
-wishlistCards.forEach((card) => {
-
-});
-
-
