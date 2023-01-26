@@ -42,7 +42,7 @@
                 <div class="dropdown-menu" style="background-color: var(--background-secondary)">
                     <a th:if="!${session.sessionId}" class="dropdown-item dropdown-link" href="http://localhost:8080/login">Login</a>
                     <a th:if="${session.sessionId}" class="dropdown-item dropdown-link" href="logout">Logout</a>
-                    <a class="dropdown-item dropdown-link" href="http://localhost:4200/registration">Sign up</a>
+                    <a th:if="!${session.sessionId}" class="dropdown-item dropdown-link" href="http://localhost:4200/registration">Sign up</a>
                     <a th:if="${session.sessionId}" class="dropdown-item dropdown-link" href="http://localhost:8080/wishlist">Wishlist</a>
                     <a th:if="${session.sessionId}" class = "dropdown-item dropdown-link" href="http://localhost:8080/recommended">Recommended for you</a>
                     <a th:if="${session.sessionId} AND ${session.user} AND ${session.user.amministratore}" class = "dropdown-item dropdown-link" href="http://localhost:8080/userList">Users List</a>
