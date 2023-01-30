@@ -21,7 +21,7 @@ public class ReportsServlet extends HttpServlet{
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession httpSession = req.getSession();
         Utente utente = (Utente)httpSession.getAttribute("user");
-        if(utente == null || !utente.isAmministratore()){
+        if(utente == null || !utente.isAmministratore() || utente.isBandito()){
             resp.sendRedirect("notPermitted");
             return;
         }
