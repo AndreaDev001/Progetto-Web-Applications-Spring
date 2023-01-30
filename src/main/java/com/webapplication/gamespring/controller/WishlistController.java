@@ -21,7 +21,7 @@ public class WishlistController {
         Utente utente = (Utente) req.getSession().getAttribute("user");
         //if user is null redirect client to the login page
         if(utente == null)
-            return "redirect:login";
+            return "redirect:notPermitted";
         List<Wishlist> userWishList = DatabaseManager.getInstance().getWishlistDao().findByUser(utente.getUsername());
         List<Gioco> games = new LinkedList<>();
         userWishList.forEach((wishlist -> games.add(DatabaseManager.getInstance().getGiocoDao().findByPrimaryKey(wishlist.getGioco()))));

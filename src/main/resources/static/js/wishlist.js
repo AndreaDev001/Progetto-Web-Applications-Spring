@@ -1,12 +1,23 @@
-let wishlistCards = document.querySelectorAll(".card")
-function removeWishlistEntry(event, value)
+$(document).ready(() => updateValues());
+function updateValues()
 {
-    console.log(value);
-    let element = document.getElementById(value);
-    element.delete();
+    let card = document.getElementsByClassName("card");
+    let missingGameDiv = document.getElementById("noGameDiv");
+    let gameHolder = document.getElementById("gameHolder");
+    missingGameDiv.style.display = card.length > 0 ? "none" : "block";
+    gameHolder.style.display = card.length > 0 ? "flex" : "none";
+    console.log(missingGameDiv);
 }
-wishlistCards.forEach((card) => {
+function removeWishlistEntry(value)
+{
+    $.post("http://localhost:8080/removeGameWishlistSpring", {gameID: value}
+    ).done(function() {
+        document.querySelector(`div[gameid="${value}"]`).remove();
+        alert("Wishlist entry successfully removed");
+        updateValues();
+    });
 
-});
+}
+
 
 
