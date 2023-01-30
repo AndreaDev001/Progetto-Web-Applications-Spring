@@ -43,6 +43,9 @@
                       <a th:if="${session.sessionId} AND ${session.user}" class = "dropdown-item dropdown-link" th:href="|http://localhost:4200/reviews?jsessionid=${session.sessionId}|">Your Reviews</a>
                   </div>
               </li>
+              <li class="nav-item header-item px-1" th:if="${session.sessionId} AND ${session.user}">
+                  <i class="fa-solid fa-id-card d-inline-block text-white"></i><a class = "nav-link header-link">Logged in</a>
+              </li>
           </ul>
       </div>
   </nav>
@@ -52,24 +55,18 @@
               <h1 class="text-center heading">Error</h1>
               <p class="text-center" style="color: whitesmoke;">Your credentials were invalid...</p>
                   <section class="d-flex w-100 justify-content-center">
-                      <div class="w-50 d-flex row py-3">
-                          <button class="btn button button-primary w-100">
-                              <a href="recoverAccount" class="button-link">Reset password</a>
-                          </button>
+                      <div class="w-50 d-flex py-3">
+                          <a class = "btn btn button button-primary w-100" href="recoverAccount">Reset Password</a>
                       </div>
                   </section>
               <section class="d-flex w-100 justify-content-center">
                   <div class="w-50 d-flex row py-1">
-                      <button class="btn button button-secondary w-100">
-                          <a href="login" class="button-link">Back to login</a>
-                      </button>
+                      <a class = "btn button button-secondary w-100" href="login">Back to login</a>
                   </div>
               </section>
               <section class="d-flex w-100 justify-content-center">
                   <div class="w-50 d-flex row py-1">
-                      <button class="btn button button-secondary w-100">
-                          <a href="http://localhost:4200/registration" class="button-link">Sign up</a>
-                      </button>
+                      <a class = "btn button button-secondary w-100" href="http://localhost:4200/registration">Sign up</a>
                   </div>
               </section>
           </div>

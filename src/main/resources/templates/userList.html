@@ -42,6 +42,9 @@
                     <a th:if="${session.sessionId} AND ${session.user}" class = "dropdown-item dropdown-link" th:href="|http://localhost:4200/reviews?jsessionid=${session.sessionId}|">Your Reviews</a>
                 </div>
             </li>
+            <li class="nav-item header-item px-1" th:if="${session.sessionId} AND ${session.user}">
+                <i class="fa-solid fa-id-card d-inline-block text-white"></i><a class = "nav-link header-link">Logged in</a>
+            </li>
         </ul>
     </div>
 </nav>
