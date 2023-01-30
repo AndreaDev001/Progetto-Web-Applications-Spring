@@ -9,6 +9,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.io.IOException;
@@ -63,6 +64,14 @@ public class ApplyModifyServlet extends HttpServlet {
         }
 
         DatabaseManager.getInstance().getUtenteDao().saveOrUpdate(u);
+
+        HttpSession session = req.getSession();
+
+        session.setAttribute("user", u);
+        session.setAttribute("sessionId", session.getId());
+
+        req.getServletContext().setAttribute(session.getId(), session);
+
 
             List<Utente> userList = DatabaseManager.getInstance().getUtenteDao().findAll();
 
