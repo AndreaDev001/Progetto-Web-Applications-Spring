@@ -7,7 +7,11 @@ function formValidate() {
     var mailformat2 = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,50}$/;
 
 
-    if(!password.value.match(mailformat2)){
+    if(password.value === ""){
+
+    }
+
+    else if(!password.value.match(mailformat2)){
         alert('Password must contain at least:\n'+
             '- a lowercase character,\n' +
             '- an uppercase character,\n' +
