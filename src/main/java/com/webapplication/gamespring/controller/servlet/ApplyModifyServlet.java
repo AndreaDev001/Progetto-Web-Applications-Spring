@@ -49,7 +49,8 @@ public class ApplyModifyServlet extends HttpServlet {
             u.setBandito(true);
 
         Utente utente = DatabaseManager.getInstance().getUtenteDao().findByPrimaryKey(username);
-        if(!Objects.equals(utente.getEmail(), email)) {
+
+        if(!Objects.equals(utente.getEmail(), u.getEmail())) {
 
             List<Utente> utenti = DatabaseManager.getInstance().getUtenteDao().findAll();
             for (Utente ut : utenti) {

@@ -30,7 +30,7 @@ public class RecommendedServlet extends HttpServlet {
         genres.put("action", 0);
         genres.put("indie", 0);
         genres.put("adventure", 0);
-        genres.put("rpg", 0);
+        genres.put("role-playing-games-rpg", 0);
         genres.put("strategy", 0);
         genres.put("shooter", 0);
         genres.put("casual", 0);
