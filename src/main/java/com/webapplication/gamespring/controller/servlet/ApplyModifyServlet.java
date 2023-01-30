@@ -30,27 +30,10 @@ public class ApplyModifyServlet extends HttpServlet {
 
         String encryptedPassword = BCrypt.hashpw(password, BCrypt.gensalt(12));
 
-        Utente u = new Utente();
-        u.setUsername(username);
-        u.setEmail(email);
-        u.setPassword(encryptedPassword);
-
-
-        if(admin == null){
-            u.setAmministratore(false);
-        }
-        else
-            u.setAmministratore(true);
-
-        if(ban == null){
-            u.setBandito(false);
-        }
-        else
-            u.setBandito(true);
 
         Utente utente = DatabaseManager.getInstance().getUtenteDao().findByPrimaryKey(username);
 
-        if(!Objects.equals(utente.getEmail(), u.getEmail())) {
+        if(!Objects.equals(utente.getEmail(), email)) {
 
             List<Utente> utenti = DatabaseManager.getInstance().getUtenteDao().findAll();
             for (Utente ut : utenti) {
@@ -62,24 +45,47 @@ public class ApplyModifyServlet extends HttpServlet {
                 }
 
             }
+
+            utente.setEmail(email);
+
         }
 
-        DatabaseManager.getInstance().getUtenteDao().saveOrUpdate(u);
+        if(!password.equals("")){
+
+            utente.setPassword(encryptedPassword);
+
+        }
+
+        if(admin == null){
+            utente.setAmministratore(false);
+        }
+        else
+            utente.setAmministratore(true);
+
+        if(ban == null){
+            utente.setBandito(false);
+        }
+        else
+            utente.setBandito(true);
+
+
+
+        DatabaseManager.getInstance().getUtenteDao().saveOrUpdate(utente);
 
         HttpSession session = req.getSession();
 
-        session.setAttribute("user", u);
+        session.setAttribute("user", utente);
         session.setAttribute("sessionId", session.getId());
 
         req.getServletContext().setAttribute(session.getId(), session);
 
 
-            List<Utente> userList = DatabaseManager.getInstance().getUtenteDao().findAll();
+        List<Utente> userList = DatabaseManager.getInstance().getUtenteDao().findAll();
 
-            req.setAttribute("lista_utenti", userList);
+        req.setAttribute("lista_utenti", userList);
 
-            RequestDispatcher dispacher = req.getRequestDispatcher("views/userList.html");
-            dispacher.forward(req, resp);
+        RequestDispatcher dispacher = req.getRequestDispatcher("views/userList.html");
+        dispacher.forward(req, resp);
 
 
     }
