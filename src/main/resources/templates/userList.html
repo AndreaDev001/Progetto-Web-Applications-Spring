@@ -47,7 +47,7 @@
 </nav>
 <div class ="container-fluid py-4">
     <div class = "w-100" th:if="${session.sessionId} AND ${session.user} AND ${session.user.amministratore}">
-        <form action="search" method="post" class="d-flex w-100 justify-content-center">
+        <form action="search" method="get" class="d-flex w-100 justify-content-center">
             <input type="text" name="keyword" placeholder="Write a username..." class="searchInput">
             <button type="submit" class="btn button button-primary ml-2" >Search</button>
         </form>
@@ -70,7 +70,7 @@
                                 <input name="admin" type="checkbox" th:checked="${utenti.bandito}" class="form-check-input" id="bannedCheckbox" onclick="this.checked = !this.checked">
                                 <label class="form-check-label text-white" for="bannedCheckbox">Banned</label>
                             </div>
-                            <form action="modifyUser" method="post" class = "d-flex justify-content-center py-2">
+                            <form action="modifyUser" method="get" class = "d-flex justify-content-center py-2">
                                 <input type="hidden" name="username" th:value="${utenti.username}">
                                 <button type="submit" value="Submit" class="btn button button-primary">Modify Account</button>
                             </form>

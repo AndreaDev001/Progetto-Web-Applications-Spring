@@ -18,7 +18,7 @@ import java.util.*;
 @WebServlet("/recommended")
 public class RecommendedServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         HttpSession session = req.getSession();
         Utente utente = (Utente)session.getAttribute("user");

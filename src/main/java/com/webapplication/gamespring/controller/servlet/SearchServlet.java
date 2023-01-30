@@ -15,7 +15,7 @@ import java.util.List;
 @WebServlet("/search")
 public class SearchServlet extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String keyword = req.getParameter("keyword");
         if(keyword.equals("")){
             List<Utente> all = DatabaseManager.getInstance().getUtenteDao().findAll();
