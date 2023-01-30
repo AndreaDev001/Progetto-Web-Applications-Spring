@@ -11,35 +11,30 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.0.4/popper.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="js/wishlist.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
     </head>
     <body>
-    <nav class="navbar navbar-expand-lg position-sticky top-0">
-        <button class="navbar-toggler navbar-light" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <nav class="navbar navbar-expand-lg position-sticky top-0" style="padding-left: 2%;padding-right: 2%">
+        <a class = "navbar-brand"></a><button class="navbar-toggler navbar-light" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav ">
-                <li class="nav-item active header-item">
-                    <a th:if="${session.sessionId} AND ${session.user}" class="nav-link header-link" th:href="|http://localhost:4200/games?jsessionid=${session.sessionId}|">Home <span class="sr-only">(current)</span></a>
-                    <a th:unless="${session.user} AND ${session.sessionId}" class="nav-link header-link" href="http://localhost:4200/games">Home</a>
+            <ul class="navbar-nav">
+                <li class="nav-item active header-item px-1">
+                    <i class="fa-solid fa-house d-inline-block"></i><a th:if="${session.sessionId} AND ${session.user}" class="nav-link header-link" th:href="|http://localhost:4200/games?jsessionid=${session.sessionId}|">Home<span class="sr-only">(current)</span></a><a th:unless="${session.user} AND ${session.sessionId}" class="nav-link header-link" href="http://localhost:4200/games">Home</a>
                 </li>
-                <li class="nav-item header-item">
-                    <a th:if="${session.user} AND ${session.sessionId}" class="nav-link header-link" th:href="|http://localhost:4200/news?jsessionid=${session.sessionId}|">News</a>
-                    <a th:unless="${session.user} AND ${session.sessionId}" class="nav-link header-link" href = "http://localhost:4200/news">News</a>
+                <li class="nav-item header-item px-1">
+                    <i class="fa-solid fa-newspaper"></i><a th:if="${session.user} AND ${session.sessionId}" class="nav-link header-link" th:href="|http://localhost:4200/news?jsessionid=${session.sessionId}|">News</a><a th:unless="${session.user} AND ${session.sessionId}" class="nav-link header-link" href = "http://localhost:4200/news">News</a>
                 </li>
-                <li class="nav-item header-item">
-                    <a class="nav-link header-link" href="#">About us</a>
+                <li class="nav-item header-item px-1">
+                    <i class="fa-solid fa-people-group d-inline-block text-white"></i><a class="nav-link header-link" th:if="${session.sessionId} AND ${session.user}" th:href="|http://localhost:4200/info?jsessionid=${session.sessionId}|">About us</a><a class="nav-link header-link" th:unless="${session.sessionId} AND ${session.user}" href="http://localhost:4200/info">About us</a>
                 </li>
-                <li class="nav-item dropdown header-item">
-                    <a class="nav-link dropdown-toggle header-link" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                        Account
-                    </a>
+                <li class="nav-item dropdown header-item px-1">
+                    <i class="fa-solid fa-circle-user d-inline-block text-white"></i><a class="nav-link dropdown-toggle header-link" href="#" role="button" data-toggle="dropdown" aria-expanded="false">Account</a>
                     <div class="dropdown-menu" style="background-color: var(--background-secondary)">
-                        <a th:if="!${session.sessionId}" class="dropdown-item dropdown-link" href="http://localhost:8080/login">Login</a>
-                        <a th:if="${session.sessionId}" class="dropdown-item dropdown-link" href="logout">Logout</a>
-                        <a th:if="!${session.sessionId}" class="dropdown-item dropdown-link" href="http://localhost:4200/registration">Sign up</a>
-                        <a th:if="${session.sessionId}" class="dropdown-item dropdown-link" href="http://localhost:8080/wishlist">Wishlist</a>
-                        <a th:if="${session.sessionId}" class = "dropdown-item dropdown-link" href="http://localhost:8080/recommended">Recommended for you</a>
+                        <a th:unless="${session.sessionId} AND ${session.user}" class="dropdown-item dropdown-link" href="http://localhost:8080/login">Login</a>
+                        <a th:if="${session.sessionId} AND ${session.user}" class="dropdown-item dropdown-link" href="logout">Logout</a>
+                        <a th:unless="${session.sessionId} AND ${session.user}" class="dropdown-item dropdown-link" href="http://localhost:4200/registration">Sign up</a>
+                        <a th:if="${session.sessionId} AND ${session.user}" class="dropdown-item dropdown-link" href="http://localhost:8080/wishlist">Wishlist</a>
+                        <a th:if="${session.sessionId} AND ${session.user}" class = "dropdown-item dropdown-link" href="http://localhost:8080/recommended">Recommended for you</a>
                         <a th:if="${session.sessionId} AND ${session.user} AND ${session.user.amministratore}" class = "dropdown-item dropdown-link" href="http://localhost:8080/userList">Users List</a>
                         <a th:if="${session.sessionId} AND ${session.user} AND ${session.user.amministratore}" class = "dropdown-item dropdown-link" href="http://localhost:8080/reports">Reports List</a>
                         <a th:if="${session.sessionId} AND ${session.user}" class = "dropdown-item dropdown-link" th:href="|http://localhost:4200/reviews?jsessionid=${session.sessionId}|">Your Reviews</a>

@@ -2,16 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Account inesistente</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.0.4/popper.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/recommended.css">
+    <link rel="stylesheet" href="css/authentication.css">
+    <link rel="stylesheet" href="css/login.css">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
 </head>
@@ -45,26 +46,28 @@
         </ul>
     </div>
 </nav>
-<div class="main-wrap">
-    <div class="container-wrap">
-        <div class="recommended">
-            <h2 th:text="${gen1}" style="text-transform: uppercase; color: whitesmoke; margin-top: 20px;"></h2>
-            <div class=container id="container1"></div>
-            <h2 th:text="${gen2}" style="text-transform: uppercase; color: whitesmoke"></h2>
-            <div class=container id="container2"></div>
-            <h2 th:text="${gen3}" style="text-transform: uppercase; color: whitesmoke"></h2>
-            <div class=container id="container3"></div>
-            <h2 th:text="${gen4}" style="text-transform: uppercase; color: whitesmoke"></h2>
-            <div class=container id="container4"></div>
+<div class="container-fluid">
+    <section id ="reg-holder">
+        <div style="background-color: var(--background-secondary);border-radius: 30px;padding: 2% 0">
+            <h1 class="text-center heading">Not authorized</h1>
+            <section class = "d-flex w-100 justify-content-center">
+                <div class = "w-50 d-flex py-1">
+                    <a th:unless="${session.sessionId} AND ${session.user}" class = "btn button button-primary w-100" href="http://localhost:4200/games">Back to home page</a>
+                    <a th:if="${session.sessionId} AND ${session.user}" class = "btn button button-primary w-100" th:href="|http://localhost:4200/games?jsessionid=${session.sessionId}|">Back to home page</a>
+                </div>
+            </section>
+            <section class="d-flex w-100 justify-content-center" th:unless="${session.sessionId} AND ${session.user}">
+                <div class="w-50 d-flex py-1">
+                    <a class = "btn button button-secondary w-100" href="login">Login</a>
+                </div>
+            </section>
+            <section class="d-flex w-100 justify-content-center" th:unless="${session.sessionId} AND ${session.user}">
+                <div class="w-50 d-flex py-1">
+                    <a class = "btn button button-secondary w-100" href="http://localhost:4200/registration">Sign up</a>
+                </div>
+            </section>
         </div>
-    </div>
-
-    <p hidden id="api1" th:text="${api1}">...</p>
-    <p hidden id="api2" th:text="${api2}">...</p>
-    <p hidden id="api3" th:text="${api3}">...</p>
-    <p hidden id="api4" th:text="${api4}">...</p>
-    <p hidden id="sessionId" th:text="${session.sessionId}"></p>
+    </section>
 </div>
-<script src="js/recommended.js"></script>
 </body>
 </html>

@@ -2,8 +2,6 @@ nav
 {
     z-index: 1000;
     background-color: var(--primary);
-    padding-left: 2%;
-    padding-right: 2%;
 }
 a.dropdown-link{
     background-color: var(--background-secondary);
@@ -24,9 +22,14 @@ li.header-item
     color: whitesmoke;
     font-size: 17px;
 }
+i
+{
+    font-size: 17px;
+}
 a.header-link{
     color: inherit;
     font-size: inherit;
+    display: inline-block;
 }
 li.header-item:hover{
     transform:scale(1.02);

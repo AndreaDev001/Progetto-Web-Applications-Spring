@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 public class AuthenticationRestController {
     @GetMapping("/checkAuth")
     public Boolean isAuth(HttpServletRequest req, String jsessionid) {

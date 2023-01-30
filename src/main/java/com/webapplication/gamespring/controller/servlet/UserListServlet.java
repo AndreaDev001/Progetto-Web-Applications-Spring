@@ -8,6 +8,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -15,11 +17,14 @@ import java.util.List;
 public class UserListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        HttpSession httpSession = req.getSession();
+        Utente utente = (Utente)httpSession.getAttribute("user");
+        if(utente == null || !utente.isAmministratore()){
+            resp.sendRedirect("notPermitted");
+            return;
+        }
         List<Utente> users = DatabaseManager.getInstance().getUtenteDao().findAll();
-
         req.setAttribute("lista_utenti", users);
-
         RequestDispatcher dispacher = req.getRequestDispatcher("views/userList.html");
         dispacher.forward(req, resp);
 
