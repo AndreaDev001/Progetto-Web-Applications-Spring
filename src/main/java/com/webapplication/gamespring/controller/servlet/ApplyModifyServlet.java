@@ -18,7 +18,7 @@ import java.util.Objects;
 @WebServlet("/applyModify")
 public class ApplyModifyServlet extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 
         String username = req.getParameter("username");
