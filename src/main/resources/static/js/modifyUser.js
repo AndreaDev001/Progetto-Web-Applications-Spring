@@ -6,8 +6,9 @@ function formValidate() {
 
     var mailformat2 = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,50}$/;
 
+
     if(password.value === ""){
-        alert("Password not modified")
+
     }
 
     else if(!password.value.match(mailformat2)){

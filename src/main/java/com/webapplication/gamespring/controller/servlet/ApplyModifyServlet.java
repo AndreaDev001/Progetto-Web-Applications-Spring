@@ -9,6 +9,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.io.IOException;
@@ -18,7 +19,7 @@ import java.util.Objects;
 @WebServlet("/applyModify")
 public class ApplyModifyServlet extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 
         String username = req.getParameter("username");
@@ -29,25 +30,9 @@ public class ApplyModifyServlet extends HttpServlet {
 
         String encryptedPassword = BCrypt.hashpw(password, BCrypt.gensalt(12));
 
-        Utente u = new Utente();
-        u.setUsername(username);
-        u.setEmail(email);
-        u.setPassword(encryptedPassword);
-
-
-        if(admin == null){
-            u.setAmministratore(false);
-        }
-        else
-            u.setAmministratore(true);
-
-        if(ban == null){
-            u.setBandito(false);
-        }
-        else
-            u.setBandito(true);
 
         Utente utente = DatabaseManager.getInstance().getUtenteDao().findByPrimaryKey(username);
+
         if(!Objects.equals(utente.getEmail(), email)) {
 
             List<Utente> utenti = DatabaseManager.getInstance().getUtenteDao().findAll();
@@ -60,16 +45,47 @@ public class ApplyModifyServlet extends HttpServlet {
                 }
 
             }
+
+            utente.setEmail(email);
+
         }
 
-        DatabaseManager.getInstance().getUtenteDao().saveOrUpdate(u);
+        if(!password.equals("")){
 
-            List<Utente> userList = DatabaseManager.getInstance().getUtenteDao().findAll();
+            utente.setPassword(encryptedPassword);
 
-            req.setAttribute("lista_utenti", userList);
+        }
 
-            RequestDispatcher dispacher = req.getRequestDispatcher("views/userList.html");
-            dispacher.forward(req, resp);
+        if(admin == null){
+            utente.setAmministratore(false);
+        }
+        else
+            utente.setAmministratore(true);
+
+        if(ban == null){
+            utente.setBandito(false);
+        }
+        else
+            utente.setBandito(true);
+
+
+
+        DatabaseManager.getInstance().getUtenteDao().saveOrUpdate(utente);
+
+        HttpSession session = req.getSession();
+
+        session.setAttribute("user", utente);
+        session.setAttribute("sessionId", session.getId());
+
+        req.getServletContext().setAttribute(session.getId(), session);
+
+
+        List<Utente> userList = DatabaseManager.getInstance().getUtenteDao().findAll();
+
+        req.setAttribute("lista_utenti", userList);
+
+        RequestDispatcher dispacher = req.getRequestDispatcher("views/userList.html");
+        dispacher.forward(req, resp);
 
 
     }

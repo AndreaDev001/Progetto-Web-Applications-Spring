@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Reports</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
@@ -67,12 +67,12 @@
                         <p class = "text-white" th:text="'Reason: ' +${segnalazione.motivazione}"></p>
                     </div>
                     <div class = "card-footer py-2" style="background-color: var(--secondary)">
-                        <form action="deleteReview" method="get">
+                        <form action="deleteReports" method="get">
                             <input type="hidden" name="utente" th:value="${segnalazione.utente}">
                             <input type="hidden" name="recensione" th:value="${segnalazione.recensione.id}">
                             <button type="submit" class="btn button button-primary">Elimina Segnalazione</button>
                         </form>
-                        <form class = "mt-2" action="deleteReports" method="get">
+                        <form class = "mt-2" action="deleteReview" method="get">
                             <input type="hidden" name="utente" th:value="${segnalazione.utente}">
                             <input type="hidden" name="recensione" th:value="${segnalazione.recensione.id}">
                             <button type="submit" class="btn button button-delete">Elimina Recensione</button>
