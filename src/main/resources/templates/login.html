@@ -31,7 +31,7 @@
                     <i class="fa-solid fa-people-group d-inline-block text-white"></i><a class="nav-link header-link" th:if="${session.sessionId} AND ${session.user}" th:href="|http://localhost:4200/info?jsessionid=${session.sessionId}|">About us</a><a class="nav-link header-link" th:unless="${session.sessionId} AND ${session.user}" href="http://localhost:4200/info">About us</a>
                 </li>
                 <li class="nav-item dropdown header-item px-1">
-                    <i class="fa-solid fa-circle-user d-inline-block text-white"></i><a class="nav-link dropdown-toggle header-link" href="#" role="button" data-toggle="dropdown" aria-expanded="false">Account</a>
+                    <i class="fa-solid fa-circle-user d-inline-block text-white"></i><a class="nav-link dropdown-toggle header-link" href="#" role="button" data-toggle="dropdown" aria-expanded="false" th:unless="${session.sessionId} AND ${session.user}">Account</a><a class="nav-link dropdown-toggle header-link" href="#" role="button" data-toggle="dropdown" aria-expanded="false" th:if="${session.sessionId} AND ${session.user}" th:text="${session.user.username}"></a>
                     <div class="dropdown-menu" style="background-color: var(--background-secondary)">
                         <a th:unless="${session.sessionId} AND ${session.user}" class="dropdown-item dropdown-link" href="http://localhost:8080/login">Login</a>
                         <a th:if="${session.sessionId} AND ${session.user}" class="dropdown-item dropdown-link" href="logout">Logout</a>
@@ -42,9 +42,6 @@
                         <a th:if="${session.sessionId} AND ${session.user} AND ${session.user.amministratore}" class = "dropdown-item dropdown-link" href="http://localhost:8080/reports">Reports List</a>
                         <a th:if="${session.sessionId} AND ${session.user}" class = "dropdown-item dropdown-link" th:href="|http://localhost:4200/reviews?jsessionid=${session.sessionId}|">Your Reviews</a>
                     </div>
-                </li>
-                <li class="nav-item header-item px-1" th:if="${session.sessionId} AND ${session.user}">
-                    <i class="fa-solid fa-id-card d-inline-block text-white"></i><a class = "nav-link header-link">Logged in</a>
                 </li>
             </ul>
         </div>
