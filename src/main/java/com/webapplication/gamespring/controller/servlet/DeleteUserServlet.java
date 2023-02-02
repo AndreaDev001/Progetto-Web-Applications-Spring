@@ -15,7 +15,7 @@ import java.util.List;
 @WebServlet("/deleteUser")
 public class DeleteUserServlet extends HttpServlet{
         @Override
-        protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
             String username = req.getParameter("username");
 
 

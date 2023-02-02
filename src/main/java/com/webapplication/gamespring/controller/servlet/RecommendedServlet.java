@@ -18,7 +18,7 @@ import java.util.*;
 @WebServlet("/recommended")
 public class RecommendedServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         HttpSession session = req.getSession();
         Utente utente = (Utente)session.getAttribute("user");
@@ -120,10 +120,6 @@ public class RecommendedServlet extends HttpServlet {
         req.setAttribute("gen3", index3);
         req.setAttribute("gen4", index4);;
 
-        System.out.println(api);
-        System.out.println(api2);
-        System.out.println(api3);
-        System.out.println(api4);
         RequestDispatcher dispacher = req.getRequestDispatcher("views/recommended.html");
         dispacher.forward(req, resp);
     }

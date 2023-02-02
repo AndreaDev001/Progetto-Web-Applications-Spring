@@ -15,7 +15,7 @@ import java.util.List;
 @WebServlet("/deleteReports")
 public class DeleteReportsServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String review = req.getParameter("recensione");
         String user = req.getParameter("utente");
 
