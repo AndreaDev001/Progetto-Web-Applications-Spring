@@ -24,6 +24,7 @@ public class DeleteReviewServlet extends HttpServlet {
         int recensione2 = Integer.parseInt(review);
 
 
+        //elimino la recensione dal database e banno l'utente
         DatabaseManager.getInstance().getRecensioneDao().delete(recensione2);
         Utente uDao = DatabaseManager.getInstance().getUtenteDao().findByPrimaryKey(user);
         uDao.setBandito(true);

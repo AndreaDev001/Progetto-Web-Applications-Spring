@@ -27,6 +27,9 @@ public class RecommendedServlet extends HttpServlet {
             resp.sendRedirect("http://localhost:8080/notPermitted");
             return;
         }
+
+        //cerco tutti i giochi della wishlist di un utente e successivamente creo un hashmap per capire quali sono i giochi piu
+        //popolari della sua wishlist
         List<Wishlist> wishlists = DatabaseManager.getInstance().getWishlistDao().findByUser(utente.getUsername());
         HashMap<String, Integer> genres = new HashMap<String, Integer>();
         genres.put("action", 0);
@@ -61,6 +64,8 @@ public class RecommendedServlet extends HttpServlet {
             System.out.println(genres);
         }
 
+
+        //prendo i generi più popolari della wishlist
         int max = Collections.max(genres.values());
         String index = "";
 
@@ -103,6 +108,7 @@ public class RecommendedServlet extends HttpServlet {
 
         }
 
+        //passo i dati delle api per reperire i giochi
 
         String api = "https://api.rawg.io/api/games?key=9970cebdf7b244e6bc80319c9e29e10c&genres=" + index ;
         String api2 = "https://api.rawg.io/api/games?key=9970cebdf7b244e6bc80319c9e29e10c&genres=" + index2 ;

@@ -27,12 +27,13 @@ public class ApplyModifyServlet extends HttpServlet {
         String email = req.getParameter("email");
         String admin= req.getParameter("admin");
         String ban = req.getParameter("ban");
-
         String encryptedPassword = BCrypt.hashpw(password, BCrypt.gensalt(12));
+
 
 
         Utente utente = DatabaseManager.getInstance().getUtenteDao().findByPrimaryKey(username);
 
+        //controllo se la email è stata effettivamente modificata
         if(!Objects.equals(utente.getEmail(), email)) {
 
             List<Utente> utenti = DatabaseManager.getInstance().getUtenteDao().findAll();
@@ -43,17 +44,12 @@ public class ApplyModifyServlet extends HttpServlet {
                     dispacher.forward(req, resp);
                     break;
                 }
-
             }
-
             utente.setEmail(email);
-
         }
 
         if(!password.equals("")){
-
             utente.setPassword(encryptedPassword);
-
         }
 
         if(admin == null){
@@ -68,10 +64,12 @@ public class ApplyModifyServlet extends HttpServlet {
         else
             utente.setBandito(true);
 
-
-
+        //aggiorno i dati del utente nel database
         DatabaseManager.getInstance().getUtenteDao().saveOrUpdate(utente);
 
+
+
+        //aggiorno la sessione
         HttpSession session = req.getSession();
 
         session.setAttribute("user", utente);
@@ -80,6 +78,9 @@ public class ApplyModifyServlet extends HttpServlet {
         req.getServletContext().setAttribute(session.getId(), session);
 
 
+
+
+        //dopo le modifiche ricarico la pagina con tutti gli utenti
         List<Utente> userList = DatabaseManager.getInstance().getUtenteDao().findAll();
 
         req.setAttribute("lista_utenti", userList);

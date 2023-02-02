@@ -19,6 +19,7 @@ public class DeleteUserServlet extends HttpServlet{
             String username = req.getParameter("username");
 
 
+            //elimino l'utente dal database
             DatabaseManager.getInstance().getUtenteDao().delete(username);
 
             List<Utente> utenti = DatabaseManager.getInstance().getUtenteDao().findAll();
