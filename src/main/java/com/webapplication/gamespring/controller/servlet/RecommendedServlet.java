@@ -23,8 +23,10 @@ public class RecommendedServlet extends HttpServlet {
         HttpSession session = req.getSession();
         Utente utente = (Utente)session.getAttribute("user");
         String sessionID = (String)session.getAttribute("sessionId");
-        if(utente == null)
-            resp.sendRedirect("http://localhost:8080/login");
+        if(utente == null){
+            resp.sendRedirect("http://localhost:8080/notPermitted");
+            return;
+        }
         List<Wishlist> wishlists = DatabaseManager.getInstance().getWishlistDao().findByUser(utente.getUsername());
         HashMap<String, Integer> genres = new HashMap<String, Integer>();
         genres.put("action", 0);

@@ -4,12 +4,17 @@ import com.webapplication.gamespring.model.Utente;
 import com.webapplication.gamespring.model.dto.UtenteDto;
 import com.webapplication.gamespring.persistenza.Dao.UtenteDao;
 import com.webapplication.gamespring.persistenza.DatabaseManager;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.support.SessionStatus;
+
+import java.io.IOException;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -37,32 +42,14 @@ public class AuthenticationRestController {
             result = (Utente)session.getAttribute("user");
         return result != null ? new UtenteDto(result) : null;
     }
-    @PostMapping("/doLogin")
-    public String[] doLogin(HttpServletRequest req){
-        String[] results = new String[2];
-        String[] values = req.getQueryString().split("&");
-        String username = values[0].split("=")[1];
-        String password = values[1].split("=")[1];
-        if(!username.isEmpty() && !password.isEmpty()){
-            UtenteDao utenteDao = DatabaseManager.getInstance().getUtenteDao();
-            Utente utente = utenteDao.findByPrimaryKey(username);
-            if(utente != null){
-                HttpSession session = req.getSession();
-                session.setAttribute("user",utente);
-                session.setAttribute("sessionId",session.getId());
-                session.getServletContext().setAttribute(session.getId(),session);
-                results[0] = session.getId();
-                results[1] = utente.getUsername();
-            }
+    @GetMapping("/performLogout")
+    public void performLogout(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String jsessionid = req.getQueryString().split("=")[1];
+        HttpSession session = (HttpSession)req.getServletContext().getAttribute(jsessionid);
+        if(session != null){
+            session.removeAttribute("user");
+            session.removeAttribute("sessionId");
+            session.invalidate();
         }
-        return results;
-    }
-    @PostMapping("/logout")
-    public void logout(HttpServletRequest req){
-        HttpSession session = req.getSession();
-        session.removeAttribute("sessionId");
-        session.removeAttribute("user");
-        session.invalidate();
-        System.out.println("Logout: sessionsID: " + session);
     }
 }
