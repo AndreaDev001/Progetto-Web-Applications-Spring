@@ -17,24 +17,19 @@ public class SearchServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String keyword = req.getParameter("keyword");
-
         //effettuo delle ricerche all'interno del database in base ai filtri
         if(keyword.equals("")){
             List<Utente> all = DatabaseManager.getInstance().getUtenteDao().findAll();
             req.setAttribute("lista_utenti", all);
-
             RequestDispatcher dispacher = req.getRequestDispatcher("views/userList.html");
             dispacher.forward(req, resp);
         }
-        else{
+        else
+        {
             List<Utente> utenti = DatabaseManager.getInstance().getUtenteDao().fuzzySearch(keyword);
             req.setAttribute("lista_utenti", utenti);
-
-            RequestDispatcher dispacher = req.getRequestDispatcher("views/userList.html");
-            dispacher.forward(req, resp);
+            RequestDispatcher dispatcher = req.getRequestDispatcher("views/userList.html");
+            dispatcher.forward(req, resp);
         }
-
-
-
     }
 }
