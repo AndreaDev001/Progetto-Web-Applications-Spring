@@ -17,6 +17,8 @@ public class SearchServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String keyword = req.getParameter("keyword");
+
+        //effettuo delle ricerche all'interno del database in base ai filtri
         if(keyword.equals("")){
             List<Utente> all = DatabaseManager.getInstance().getUtenteDao().findAll();
             req.setAttribute("lista_utenti", all);

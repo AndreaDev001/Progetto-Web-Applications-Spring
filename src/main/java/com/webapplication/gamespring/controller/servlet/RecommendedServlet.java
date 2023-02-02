@@ -18,7 +18,7 @@ import java.util.*;
 @WebServlet("/recommended")
 public class RecommendedServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         HttpSession session = req.getSession();
         Utente utente = (Utente)session.getAttribute("user");
@@ -27,6 +27,9 @@ public class RecommendedServlet extends HttpServlet {
             resp.sendRedirect("http://localhost:8080/notPermitted");
             return;
         }
+
+        //cerco tutti i giochi della wishlist di un utente e successivamente creo un hashmap per capire quali sono i giochi piu
+        //popolari della sua wishlist
         List<Wishlist> wishlists = DatabaseManager.getInstance().getWishlistDao().findByUser(utente.getUsername());
         HashMap<String, Integer> genres = new HashMap<String, Integer>();
         genres.put("action", 0);
@@ -61,6 +64,8 @@ public class RecommendedServlet extends HttpServlet {
             System.out.println(genres);
         }
 
+
+        //prendo i generi più popolari della wishlist
         int max = Collections.max(genres.values());
         String index = "";
 
@@ -103,6 +108,7 @@ public class RecommendedServlet extends HttpServlet {
 
         }
 
+        //passo i dati delle api per reperire i giochi
 
         String api = "https://api.rawg.io/api/games?key=9970cebdf7b244e6bc80319c9e29e10c&genres=" + index ;
         String api2 = "https://api.rawg.io/api/games?key=9970cebdf7b244e6bc80319c9e29e10c&genres=" + index2 ;
@@ -120,10 +126,6 @@ public class RecommendedServlet extends HttpServlet {
         req.setAttribute("gen3", index3);
         req.setAttribute("gen4", index4);;
 
-        System.out.println(api);
-        System.out.println(api2);
-        System.out.println(api3);
-        System.out.println(api4);
         RequestDispatcher dispacher = req.getRequestDispatcher("views/recommended.html");
         dispacher.forward(req, resp);
     }

@@ -14,10 +14,11 @@ import java.io.IOException;
 @WebServlet("/modifyUser")
 public class ModifyUserServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String username = req.getParameter("username");
 
+        //cerco tutti i dati dell'utente e carico la pagina per poter modificare l'utente
         Utente user = DatabaseManager.getInstance().getUtenteDao().findByPrimaryKey(username);
 
         req.setAttribute("modify_utente", user);

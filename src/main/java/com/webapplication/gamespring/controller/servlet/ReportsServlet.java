@@ -18,9 +18,11 @@ import java.util.List;
 @WebServlet("/reports")
 public class ReportsServlet extends HttpServlet{
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession httpSession = req.getSession();
         Utente utente = (Utente)httpSession.getAttribute("user");
+
+
         if(utente == null || !utente.isAmministratore() || utente.isBandito()){
             resp.sendRedirect("notPermitted");
             return;
