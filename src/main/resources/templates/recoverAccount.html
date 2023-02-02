@@ -77,18 +77,16 @@
       </section>
 
       <section class = "d-flex w-100 justify-content-center py-2">
-        <div class = "w-50 d-flex row" th:if="${session.status != T(com.webapplication.gamespring.controller.Status).SUCCESS}">
+        <div class = "w-50 d-flex" th:if="${session.status != T(com.webapplication.gamespring.controller.Status).SUCCESS}">
           <button type="submit" class="btn button button-primary w-100">Send email</button>
         </div>
-        <div class = "w-50 d-flex row" th:unless="${session.status != T(com.webapplication.gamespring.controller.Status).SUCCESS}">
+        <div class = "w-50 d-flex" th:unless="${session.status != T(com.webapplication.gamespring.controller.Status).SUCCESS}">
           <button type="submit" class="btn button button-primary w-100">Resend email</button>
         </div>
       </section>
       <section class="d-flex w-100 justify-content-center">
-        <div class="w-50 d-flex row py-1">
-          <button class="btn button button-secondary w-100">
-            <a href="login" class="button-link">Back to login</a>
-          </button>
+        <div class="w-50 d-flex py-1">
+          <a class="btn button button-secondary w-100" href="login">Back to login</a>
         </div>
       </section>
     </form>
