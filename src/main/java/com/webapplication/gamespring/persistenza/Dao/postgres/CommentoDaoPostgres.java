@@ -44,22 +44,6 @@ public class CommentoDaoPostgres implements CommentoDao {
     }
 
     @Override
-    public Commento findByPrimaryKey(int id) {
-        String query = "select * from DatabaseProg.commento where id = ?";
-        try {
-            PreparedStatement st = connection.prepareStatement(query);
-            st.setInt(1, id);
-            ResultSet rs = st.executeQuery();
-            if (rs.next())
-                return readCommento(rs);
-
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return null;
-    }
-    @Override
     public Commento readCommento(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("id");
         String contenuto = resultSet.getString("contenuto");
