@@ -2,23 +2,38 @@ package com.webapplication.gamespring.controller.rest;
 
 import com.webapplication.gamespring.model.Commento;
 import com.webapplication.gamespring.model.FeedbackCommento;
+import com.webapplication.gamespring.model.Utente;
+import com.webapplication.gamespring.model.dto.CommentDto;
 import com.webapplication.gamespring.persistenza.DatabaseManager;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class CommentRestController {
 
     @GetMapping(value = "/getComments")
-    public List<Commento> getComments(@RequestParam int reviewID, @RequestParam int startIndex, @RequestParam int commentsSize)
+    public List<CommentDto> getComments(HttpServletRequest req, @RequestParam int reviewID, @RequestParam int startIndex, @RequestParam int commentsSize, @RequestParam(required = false) String jsessionid)
     {
-        return DatabaseManager.getInstance().getCommentoDao().getReviewComments(reviewID, startIndex, commentsSize);
+        HttpSession session = jsessionid == null ? null : (HttpSession)req.getServletContext().getAttribute(jsessionid);
+        Utente utente = session != null ? (Utente) session.getAttribute("user") : null;
+
+        List<CommentDto> comments = new LinkedList<>();
+        DatabaseManager.getInstance().getCommentoDao().getReviewComments(reviewID, startIndex, commentsSize).forEach(comment -> {
+
+            FeedbackCommento feed = utente != null ? DatabaseManager.getInstance().getFeedbackCommentoDao().findByPrimaryKey(utente.getUsername(), comment.getId()) : null;
+            comments.add(new CommentDto(comment, feed == null ? "none" : (feed.isTipo() ? "like"  : "dislike")));
+        });
+        return comments;
     }
 
     @PostMapping(value = "/changeFeedback")
@@ -27,15 +42,6 @@ public class CommentRestController {
         if(DatabaseManager.getInstance().getFeedbackCommentoDao().saveOrUpdate(feedbackCommento))
             return feedbackCommento.isTipo() ? "like" : "dislike";
         return "none";
-    }
-
-    @GetMapping(value = "/getCommentFeedback")
-    public String getCommentFeedback(@RequestParam String username, @RequestParam int commentID)
-    {
-        FeedbackCommento feed = DatabaseManager.getInstance().getFeedbackCommentoDao().findByPrimaryKey(username, commentID);
-        if(feed == null)
-            return "none";
-        return feed.isTipo() ? "like" : "dislike";
     }
 
     @PostMapping(value = "/addComment")
