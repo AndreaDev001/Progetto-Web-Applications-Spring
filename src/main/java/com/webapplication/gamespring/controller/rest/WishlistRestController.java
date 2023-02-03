@@ -14,11 +14,23 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 public class WishlistRestController
 {
+    /***
+     * Verifica se un gioco è contenuto o meno nella lista dei desideri di un utente
+     * @param username L'username dell'utente
+     * @param gameID L'id del gioco
+     * @return Ritorna se il gioco è contenuto o meno nella lista dei desideri dell'utente
+     */
     @GetMapping("/containsGameWishlist")
     public boolean containsGame(@RequestParam String username,@RequestParam int gameID){
         WishlistDao wishlistDao = DatabaseManager.getInstance().getWishlistDao();
         return wishlistDao.alreadyInDatabase(gameID,username);
     }
+
+    /***
+     * Ottiene i giochi contenuti dentro la lista dei desideri di un utente
+     * @param username L'username dell'utente
+     * @return La lista trovata
+     */
     @GetMapping("/getWishlist")
     public List<Integer> getWishlistGames(@RequestParam String username){
         List<Integer> result = new ArrayList<>();
@@ -30,6 +42,11 @@ public class WishlistRestController
         }
         return result;
     }
+    /***
+     * Aggiunge un gioco alla lista dei desideri di un utente
+     * @param username L'username dell'utente
+     * @param gameID L'id del gioco da aggiungere
+     */
     @PostMapping("/addGameWishlist")
     public void addGameWishlist(@RequestParam String username,@RequestParam int gameID){
         WishlistDao wishlistDao = DatabaseManager.getInstance().getWishlistDao();
@@ -41,6 +58,11 @@ public class WishlistRestController
             wishlistDao.save(wishlist);
         }
     }
+    /***
+     * Rimuove un gioco dalla lista dei desideri di un utente
+     * @param username L'username dell'utente
+     * @param gameID L'id del gioco da rimuovere
+     */
     @PostMapping("/removeGameWishlist")
     public void removeGameWishlist(@RequestParam String username,@RequestParam int gameID) {
         WishlistDao wishlistDao = DatabaseManager.getInstance().getWishlistDao();
@@ -52,7 +74,11 @@ public class WishlistRestController
             wishlistDao.delete(wishlist);
         }
     }
-
+    /***
+     * Rimuove un gioco dalla lista dei desideri, quando l'utente è dentro la pagina della propria lista dei desideri
+     * @param req Utilizzato per ottenere la sessione
+     * @param gameID L'id del gioco da rimuovere
+     */
     @PostMapping("/removeGameWishlistSpring")
     public void removeGameWishlist(HttpServletRequest req, @RequestParam int gameID) {
         Utente utente = (Utente) req.getSession().getAttribute("user");
