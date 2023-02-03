@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface CommentoDao {
 
+    List<Commento> getReviewComments(int reviewID, int startIndex, int commentsSize);
     Commento readCommento(ResultSet resultSet) throws SQLException; // permette di leggere il commento per evitare duplicazione del codice
     int save(Commento commento) throws SQLException; // salva i nuovi dati all'interno del database
     void update(Commento commento) throws SQLException; // aggiorna i dati all'interno del database
