@@ -19,14 +19,20 @@ import java.io.IOException;
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class AuthenticationRestController {
+
+    /**
+     * Invocato qunado si sta passando da Angular a Spring per controllare se l'utente si è autenticato
+     *
+     * @param req
+     * @param jsessionid ID della sessione corrente
+     * @return true se l'utente si è autenticato, false altrimenti
+     */
     @GetMapping("/checkAuth")
     public Boolean isAuth(HttpServletRequest req, String jsessionid) {
-        System.out.println("Sono in Auth rest controller con jsessionid = " + jsessionid);  // todo: debug
         // ricevo la jessionid dal chiamante (service di Angular) e controllo che
         // esista un obj session avente come sessionid = quella passata dal client
         HttpSession session = (HttpSession) req.getServletContext().getAttribute(jsessionid);
         if (session != null) {
-            System.out.println("user: " + session.getAttribute("user"));  // todo: debug
             return true;
         }
         else {

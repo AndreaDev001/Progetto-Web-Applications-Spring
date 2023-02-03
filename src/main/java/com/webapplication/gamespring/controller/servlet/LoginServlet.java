@@ -19,7 +19,14 @@ import java.util.Enumeration;
 @WebServlet ("/login")
 public class LoginServlet extends HttpServlet {
 
-    // invocata da index.html (GET)
+    /**
+     * Inoltra la risorsa login.html
+     *
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
@@ -28,16 +35,24 @@ public class LoginServlet extends HttpServlet {
         dispatcher.forward(req, resp);
     }
 
-    // invocata dal bottone login quando si invia il login (form in login.html, action = POST)
+
+    /**
+     * Invocata quando l'utente chiede di effettuare il login.
+     * Controlla che i campi 'username' e 'password', che vengono passati
+     * nel body della richiesta POST, siano validi, e aggiorna la sessione di conseguenza.
+     * Se username e password sono entrambi validi, effettua l'autenticazione, valorizza l'attributo
+     * 'sessionId' della sessione e reindirizza l'utente sulla pagina principale.
+     *
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
-        System.out.println("sono in loginServlet");  // todo: debug
         if (username.isEmpty() || username.isBlank() || password.isEmpty() || password.isBlank()) {
-            System.out.println("ciaoooooooooo"); // todo: leva
-
-            // resp.sendRedirect("loginError.html");
             HttpSession session = req.getSession();
             session.setAttribute("emptyFields", true);
             RequestDispatcher dispatcher = req.getRequestDispatcher("views/login.html");
@@ -49,30 +64,24 @@ public class LoginServlet extends HttpServlet {
             Utente utente = udao.findByPrimaryKey(username);
 
             boolean logged;
+
             // se l'utente è nullo (cioè non esiste un account con questo username)
             if (utente == null) {
                 logged = false;
                 RequestDispatcher dispatcher = req.getRequestDispatcher("views/loginError.html");
                 dispatcher.forward(req, resp);
-                // resp.sendRedirect("loginError.html");
             }
             else {
                 // se le credenziali sono entrambe giuste
                 if (BCrypt.checkpw(password, utente.getPassword())) {
                     logged = true;
                     HttpSession session = req.getSession();
-
-                    // scrivo nella sessione l'utente che ha fatto login e l'id della sessione stessa,
-                    // per poi passarle alla HomeServlet
                     session.setAttribute("user", utente);
                     session.setAttribute("sessionId", session.getId());
-
-                    // registro la session corrente nella mappa di tutte le sessioni
                     req.getServletContext().setAttribute(session.getId(), session);
                 }
                 // se username giusto ma password sbagliata
                 else {
-                    // resp.sendRedirect("loginError.html");
                     RequestDispatcher dispatcher = req.getRequestDispatcher("views/loginError.html");
                     dispatcher.forward(req, resp);
                     logged = false;
@@ -80,9 +89,8 @@ public class LoginServlet extends HttpServlet {
             }
             // se loggato
             if (logged) {
-                System.out.println("logged as " + username);
                 String desiredRedirect = "http://localhost:4200/games?jsessionid=" + req.getSession().getAttribute("sessionId");
-                resp.sendRedirect(desiredRedirect);  // 2. faccio una redirect verso la homePage (HomeServlet)
+                resp.sendRedirect(desiredRedirect);
             }
         }
     }

@@ -9,6 +9,10 @@ import jakarta.mail.internet.MimeMessage;
 import java.util.Date;
 import java.util.Properties;
 
+/**
+ * Singleton utilizzata dalla Servlet RecoverAccountServlet per inviare
+ * all'utente una mail per modificare la propria password
+ */
 public class MailHandler {
 
     private MailHandler() {
@@ -27,6 +31,10 @@ public class MailHandler {
     private Session session;
 
 
+    /**
+     * Configura alcune proprietà di sistema riguradanti il protocollo smtp e
+     * esegue l'autenticazione dell'account mail this.fromMail.
+     */
     private void config() {
         properties.put("mail.smtp.host", host);
         properties.put("mail.smtp.port", "465");
@@ -40,6 +48,12 @@ public class MailHandler {
         });
     }
 
+    /**
+     * Invia un email contenente un link per modificare la propria password dall'account this.fromMail.
+     *
+     * @param toEmail indirizzo email di destinazione
+     * @return true se l'email è stata inviata con successo, false altrimenti
+     */
     public boolean sendEmail(String toEmail) {
 
         try {
