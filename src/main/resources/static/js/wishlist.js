@@ -6,7 +6,6 @@ function updateValues()
     let gameHolder = document.getElementById("gameHolder");
     missingGameDiv.style.display = card.length > 0 ? "none" : "block";
     gameHolder.style.display = card.length > 0 ? "flex" : "none";
-    console.log(missingGameDiv);
 }
 function removeWishlistEntry(value)
 {

@@ -1,7 +1,6 @@
 package com.webapplication.gamespring.persistenza;
 
 
-import com.webapplication.gamespring.model.FeedbackCommento;
 import com.webapplication.gamespring.persistenza.Dao.*;
 import com.webapplication.gamespring.persistenza.Dao.postgres.*;
 

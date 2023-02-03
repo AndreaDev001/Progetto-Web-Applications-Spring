@@ -1,8 +1,6 @@
 package com.webapplication.gamespring.persistenza.Dao;
 
 import com.webapplication.gamespring.model.Commento;
-import com.webapplication.gamespring.model.FeedbackCommento;
-import com.webapplication.gamespring.model.Recensione;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

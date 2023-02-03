@@ -2,17 +2,13 @@ package com.webapplication.gamespring.controller.rest;
 
 import com.webapplication.gamespring.model.Utente;
 import com.webapplication.gamespring.model.dto.UtenteDto;
-import com.webapplication.gamespring.persistenza.Dao.UtenteDao;
-import com.webapplication.gamespring.persistenza.DatabaseManager;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.support.SessionStatus;
 
 import java.io.IOException;
 

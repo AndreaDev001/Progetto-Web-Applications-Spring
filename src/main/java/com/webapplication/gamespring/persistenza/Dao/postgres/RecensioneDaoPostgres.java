@@ -1,13 +1,8 @@
 package com.webapplication.gamespring.persistenza.Dao.postgres;
 
-import com.webapplication.gamespring.model.Commento;
 import com.webapplication.gamespring.model.Recensione;
-import com.webapplication.gamespring.model.Segnalazione;
-import com.webapplication.gamespring.model.Utente;
 import com.webapplication.gamespring.persistenza.Dao.RecensioneDao;
-import org.jsoup.Jsoup;
 
-import java.io.IOException;
 import java.sql.*;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;

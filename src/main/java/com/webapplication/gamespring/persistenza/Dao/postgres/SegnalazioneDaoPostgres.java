@@ -1,7 +1,6 @@
 package com.webapplication.gamespring.persistenza.Dao.postgres;
 
 import com.webapplication.gamespring.model.Segnalazione;
-import com.webapplication.gamespring.model.Utente;
 import com.webapplication.gamespring.persistenza.Dao.SegnalazioneDao;
 import com.webapplication.gamespring.persistenza.DatabaseManager;
 

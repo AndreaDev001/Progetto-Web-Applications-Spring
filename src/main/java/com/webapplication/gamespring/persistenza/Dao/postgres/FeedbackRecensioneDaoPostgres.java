@@ -3,7 +3,10 @@ package com.webapplication.gamespring.persistenza.Dao.postgres;
 import com.webapplication.gamespring.model.FeedbackRecensione;
 import com.webapplication.gamespring.persistenza.Dao.FeedbackRecensioneDao;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class FeedbackRecensioneDaoPostgres implements FeedbackRecensioneDao {
     Connection connection;

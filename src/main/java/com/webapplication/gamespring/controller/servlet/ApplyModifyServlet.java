@@ -1,9 +1,7 @@
 package com.webapplication.gamespring.controller.servlet;
 
 import com.webapplication.gamespring.model.Utente;
-import com.webapplication.gamespring.persistenza.Dao.UtenteDao;
 import com.webapplication.gamespring.persistenza.DatabaseManager;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

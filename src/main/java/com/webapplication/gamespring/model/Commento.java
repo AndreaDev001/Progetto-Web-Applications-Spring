@@ -1,11 +1,6 @@
 package com.webapplication.gamespring.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
-
-import java.sql.Timestamp;
 import java.time.OffsetDateTime;
-import java.util.Date;
 
 public class Commento
 {

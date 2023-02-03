@@ -1,7 +1,6 @@
 package com.webapplication.gamespring.persistenza.Dao.postgres;
 
 import com.webapplication.gamespring.model.Gioco;
-import com.webapplication.gamespring.model.Utente;
 import com.webapplication.gamespring.persistenza.Dao.GiocoDao;
 
 import java.sql.*;

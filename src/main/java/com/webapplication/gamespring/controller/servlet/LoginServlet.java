@@ -10,11 +10,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.io.IOException;
-import java.util.Enumeration;
 
 @WebServlet ("/login")
 public class LoginServlet extends HttpServlet {
