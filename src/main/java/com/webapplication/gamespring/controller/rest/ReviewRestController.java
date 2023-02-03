@@ -29,6 +29,9 @@ public class ReviewRestController {
         return DatabaseManager.getInstance().getRecensioneDao().getGameReviews(gameID);
     }
 
+    /**
+     * @return la recensione ed il corrispettivo feedback lasciato dall'utente associato con la jsessionid
+     */
     @GetMapping(value = "/getReview")
     public Map<String, Object> getReview(HttpServletRequest req, @RequestParam int reviewID, @RequestParam(required = false) String jsessionid) throws SQLException {
 

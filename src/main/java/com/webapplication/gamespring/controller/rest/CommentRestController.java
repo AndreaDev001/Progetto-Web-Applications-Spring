@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,10 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:4200")
 public class CommentRestController {
 
+
+    /**
+     * @return una lista di commenti con ognuno il feedback lasciato dall'utente associato con jsessionid
+     */
     @GetMapping(value = "/getComments")
     public List<CommentDto> getComments(HttpServletRequest req, @RequestParam int reviewID, @RequestParam int startIndex, @RequestParam int commentsSize, @RequestParam(required = false) String jsessionid)
     {
@@ -61,6 +66,9 @@ public class CommentRestController {
         DatabaseManager.getInstance().getCommentoDao().delete(commento);
     }
 
+    /**
+     * @return il messaggio da far ricevere al client quando la richiesta è invalida
+     */
     @ResponseBody
     @ExceptionHandler({MissingServletRequestParameterException.class, MethodArgumentTypeMismatchException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -68,11 +76,16 @@ public class CommentRestController {
         return ex.getMessage();
     }
 
-
+    /**
+     * @return codice di errore specifico di sql
+     * (sicurezza da rivedere data l'informazione data ad un client potenzialmente malevolo
+     */
     @ResponseBody
     @ExceptionHandler({SQLException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    String failedQuery(SQLException ex) {
-        return ex.getMessage();
+    Map<String,String> invalidData(SQLException ex) {
+        Map<String, String> result = new HashMap<>();
+        result.put("sqlError", ex.getSQLState());
+        return result;
     }
 }
