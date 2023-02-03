@@ -49,6 +49,9 @@ public class RecommendedServlet extends HttpServlet
             Map.Entry<String,Integer> value = (Map.Entry<String,Integer>)values[i];
             indexes.add(value.getKey());
         }
+        for (Gioco game : games)
+            genres.replace(game.getGenere(), genres.get(game.getGenere()) + 1);
+
         //passo i dati delle api per reperire i giochi
         for(int i = 0;i < 4;i++){
             addAPIAttribute(req,i,indexes.get(i));
