@@ -45,12 +45,18 @@ public class ApplyModifyServlet extends HttpServlet {
         //aggiorno i dati del utente nel database
         DatabaseManager.getInstance().getUtenteDao().saveOrUpdate(utente);
         //aggiorno la sessione
-        /***
+
+
         HttpSession session = req.getSession();
-        session.setAttribute("user", utente);
-        session.setAttribute("sessionId", session.getId());
-        req.getServletContext().setAttribute(session.getId(), session);
-         ***/
+        Utente sessionUtente = (Utente)session.getAttribute("user");
+
+        if(Objects.equals(sessionUtente.getUsername(), username)){
+            session.setAttribute("user", utente);
+            session.setAttribute("sessionId", session.getId());
+            req.getServletContext().setAttribute(session.getId(), session);
+        }
+
+
         //dopo le modifiche ricarico la pagina con tutti gli utenti
         List<Utente> userList = DatabaseManager.getInstance().getUtenteDao().findAll();
         req.setAttribute("lista_utenti", userList);
