@@ -61,8 +61,6 @@ public class CommentRestController {
         DatabaseManager.getInstance().getCommentoDao().delete(commento);
     }
 
-
-
     @ResponseBody
     @ExceptionHandler({MissingServletRequestParameterException.class, MethodArgumentTypeMismatchException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)

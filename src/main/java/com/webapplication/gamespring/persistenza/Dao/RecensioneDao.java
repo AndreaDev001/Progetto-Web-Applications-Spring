@@ -20,6 +20,6 @@ public interface RecensioneDao {
 
     void delete(int recensione);
 
-    boolean update(Recensione recensione);
+    boolean update(Recensione recensione) throws SQLException;
 
 }

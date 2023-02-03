@@ -64,13 +64,13 @@ public class ReviewRestController {
     }
 
     @PostMapping(value = "/editReview")
-    public boolean editReview(@RequestBody Recensione review) throws IllegalArgumentException {
+    public boolean editReview(@RequestBody Recensione review) throws IllegalArgumentException, SQLException {
         isReviewValid(review);
         return DatabaseManager.getInstance().getRecensioneDao().update(review);
     }
 
     @DeleteMapping(value = "/deleteReview/{reviewID}")
-    public void deleteReview(@PathVariable int reviewID) throws IllegalArgumentException {
+    public void deleteReview(@PathVariable int reviewID) throws IllegalArgumentException,SQLException {
         DatabaseManager.getInstance().getRecensioneDao().delete(reviewID);
     }
 
@@ -86,6 +86,10 @@ public class ReviewRestController {
         return "none";
     }
 
+    /**
+     * @param review la recensione da controllare
+     * @throws IllegalArgumentException lanciato quando non valido.
+     */
     private void isReviewValid(Recensione review) throws IllegalArgumentException
     {
         if(review.getTitolo().isEmpty())
@@ -101,7 +105,9 @@ public class ReviewRestController {
 
     }
 
-
+    /**
+     * @return il messaggio da far ricevere al client quando la richiesta è invalida
+     */
     @ResponseBody
     @ExceptionHandler({MissingServletRequestParameterException.class, MethodArgumentTypeMismatchException.class, IllegalArgumentException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -110,6 +116,10 @@ public class ReviewRestController {
     }
 
 
+    /**
+     * @return codice di errore specifico di sql
+     * (sicurezza da rivedere data l'informazione data ad un client potenzialmente malevolo
+     */
     @ResponseBody
     @ExceptionHandler({SQLException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
