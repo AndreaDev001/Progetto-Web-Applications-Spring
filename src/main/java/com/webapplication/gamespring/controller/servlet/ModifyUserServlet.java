@@ -8,6 +8,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
@@ -27,6 +28,16 @@ public class ModifyUserServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+
+        HttpSession httpSession = req.getSession();
+        Utente utente = (Utente)httpSession.getAttribute("user");
+        if(utente == null || !utente.isAmministratore() || utente.isBandito()){
+            resp.sendRedirect("notPermitted");
+            return;
+        }
+
+
         String username = req.getParameter("username");
         //cerco tutti i dati dell'utente e carico la pagina per poter modificare l'utente
         Utente user = DatabaseManager.getInstance().getUtenteDao().findByPrimaryKey(username);
