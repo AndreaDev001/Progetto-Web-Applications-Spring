@@ -117,86 +117,27 @@ public class RecensioneDaoPostgres implements RecensioneDao {
         return recensioni;
     }
     @Override
-    public void delete(int recensione) {
+    public void delete(int recensione){
 
-        String query = "DELETE FROM DatabaseProg.feedback_recensione WHERE recensione = ?";
         try {
+            String query = "DELETE FROM DatabaseProg.recensione WHERE id = ?";
             PreparedStatement st = connection.prepareStatement(query);
             st.setInt(1, recensione);
             st.executeUpdate();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
-
-        query = "SELECT * FROM DatabaseProg.commento WHERE recensione = ?";
-        try {
-            PreparedStatement st = connection.prepareStatement(query);
-            st.setInt(1, recensione);
-            ResultSet rs = st.executeQuery();
-
-
-
-            while (rs.next()){
-
-                String query2 = "DELETE FROM DatabaseProg.feedback_commenti WHERE commento = ?";
-                PreparedStatement st2 = connection.prepareStatement(query2);
-                st2.setInt(1, rs.getInt("id"));
-                st2.executeUpdate();
-
-            }
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        query = "DELETE FROM DatabaseProg.segnalazione WHERE recensione = ?";
-        try {
-            PreparedStatement st = connection.prepareStatement(query);
-            st.setInt(1, recensione);
-            st.executeUpdate();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-
-        query = "DELETE FROM DatabaseProg.commento WHERE recensione = ?";
-        try {
-            PreparedStatement st = connection.prepareStatement(query);
-            st.setInt(1, recensione);
-            st.executeUpdate();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        query = "DELETE FROM DatabaseProg.recensione WHERE id = ?";
-        try {
-            PreparedStatement st = connection.prepareStatement(query);
-            st.setInt(1, recensione);
-            st.executeUpdate();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        catch (SQLException ignored) {
         }
     }
 
     @Override
-    public boolean update(Recensione recensione) {
+    public boolean update(Recensione recensione) throws SQLException {
         String query = "update DatabaseProg.recensione set titolo = ?, contenuto = ?, voto = ? where id = ?";
-        try {
-            PreparedStatement st = connection.prepareStatement(query);
-            st.setString(1, recensione.getTitolo());
-            st.setString(2, recensione.getContenuto());
-            st.setInt(3, recensione.getVoto());
-            st.setLong(4, recensione.getId());
-            return st.executeUpdate() > 0;
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return false;
+        PreparedStatement st = connection.prepareStatement(query);
+        st.setString(1, recensione.getTitolo());
+        st.setString(2, recensione.getContenuto());
+        st.setInt(3, recensione.getVoto());
+        st.setLong(4, recensione.getId());
+        return st.executeUpdate() > 0;
     }
 
 }
