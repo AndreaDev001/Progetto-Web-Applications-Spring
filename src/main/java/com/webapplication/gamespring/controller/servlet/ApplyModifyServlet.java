@@ -20,74 +20,46 @@ import java.util.Objects;
 public class ApplyModifyServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         String email = req.getParameter("email");
         String admin= req.getParameter("admin");
         String ban = req.getParameter("ban");
         String encryptedPassword = BCrypt.hashpw(password, BCrypt.gensalt(12));
-
-
-
         Utente utente = DatabaseManager.getInstance().getUtenteDao().findByPrimaryKey(username);
-
         //controllo se la email è stata effettivamente modificata
         if(!Objects.equals(utente.getEmail(), email)) {
-
             List<Utente> utenti = DatabaseManager.getInstance().getUtenteDao().findAll();
             for (Utente ut : utenti) {
                 if (ut.getEmail().equals(email)) {
-
-                    RequestDispatcher dispacher = req.getRequestDispatcher("views/errorModifyProfile.html");
-                    dispacher.forward(req, resp);
-                    break;
+                    resp.sendRedirect("http://localhost:8080/errorModifyProfile");
+                    return;
                 }
             }
             utente.setEmail(email);
         }
-
-        if(!password.equals("")){
+        if(!password.isEmpty())
             utente.setPassword(encryptedPassword);
-        }
-
-        if(admin == null){
-            utente.setAmministratore(false);
-        }
-        else
-            utente.setAmministratore(true);
-
-        if(ban == null){
-            utente.setBandito(false);
-        }
-        else
-            utente.setBandito(true);
-
+        utente.setAmministratore(admin != null);
+        utente.setBandito(ban != null);
         //aggiorno i dati del utente nel database
         DatabaseManager.getInstance().getUtenteDao().saveOrUpdate(utente);
-
-
-
         //aggiorno la sessione
+
+
         HttpSession session = req.getSession();
+        Utente sessionUtente = (Utente)session.getAttribute("user");
 
-        session.setAttribute("user", utente);
-        session.setAttribute("sessionId", session.getId());
-
-        req.getServletContext().setAttribute(session.getId(), session);
-
-
+        if(Objects.equals(sessionUtente.getUsername(), username)){
+            session.setAttribute("user", utente);
+            session.setAttribute("sessionId", session.getId());
+            req.getServletContext().setAttribute(session.getId(), session);
+        }
 
 
         //dopo le modifiche ricarico la pagina con tutti gli utenti
         List<Utente> userList = DatabaseManager.getInstance().getUtenteDao().findAll();
-
         req.setAttribute("lista_utenti", userList);
-
-        RequestDispatcher dispacher = req.getRequestDispatcher("views/userList.html");
-        dispacher.forward(req, resp);
-
-
+        resp.sendRedirect("http://localhost:8080/userList");
     }
 }

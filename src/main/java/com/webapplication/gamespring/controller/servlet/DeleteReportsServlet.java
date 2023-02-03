@@ -18,19 +18,14 @@ public class DeleteReportsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String review = req.getParameter("recensione");
         String user = req.getParameter("utente");
-
         int intReview = Integer.parseInt(review);
-
-
         DatabaseManager.getInstance().getSegnalazioneDao().delete(intReview, user);
-
         List<Segnalazione> reports = DatabaseManager.getInstance().getSegnalazioneDao().findAll();
-
         req.setAttribute("recensioni_segnalate", reports);
-
-        RequestDispatcher dispacher = req.getRequestDispatcher("views/report.html");
-        dispacher.forward(req, resp);
-
-
+        /**
+        RequestDispatcher dispatcher = req.getRequestDispatcher("views/report.html");
+        dispatcher.forward(req, resp);
+         **/
+        resp.sendRedirect("http://localhost:8080/reports");
     }
 }

@@ -18,16 +18,14 @@ import java.util.*;
 @WebServlet("/recommended")
 public class RecommendedServlet extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         HttpSession session = req.getSession();
         Utente utente = (Utente)session.getAttribute("user");
-        String sessionID = (String)session.getAttribute("sessionId");
         if(utente == null){
             resp.sendRedirect("http://localhost:8080/notPermitted");
             return;
         }
-
         //cerco tutti i giochi della wishlist di un utente e successivamente creo un hashmap per capire quali sono i giochi piu
         //popolari della sua wishlist
         List<Wishlist> wishlists = DatabaseManager.getInstance().getWishlistDao().findByUser(utente.getUsername());
@@ -51,24 +49,16 @@ public class RecommendedServlet extends HttpServlet {
         genres.put("board-games", 0);
         genres.put("educational", 0);
         genres.put("cards", 0);
-
         List<Gioco> games = new ArrayList<Gioco>();
-
         for (Wishlist element : wishlists)
-        {
             games.add(DatabaseManager.getInstance().getGiocoDao().findByPrimaryKey(element.getGioco()));
+        for (Gioco game : games) {
+            genres.replace(game.getGenere(), genres.get(game.getGenere()) + 1);
+
         }
-        for (int i=0; i<games.size(); i++){
-
-            genres.replace(games.get(i).getGenere(), genres.get(games.get(i).getGenere()) +1);
-            System.out.println(genres);
-        }
-
-
         //prendo i generi più popolari della wishlist
         int max = Collections.max(genres.values());
         String index = "";
-
         for (Map.Entry<String, Integer> entry : genres.entrySet()){
             if(max == entry.getValue())
                 index = entry.getKey();
@@ -126,7 +116,7 @@ public class RecommendedServlet extends HttpServlet {
         req.setAttribute("gen3", index3);
         req.setAttribute("gen4", index4);;
 
-        RequestDispatcher dispacher = req.getRequestDispatcher("views/recommended.html");
-        dispacher.forward(req, resp);
+        RequestDispatcher dispatcher = req.getRequestDispatcher("views/recommended.html");
+        dispatcher.forward(req, resp);
     }
 }

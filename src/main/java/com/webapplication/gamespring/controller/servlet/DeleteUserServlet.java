@@ -13,21 +13,18 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/deleteUser")
-public class DeleteUserServlet extends HttpServlet{
-        @Override
-        protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            String username = req.getParameter("username");
-
-
-            //elimino l'utente dal database
-            DatabaseManager.getInstance().getUtenteDao().delete(username);
-
-            List<Utente> utenti = DatabaseManager.getInstance().getUtenteDao().findAll();
-            req.setAttribute("lista_utenti", utenti);
-            RequestDispatcher dispacher = req.getRequestDispatcher("views/userList.html");
-            dispacher.forward(req, resp);
-
-
-
-        }
+public class DeleteUserServlet extends HttpServlet {
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String username = req.getParameter("username");
+        //elimino l'utente dal database
+        DatabaseManager.getInstance().getUtenteDao().delete(username);
+        List<Utente> utenti = DatabaseManager.getInstance().getUtenteDao().findAll();
+        req.setAttribute("lista_utenti", utenti);
+        /**
+        RequestDispatcher dispatcher = req.getRequestDispatcher("views/userList.html");
+        dispatcher.forward(req, resp);
+         **/
+        resp.sendRedirect("http://localhost:8080/userList");
+    }
 }

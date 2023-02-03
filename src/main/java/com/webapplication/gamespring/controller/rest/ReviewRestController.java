@@ -3,8 +3,11 @@ package com.webapplication.gamespring.controller.rest;
 import com.webapplication.gamespring.model.FeedbackRecensione;
 import com.webapplication.gamespring.model.Recensione;
 import com.webapplication.gamespring.model.Segnalazione;
+import com.webapplication.gamespring.model.Utente;
 import com.webapplication.gamespring.persistenza.Dao.RecensioneDao;
 import com.webapplication.gamespring.persistenza.DatabaseManager;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.jsoup.Jsoup;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -27,9 +30,21 @@ public class ReviewRestController {
     }
 
     @GetMapping(value = "/getReview")
-    public Recensione getReview(@RequestParam int reviewID)
-    {
-        return DatabaseManager.getInstance().getRecensioneDao().findByPrimaryKey(reviewID);
+    public Map<String, Object> getReview(HttpServletRequest req, @RequestParam int reviewID, @RequestParam(required = false) String jsessionid) throws SQLException {
+
+        HttpSession session = jsessionid == null ? null : (HttpSession)req.getServletContext().getAttribute(jsessionid);
+        Utente utente = session != null ? (Utente) session.getAttribute("user") : null;
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("review", DatabaseManager.getInstance().getRecensioneDao().findByPrimaryKey(reviewID));
+
+        if(utente != null) {
+            FeedbackRecensione feed = DatabaseManager.getInstance().getFeedbackRecensioneDao().findByPrimaryKey(utente.getUsername(), reviewID);
+            map.put("feedback", feed == null ? "none" : (feed.isTipo() ? "like" : "dislike"));
+        }
+        else
+            map.put("feedback", "none");
+        return map;
     }
     @GetMapping(value = "/getUserReview")
     public Recensione getUserReview(@RequestParam String username,@RequestParam int gameID)
@@ -69,14 +84,6 @@ public class ReviewRestController {
         if(DatabaseManager.getInstance().getFeedbackRecensioneDao().saveOrUpdate(feedbackRecensione))
             return feedbackRecensione.isTipo() ? "like" : "dislike";
         return "none";
-    }
-
-    @GetMapping(value = "/getReviewFeedback")
-    public String getReviewFeedback(@RequestParam String user, @RequestParam int reviewID) throws SQLException {
-        FeedbackRecensione feed = DatabaseManager.getInstance().getFeedbackRecensioneDao().findByPrimaryKey(user, reviewID);
-        if(feed == null)
-            return "none";
-        return feed.isTipo() ? "like" : "dislike";
     }
 
     private void isReviewValid(Recensione review) throws IllegalArgumentException

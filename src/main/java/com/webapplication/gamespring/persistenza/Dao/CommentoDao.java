@@ -11,7 +11,6 @@ import java.util.List;
 public interface CommentoDao {
 
     List<Commento> getReviewComments(int reviewID, int startIndex, int commentsSize);
-    Commento findByPrimaryKey(int id);
     Commento readCommento(ResultSet resultSet) throws SQLException;
     int save(Commento commento) throws SQLException;
     void update(Commento commento) throws SQLException;
