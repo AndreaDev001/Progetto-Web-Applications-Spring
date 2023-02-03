@@ -54,7 +54,7 @@ public class RecommendedServlet extends HttpServlet {
             games.add(DatabaseManager.getInstance().getGiocoDao().findByPrimaryKey(element.getGioco()));
         for (Gioco game : games) {
             genres.replace(game.getGenere(), genres.get(game.getGenere()) + 1);
-            System.out.println(genres);
+
         }
         //prendo i generi più popolari della wishlist
         int max = Collections.max(genres.values());
