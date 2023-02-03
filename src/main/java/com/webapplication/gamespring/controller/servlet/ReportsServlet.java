@@ -17,6 +17,20 @@ import java.util.List;
 
 @WebServlet("/reports")
 public class ReportsServlet extends HttpServlet{
+
+    /**
+     *
+     * Viene invocata quando si vuole accedere alla pagina amministrativa dedicata
+     * al controllo delle segnalazioni, da qui l'utente admini può eventualmente eliminare
+     * una recensione o eliminare una segnalazione
+     *
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession httpSession = req.getSession();

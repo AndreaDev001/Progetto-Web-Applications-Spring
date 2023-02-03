@@ -16,8 +16,19 @@ import java.io.IOException;
 import java.util.*;
 
 @WebServlet("/recommended")
-public class RecommendedServlet extends HttpServlet
-{
+
+public class RecommendedServlet extends HttpServlet {
+
+    /**
+     *
+     * Invocata quando si accede alla pagina dedicata ai consigliati,
+     * crea una pagina in base ai risultati contenuti dalla wishlist nel database
+     *
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 

@@ -19,31 +19,47 @@ import java.io.IOException;
 @WebServlet("/changePassword")
 public class ChangePasswordServlet extends HttpServlet {
 
-    // chiamata dopo il click sul link nella mail
+    /**
+     * Inoltra la risorsa changePassword.html solo se l'attributo 'user'
+     * della sessione è correttamente valorizzato,
+     * altrimenti nega l'accesso inoltrando la risorsa notAuthorized.html
+     *
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         if (session.getAttribute("user") == null) {
-            System.out.println("non autorizzato al cambio pw"); // todo: debug
-            // resp.sendRedirect("loginError.html");
-            RequestDispatcher dispatcher = req.getRequestDispatcher("views/notAuthorized.html"); // todo: cambia con pag not authorized
+            RequestDispatcher dispatcher = req.getRequestDispatcher("views/notAuthorized.html");
             dispatcher.forward(req, resp);
         }
         else {
-            System.out.println("autorizzato al cambio pw"); // todo: debug
             RequestDispatcher dispatcher = req.getRequestDispatcher("views/changePassword.html");
             dispatcher.forward(req, resp);
         }
 
     }
 
-    // qunado click su conferma -> aggiorna password
+
+    /**
+     * Invocata quando l'utente ha impostato la nuova password, che viene passata come parametro nel body della richiesta POST.
+     * Se la nuova password è valida, ne effettua l'hash e aggiorna nel DB la password dell'utente corrispondente di conseguenza.
+     * Se la nuova password non è valida, annulla l'operazione.
+     * In entrambi i casi, l'esito dell'operazione viene scritto nell'attributo "status" della sessione.
+     *
+     * @param req la richiesta POST che contiene la nuova password nel proprio body
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String password = req.getParameter("password");
 
         if (password.isEmpty() || password.isBlank()) {
-            System.out.println("pw empty");
             HttpSession session = req.getSession();
             session.setAttribute("status", Status.EMPTY_FIELDS);
 
@@ -54,7 +70,6 @@ public class ChangePasswordServlet extends HttpServlet {
         else {
             // se pw non valida -> errore
             if (!ValidationHandler.getInstance().validatePassword(password)) {
-                System.out.println("Invalid pw"); // todo: debug
                 HttpSession session = req.getSession();
                 session.setAttribute("status", Status.INVALID_PASSWORD);
 
@@ -64,12 +79,9 @@ public class ChangePasswordServlet extends HttpServlet {
                 Utente utente = (Utente) req.getSession().getAttribute("user");
                 UtenteDao utenteDao = DatabaseManager.getInstance().getUtenteDao();
 
-                // todo: controlla che pw vecchia e nuova non siano le stesse
                 if (BCrypt.checkpw(password, utente.getPassword())) {
                     HttpSession session = req.getSession();
                     session.setAttribute("status", Status.SAME_PASSWORDS);
-                    System.out.println("Pw uguale alla vecchia");  // todo: debug
-
                 }
                 else {
                     String encryptedPassword = BCrypt.hashpw(password, BCrypt.gensalt(12));
@@ -79,8 +91,6 @@ public class ChangePasswordServlet extends HttpServlet {
 
                     HttpSession session = req.getSession();
                     session.setAttribute("status", Status.PASSWORD_UPDATED);
-
-                    System.out.println("Pw modificata correttamente!");  // todo: debug
                 }
 
             }

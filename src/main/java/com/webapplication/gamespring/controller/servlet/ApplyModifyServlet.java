@@ -18,6 +18,18 @@ import java.util.Objects;
 
 @WebServlet("/applyModify")
 public class ApplyModifyServlet extends HttpServlet {
+
+    /***
+     *
+     * Funzione invocata per applicare delle modifiche effettive ad un account controllando eventuali modifiche
+     * di email/ban/admin/password in caso di errore reindirizza alla pagina di errore
+     *
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("username");

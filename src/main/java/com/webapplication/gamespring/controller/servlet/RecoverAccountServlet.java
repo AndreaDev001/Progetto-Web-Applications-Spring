@@ -18,6 +18,14 @@ import java.io.IOException;
 @WebServlet("/recoverAccount")
 public class RecoverAccountServlet extends HttpServlet {
 
+    /**
+     * Inoltra la risorsa recoverAccount.html
+     *
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
@@ -26,6 +34,17 @@ public class RecoverAccountServlet extends HttpServlet {
         dispatcher.forward(req, resp);
     }
 
+    /**
+     * Invocata quando l'utente chiede di reimpostare la propria password.
+     * Controlla che il campo 'username', passato nel body della richiesta POST,
+     * corrisponda ad un utente registrato nel DB e invia una mail all'indirizzo mail associato.
+     * Aggiorna gli attributi 'status' e 'user' della sessione di conseguenza.
+     *
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("username");
@@ -38,14 +57,11 @@ public class RecoverAccountServlet extends HttpServlet {
             dispatcher.forward(req, resp);
         }
         else {
-            // todo: check che esista account associato ad email nel db
             UtenteDao uDao = DatabaseManager.getInstance().getUtenteDao();
             Utente utente = uDao.findByPrimaryKey(username);
 
-
             // Non esiste account associato a questo utente
             if (utente == null) {
-                System.out.println("utente null");
                 HttpSession session = req.getSession();
                 session.setAttribute("status", Status.NONEXISTENT_ACCOUNT);
 
@@ -55,10 +71,10 @@ public class RecoverAccountServlet extends HttpServlet {
             }
             // Esiste account associato a questo utente
             else {
-                System.out.println("username: " + utente.getUsername());  // todo: debug
 
                 // cerco l'email associata a username nel db
                 String email = utente.getEmail();
+
                 // se l'invio dell'email è andato a buon fine
                 if (MailHandler.getInstance().sendEmail(email)) {
                     HttpSession session = req.getSession();

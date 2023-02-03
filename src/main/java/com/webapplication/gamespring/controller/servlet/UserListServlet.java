@@ -15,6 +15,21 @@ import java.util.List;
 
 @WebServlet("/userList")
 public class UserListServlet extends HttpServlet {
+
+    /**
+     *
+     * Viene invocata quando si vuole accedere alla pagina amministrativa dedicata
+     * al controllo degli utenti, da qui l'utente admini può eventualmente
+     * ricercare e selezionare il profilo che si vuole modificare
+     *
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+
+
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession httpSession = req.getSession();

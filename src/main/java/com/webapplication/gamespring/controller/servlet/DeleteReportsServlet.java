@@ -14,16 +14,25 @@ import java.util.List;
 
 @WebServlet("/deleteReports")
 public class DeleteReportsServlet extends HttpServlet {
+
+    /***
+     *
+     * Invocata per eliminare una segnalazione
+     *
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+
+
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String review = req.getParameter("recensione");
         String user = req.getParameter("utente");
         int intReview = Integer.parseInt(review);
         DatabaseManager.getInstance().getSegnalazioneDao().delete(intReview, user);
-        /**
-        RequestDispatcher dispatcher = req.getRequestDispatcher("views/report.html");
-        dispatcher.forward(req, resp);
-         **/
         resp.sendRedirect("http://localhost:8080/reports");
     }
 }
