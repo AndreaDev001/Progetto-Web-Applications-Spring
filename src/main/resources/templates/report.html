@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reports</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.0.4/popper.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/report.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg position-sticky top-0" style="padding-left: 2%;padding-right: 2%">
+    <a class = "navbar-brand"></a><button class="navbar-toggler navbar-light" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item active header-item px-1">
+                <i class="fa-solid fa-house d-inline-block"></i><a th:if="${session.sessionId} AND ${session.user}" class="nav-link header-link" th:href="|http://localhost:4200/games?jsessionid=${session.sessionId}|">Home<span class="sr-only">(current)</span></a><a th:unless="${session.user} AND ${session.sessionId}" class="nav-link header-link" href="http://localhost:4200/games">Home</a>
+            </li>
+            <li class="nav-item header-item px-1">
+                <i class="fa-solid fa-newspaper"></i><a th:if="${session.user} AND ${session.sessionId}" class="nav-link header-link" th:href="|http://localhost:4200/news?jsessionid=${session.sessionId}|">News</a><a th:unless="${session.user} AND ${session.sessionId}" class="nav-link header-link" href = "http://localhost:4200/news">News</a>
+            </li>
+            <li class="nav-item header-item px-1">
+                <i class="fa-solid fa-people-group d-inline-block text-white"></i><a class="nav-link header-link" th:if="${session.sessionId} AND ${session.user}" th:href="|http://localhost:4200/info?jsessionid=${session.sessionId}|">About us</a><a class="nav-link header-link" th:unless="${session.sessionId} AND ${session.user}" href="http://localhost:4200/info">About us</a>
+            </li>
+            <li class="nav-item dropdown header-item px-1">
+                <i class="fa-solid fa-circle-user d-inline-block text-white"></i><a class="nav-link dropdown-toggle header-link" href="#" role="button" data-toggle="dropdown" aria-expanded="false" th:unless="${session.sessionId} AND ${session.user}">Account</a><a class="nav-link dropdown-toggle header-link" href="#" role="button" data-toggle="dropdown" aria-expanded="false" th:if="${session.sessionId} AND ${session.user}" th:text="${session.user.username}"></a>
+                <div class="dropdown-menu" style="background-color: var(--background-secondary)">
+                    <a th:unless="${session.sessionId} AND ${session.user}" class="dropdown-item dropdown-link" href="http://localhost:8080/login">Login</a>
+                    <a th:if="${session.sessionId} AND ${session.user}" class="dropdown-item dropdown-link" href="logout">Logout</a>
+                    <a th:unless="${session.sessionId} AND ${session.user}" class="dropdown-item dropdown-link" href="http://localhost:4200/registration">Sign up</a>
+                    <a th:if="${session.sessionId} AND ${session.user}" class="dropdown-item dropdown-link" href="http://localhost:8080/wishlist">Wishlist</a>
+                    <a th:if="${session.sessionId} AND ${session.user}" class = "dropdown-item dropdown-link" href="http://localhost:8080/recommended">Recommended for you</a>
+                    <a th:if="${session.sessionId} AND ${session.user} AND ${session.user.amministratore}" class = "dropdown-item dropdown-link" href="http://localhost:8080/userList">Users List</a>
+                    <a th:if="${session.sessionId} AND ${session.user} AND ${session.user.amministratore}" class = "dropdown-item dropdown-link" href="http://localhost:8080/reports">Reports List</a>
+                    <a th:if="${session.sessionId} AND ${session.user}" class = "dropdown-item dropdown-link" th:href="|http://localhost:4200/reviews?jsessionid=${session.sessionId}|">Your Reviews</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class = "container-fluid py-4">
+    <div th:if="${session.sessionId} AND ${session.user} AND ${session.user.amministratore}">
+        <div class = "w-100 text-center" th:if="${recensioni_segnalate.isEmpty()}">
+            <h1 class = "text-white" style="font-weight: bold">No Reports Found</h1>
+            <a class = "btn btn-lg button button-primary" th:href="|http://localhost:4200/games?jsessionid=${session.sessionId}|">Back to home page</a>
+        </div>
+        <div class="row" th:unless="${recensioni_segnalate.isEmpty()}">
+            <div class = "col-12">
+                <h1 class = "text-white text-center" style="font-weight: bold">List of Reports</h1>
+            </div>
+            <div th:each="segnalazione : ${recensioni_segnalate}" class = "col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
+                <div class="card" style="background-color: var(--background-secondary);">
+                    <div class="card-body">
+                        <h4 class = "text-white text-center" th:text="${segnalazione.recensione.titolo}"></h4>
+                        <a th:href="|http://localhost:4200/recensioni/${segnalazione.recensione.id}?jsessionid=${session.sessionId}|" class="text" >Link alla Recensione</a>
+                        <p class = "text-white" th:text="'Reported by: ' +${segnalazione.utente}"></p>
+                        <p class = "text-white" th:text="'Reason: ' +${segnalazione.motivazione}"></p>
+                    </div>
+                    <div class = "card-footer py-2" style="background-color: var(--secondary)">
+                        <form action="deleteReports" method="post">
+                            <input type="hidden" name="utente" th:value="${segnalazione.utente}">
+                            <input type="hidden" name="recensione" th:value="${segnalazione.recensione.id}">
+                            <button type="submit" class="btn button button-primary">Elimina Segnalazione</button>
+                        </form>
+                        <form class = "mt-2" action="deleteReview" method="post">
+                            <input type="hidden" name="recUt" th:value="${segnalazione.recensione.utente}">
+                            <input type="hidden" name="recensione" th:value="${segnalazione.recensione.id}">
+                            <button type="submit" class="btn button button-delete">Elimina Recensione</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

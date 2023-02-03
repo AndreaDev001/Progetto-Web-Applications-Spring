@@ -1,0 +1,40 @@
+html, body{
+    margin: 0;
+    padding: 0;
+
+}
+
+.userData{
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+
+.div-checkbox{
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+}
+
+.deleteDiv{
+    justify-content: center;
+    display: flex;
+}
+
+.modifyDiv{
+    justify-content: center;
+    display: flex;
+    margin-top: 50px;
+}
+
+.admindiv-checkbox, .bandiv-checkbox{
+    display: flex;
+    gap: 10px
+
+}
+
+.label_ban, .label_admin{
+    margin: 0;
+}
+
+
