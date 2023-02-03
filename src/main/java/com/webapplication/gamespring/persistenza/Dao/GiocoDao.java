@@ -8,14 +8,14 @@ import java.util.List;
 
 public interface GiocoDao {
 
-    public List<Gioco> findAll();
+    List<Gioco> findAll();  // trova tutti i giochi all'inteno del database
 
-    public Gioco findByPrimaryKey(int id);
-    public Gioco readGioco(ResultSet resultSet) throws SQLException;
+    Gioco findByPrimaryKey(int id); // effettua una ricerca per chiave primaria nel database
+    Gioco readGioco(ResultSet resultSet) throws SQLException; // permette di leggere il gioco per evitare duplicazione del codice
 
-    public void saveOrUpdate(Gioco gioco);
+    void saveOrUpdate(Gioco gioco); // aggiorna o salva i dati all'interno del database
 
-    public void delete(Gioco gioco);
+    void delete(Gioco gioco); //elimina i dati dal database
 
-    public boolean alreadyInDatabase(int id);
+    boolean alreadyInDatabase(int id); // controlla se esiste già all'interno del database
 }
