@@ -128,62 +128,9 @@ public class UtenteDaoPostgres implements UtenteDao {
         }
     }
     @Override
-    public void delete(String username) {
-        String query = "DELETE FROM DatabaseProg.feedback_commenti WHERE utente = ?";
-        try {
-            PreparedStatement st = connection.prepareStatement(query);
-            st.setString(1, username);
-            st.executeUpdate();
-        } catch (SQLException exception) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException(exception);
-        }
-        query = "DELETE FROM DatabaseProg.feedback_recensione WHERE utente = ?";
-        try {
-            PreparedStatement st = connection.prepareStatement(query);
-            st.setString(1, username);
-            st.executeUpdate();
-        } catch (SQLException exception) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException(exception);
-        }
-        query = "DELETE FROM DatabaseProg.segnalazione WHERE utente = ?";
-        try {
-            PreparedStatement st = connection.prepareStatement(query);
-            st.setString(1, username);
-            st.executeUpdate();
-        } catch (SQLException exception) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException(exception);
-        }
-        query = "DELETE FROM DatabaseProg.commento WHERE utente = ?";
-        try {
-            PreparedStatement st = connection.prepareStatement(query);
-            st.setString(1, username);
-            st.executeUpdate();
-        } catch (SQLException exception) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException(exception);
-        }
-        query = "DELETE FROM DatabaseProg.recensione WHERE utente = ?";
-        try {
-            PreparedStatement st = connection.prepareStatement(query);
-            st.setString(1, username);
-            st.executeUpdate();
-        } catch (SQLException exception) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException(exception);
-        }
-        query = "DELETE FROM DatabaseProg.wishlist WHERE utente = ?";
-        try {
-            PreparedStatement st = connection.prepareStatement(query);
-            st.setString(1, username);
-            st.executeUpdate();
-        } catch (SQLException exception) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException(exception);
-        }
-        query = "DELETE FROM DatabaseProg.utente WHERE username = ?";
+    public void delete(String username)
+    {
+        String query = "DELETE FROM DatabaseProg.utente WHERE username = ?";
         try {
             PreparedStatement st = connection.prepareStatement(query);
             st.setString(1, username);
