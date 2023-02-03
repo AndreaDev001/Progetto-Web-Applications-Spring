@@ -71,13 +71,13 @@
                 <input name="ban" type="checkbox" th:checked="${modify_utente.bandito}" class="checkbox_ban"></input>
             </div>
         </div>
-        <div class="modifyDiv">
+        <div class="modifyDiv py-1">
             <button class="btn button button-primary" type="submit" value="Submit">modifica dati account</button>
         </div>
     </form>
     <form action="deleteUser" method="post">
         <input type="hidden" name="username" th:value="${modify_utente.username}">
-        <div class="deleteDiv">
+        <div class="deleteDiv py-1">
             <button onclick="alertDelete()" class="btn button button-delete" >elimina account</button>
         </div>
     </form>

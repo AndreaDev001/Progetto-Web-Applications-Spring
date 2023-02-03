@@ -33,8 +33,6 @@ public class DeleteReportsServlet extends HttpServlet {
         String user = req.getParameter("utente");
         int intReview = Integer.parseInt(review);
         DatabaseManager.getInstance().getSegnalazioneDao().delete(intReview, user);
-        List<Segnalazione> reports = DatabaseManager.getInstance().getSegnalazioneDao().findAll();
-        req.setAttribute("recensioni_segnalate", reports);
         resp.sendRedirect("http://localhost:8080/reports");
     }
 }

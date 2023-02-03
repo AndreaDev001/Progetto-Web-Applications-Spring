@@ -1,7 +1,10 @@
 nav
 {
+    display: unset;
     z-index: 1000;
     background-color: var(--primary);
+    position: sticky;
+    top: 0;
 }
 a.dropdown-link{
     background-color: var(--background-secondary);

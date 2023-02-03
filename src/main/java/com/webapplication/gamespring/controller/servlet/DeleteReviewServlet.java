@@ -39,8 +39,6 @@ public class DeleteReviewServlet extends HttpServlet {
         Utente uDao = DatabaseManager.getInstance().getUtenteDao().findByPrimaryKey(user);
         uDao.setBandito(true);
         DatabaseManager.getInstance().getUtenteDao().saveOrUpdate(uDao);
-        List<Segnalazione> reports = DatabaseManager.getInstance().getSegnalazioneDao().findAll();
-        req.setAttribute("recensioni_segnalate", reports);
         resp.sendRedirect("http://localhost:8080/reports");
     }
 }
