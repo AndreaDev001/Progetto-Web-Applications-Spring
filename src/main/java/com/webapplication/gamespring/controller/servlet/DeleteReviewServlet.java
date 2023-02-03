@@ -32,7 +32,7 @@ public class DeleteReviewServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String review = req.getParameter("recensione");
-        String user = req.getParameter("utente");
+        String user = req.getParameter("recUt");
         int recensione2 = Integer.parseInt(review);
         //elimino la recensione dal database e banno l'utente
         DatabaseManager.getInstance().getRecensioneDao().delete(recensione2);

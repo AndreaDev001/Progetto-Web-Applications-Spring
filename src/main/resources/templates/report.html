@@ -70,7 +70,7 @@
                             <button type="submit" class="btn button button-primary">Elimina Segnalazione</button>
                         </form>
                         <form class = "mt-2" action="deleteReview" method="post">
-                            <input type="hidden" name="utente" th:value="${segnalazione.utente}">
+                            <input type="hidden" name="recUt" th:value="${segnalazione.recensione.utente}">
                             <input type="hidden" name="recensione" th:value="${segnalazione.recensione.id}">
                             <button type="submit" class="btn button button-delete">Elimina Recensione</button>
                         </form>
