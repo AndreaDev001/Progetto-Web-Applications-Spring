@@ -21,10 +21,6 @@ public class DeleteUserServlet extends HttpServlet {
         DatabaseManager.getInstance().getUtenteDao().delete(username);
         List<Utente> utenti = DatabaseManager.getInstance().getUtenteDao().findAll();
         req.setAttribute("lista_utenti", utenti);
-        /**
-        RequestDispatcher dispatcher = req.getRequestDispatcher("views/userList.html");
-        dispatcher.forward(req, resp);
-         **/
         resp.sendRedirect("http://localhost:8080/userList");
     }
 }

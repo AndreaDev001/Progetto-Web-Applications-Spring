@@ -14,6 +14,19 @@ import java.util.List;
 
 @WebServlet("/deleteReports")
 public class DeleteReportsServlet extends HttpServlet {
+
+    /***
+     *
+     * Invocata per eliminare una segnalazione
+     *
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+
+
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String review = req.getParameter("recensione");
@@ -22,10 +35,6 @@ public class DeleteReportsServlet extends HttpServlet {
         DatabaseManager.getInstance().getSegnalazioneDao().delete(intReview, user);
         List<Segnalazione> reports = DatabaseManager.getInstance().getSegnalazioneDao().findAll();
         req.setAttribute("recensioni_segnalate", reports);
-        /**
-        RequestDispatcher dispatcher = req.getRequestDispatcher("views/report.html");
-        dispatcher.forward(req, resp);
-         **/
         resp.sendRedirect("http://localhost:8080/reports");
     }
 }

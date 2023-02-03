@@ -13,6 +13,18 @@ import java.io.IOException;
 
 @WebServlet("/modifyUser")
 public class ModifyUserServlet extends HttpServlet {
+
+
+    /**
+     *
+     * Invocata quando si accede alla pagina di amministrazione del singolo utente,
+     * permette di visualizzare una pagina dedicata dove poter effettuare modifiche al profilo selezionato
+     *
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("username");

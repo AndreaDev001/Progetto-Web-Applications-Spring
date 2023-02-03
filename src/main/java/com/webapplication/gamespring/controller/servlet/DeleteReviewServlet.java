@@ -15,6 +15,19 @@ import java.util.List;
 
 @WebServlet("/deleteReview")
 public class DeleteReviewServlet extends HttpServlet {
+
+    /**
+     *
+     * Invocata quando si vuole eliminare una recensione dal database, oltre
+     * all'eliminazione di quest'ultima viene anche bannato l'utente
+     *
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String review = req.getParameter("recensione");
@@ -27,10 +40,6 @@ public class DeleteReviewServlet extends HttpServlet {
         DatabaseManager.getInstance().getUtenteDao().saveOrUpdate(uDao);
         List<Segnalazione> reports = DatabaseManager.getInstance().getSegnalazioneDao().findAll();
         req.setAttribute("recensioni_segnalate", reports);
-        /**
-        RequestDispatcher dispatcher = req.getRequestDispatcher("views/report.html");
-        dispatcher.forward(req, resp);
-         **/
         resp.sendRedirect("http://localhost:8080/reports");
     }
 }
