@@ -52,8 +52,6 @@ public class ApplyModifyServlet extends HttpServlet {
         req.getServletContext().setAttribute(session.getId(), session);
          ***/
         //dopo le modifiche ricarico la pagina con tutti gli utenti
-        List<Utente> userList = DatabaseManager.getInstance().getUtenteDao().findAll();
-        req.setAttribute("lista_utenti", userList);
         resp.sendRedirect("http://localhost:8080/userList");
     }
 }

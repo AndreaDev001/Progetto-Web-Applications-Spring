@@ -23,13 +23,10 @@ public class UserListServlet extends HttpServlet {
             resp.sendRedirect("notPermitted");
             return;
         }
-
         //carico la lista degli utenti
-
         List<Utente> users = DatabaseManager.getInstance().getUtenteDao().findAll();
         req.setAttribute("lista_utenti", users);
         RequestDispatcher dispacher = req.getRequestDispatcher("views/userList.html");
         dispacher.forward(req, resp);
-
     }
 }
